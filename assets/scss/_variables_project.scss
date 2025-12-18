@@ -1,0 +1,37 @@
+/* 1. 設定你的品牌顏色變數 */
+$primary: #4472c4; /* NDT 藍 */
+$secondary: #ed7d31; /* win 橘 */
+
+/* 2. 強制導覽列背景變「純白」且加陰影 */
+.td-navbar {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05) !important;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* 3. 因為背景變白，文字必須變深灰，不然看不見 */
+.navbar-nav .nav-link {
+    color: #333333 !important;
+    font-weight: 500;
+}
+
+/* 4. 滑鼠移過連結時，變成你的品牌橘色 */
+.navbar-nav .nav-link:hover {
+    color: $secondary !important;
+}
+
+/* 5. 修正搜尋框在白底的樣式 */
+.td-search-input {
+    background-color: #f8f9fa !important;
+    border: 1px solid #e9ecef !important;
+    color: #333 !important;
+}
+
+/* 6. 修正首頁大按鈕的顏色 (配合 Logo) */
+.btn-primary {
+    background-color: $primary !important;
+    border-color: $primary !important;
+}
+.btn-primary:hover {
+    background-color: darken($primary, 10%) !important;
+}

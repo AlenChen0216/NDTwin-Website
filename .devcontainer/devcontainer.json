@@ -1,0 +1,20 @@
+{
+  "name": "Hugo Docsy Dev",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/hugo:1": {
+      "version": "extended"
+    },
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "postCreateCommand": "npm install && git submodule update --init --recursive",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rusnasonov.vscode-hugo",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
+  "forwardPorts": [1313]
+}
