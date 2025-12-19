@@ -6,7 +6,7 @@ weight: 1
 ---
 
 {{% pageinfo %}}
-**NDTwin** is a digital twin platform designed specifically for **SDN (Software-Defined Networking)**. It utilizes the OpenFlow protocol and sFlow technology to enable real-time monitoring and simulation of network behavior.
+**NDT** is a digital twin platform designed specifically for **SDN (Software-Defined Networking)**. It utilizes the OpenFlow protocol and sFlow technology to enable real-time monitoring and simulation of network behavior.
 {{% /pageinfo %}}
 
 Debugging in traditional OpenFlow development workflows is often a challenge. Developers struggle to visualize how flow entries installed by the controller actually affect packet forwarding in real-time. NDTwin provides a high-fidelity, visualized environment that allows you to verify Control Plane logic instantly.
