@@ -5,6 +5,8 @@ weight: 2
 description: "Overview of the NDTwin three-layer architecture and core components."
 ---
 
+## HIddwwdwqdq
+
 ## Overview
 
 The NDTwin architecture comprises three distinct layers, designed to bridge the gap between physical networks and software applications.
