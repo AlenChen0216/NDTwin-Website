@@ -5,7 +5,6 @@ weight: 2
 description: "Overview of the NDTwin three-layer architecture and core components."
 ---
 
-## HIddwwdwqdq
 
 ## Overview
 
