@@ -50,23 +50,6 @@ languages:
     params:
       description: A Docsy example site
   # cSpell:disable
-  'no':
-    languageName: Norsk
-    contentDir: content/no
-    title: Gulldoks
-    params:
-      description: Docsy er operativsystem for skyen
-      time_format_default: 02.01.2006
-      time_format_blog: 02.01.2006
-  fa:
-    languageDirection: rtl
-    languageName: 'فارسی (Persian)'
-    contentDir: content/fa
-    title: 'اسناد گلدی'
-    params:
-      description: 'یک نمونه برای پوسته داکسی'
-      time_format_default: 2006.01.02
-      time_format_blog: 2006.01.02
   # cSpell:enable
 
 markup:
@@ -116,17 +99,15 @@ params:
   # The version number for the version of the docs represented in this doc set.
   # Used in the "version-banner" partial to display a version number for the
   # current doc set.
-  version: 0.0
+  version: 1.0
 
   # A link to latest version of the docs. Used in the "version-banner" partial to
   # point people to the main doc site.
-  url_latest_version: https://example.com
+  url_latest_version: https://github.com/joemou/NetworkDigitalTwin
 
   # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
-  github_repo: https://github.com/google/docsy-example
+  github_repo: https://github.com/joemou/NetworkDigitalTwin
 
-  # An optional link to a related project repo. For example, the sibling repository where your product code lives.
-  github_project_repo: https://github.com/google/docsy
 
   # Specify a value here if your content directory is not in your repo's root directory
   # github_subdir: ""
@@ -146,7 +127,7 @@ params:
 
   copyright:
     authors:
-      Docsy Authors | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
+      Wang's Lab | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
     from_year: 2018
 
   # User interface configuration
@@ -154,7 +135,7 @@ params:
     # Set to true to disable breadcrumb navigation.
     breadcrumb_disable: false
     # Set to false if you don't want to display a logo (/assets/icons/logo.svg) in the top navbar
-    navbar_logo: false
+    navbar_logo: true
     # Set to true if you don't want the top navbar to be translucent when over a `block/cover`, like on the homepage.
     navbar_translucent_over_cover_disable: false
     # Enable to show the side bar menu in its compact state.
@@ -185,6 +166,7 @@ params:
     # add "hide_readingtime: true" to the page's front matter
     readingtime:
       enable: false
+  favicon: true
 
   links:
     # End user relevant links. These will show up on left side of footer and in the community page if you have one.

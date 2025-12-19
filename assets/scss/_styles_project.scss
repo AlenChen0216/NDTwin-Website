@@ -7,3 +7,14 @@ https://www.docsy.dev/docs/content/lookandfeel/#project-style-files
 @import 'td/color-adjustments-dark';
 @import 'td/code-dark';
 @import 'td/gcs-search-dark';
+
+
+/* 核彈級 Logo 縮放指令 */
+.navbar-brand img, 
+#main-navbar img,
+span.navbar-logo img {
+    max-height: 40px !important;
+    width: auto !important;
+    max-width: 150px !important; /* 多加一個最大寬度限制 */
+    display: inline-block !important;
+}

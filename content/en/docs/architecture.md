@@ -10,7 +10,7 @@ description: "Overview of the NDTwin three-layer architecture and core component
 The NDTwin architecture comprises three distinct layers, designed to bridge the gap between physical networks and software applications.
 
 <div class="alert alert-light border">
-    <img src="/images/architecture.png" class="img-fluid d-block mx-auto" alt="NDT Architecture Diagram">
+    <img src="/images/NdtArcht.png" class="img-fluid d-block mx-auto" alt="NDT Architecture Diagram">
     <p class="text-center text-muted mt-2"><small>Figure 1: The NDTwin System Architecture</small></p>
 </div>
 

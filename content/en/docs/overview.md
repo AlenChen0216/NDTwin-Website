@@ -35,7 +35,7 @@ If your team is developing OpenFlow-based network applications (e.g., dynamic ro
 ## System Architecture
 
 <div class="alert alert-light border">
-    <img src="/images/architecture.png" class="img-fluid d-block mx-auto" alt="NDTwin Architecture" style="max-height: 400px;">
+    <img src="/images/NdtArcht.png" class="img-fluid d-block mx-auto" alt="NDTwin Architecture" style="max-height: 400px;">
     <p class="text-center text-muted mt-2"><small>Figure 1: NDTwin System Architecture (OpenFlow & sFlow)</small></p>
 </div>
 

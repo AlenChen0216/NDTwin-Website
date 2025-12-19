@@ -9,8 +9,8 @@ menu:
 
 <section class="row align-items-center pb-5" style="padding-top: 4rem;">
   <div class="col-lg-6 text-left">
-    <h1 class="display-4 mb-4" style="color: #6f42c1; font-weight: 700;">
-      NDTwin <br>
+    <h1 class="display-4 mb-4" style="font-weight: 700;">
+      <span style="color: #216692;">NDT</span><span style="color: #E88130;">win</span> <br>
       <span style="font-size: 0.7em; color: #4a4a4a;">Network Digital Twin</span>
     </h1>
     <p class="lead mb-4">
@@ -27,7 +27,7 @@ menu:
     </div>
   </div>
   <div class="col-lg-6 text-center">
-    <img src="https://placehold.co/600x400/EEE/31343C?text=NDTwin+Architecture" class="img-fluid" alt="Architecture">
+    <img src="/images/NdtArcht.png" class="img-fluid" alt="Architecture">
   </div>
 </section>
 
