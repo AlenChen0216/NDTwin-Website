@@ -106,7 +106,7 @@ params:
   url_latest_version: https://github.com/joemou/NetworkDigitalTwin
 
   # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
-  github_repo: https://github.com/joemou/NetworkDigitalTwin
+  github_repo: https://github.com/joemou/NDTwin-Website
 
 
   # Specify a value here if your content directory is not in your repo's root directory
