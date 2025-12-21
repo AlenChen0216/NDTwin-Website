@@ -14,8 +14,7 @@ menu:
       <span style="font-size: 0.7em; color: #4a4a4a;">Network Digital Twin</span>
     </h1>
     <p class="lead mb-4">
-      A digital twin framework designed for <strong>OpenFlow-based Software-defined Networking (SDN) networks</strong>.<br>
-      It enables developers to define, simulate, and verify <strong>Flow Rules</strong> and control logic in real-time.
+      A novel network digital twin (NDT) open source framework designed for optimally operating and managing a network.<br><br> Its kernel continuously collects real-time network and flow states. Its apps use <strong> simulation and AI/ML technologies </strong> to: 1) evaluate/predict the outcome of many "what-if" conditions, 2) find the optimal solution to the current or a predicted situation, and 3) issue commands to network devices in real time to perform the best solution. Its tools include a Web GUI that uses Large Language Model (LLM) to support intent-based network management and a real-time network traffic visualizer.<br><br>NDTwin operates correctly and successfully on both physical networks composed of hardware switches and emulated networks formed by Mininet. It can be used as an automatic system to optimize the operation of a production network or as an academic platform to conduct NDT-based research. Developers can use this framework to develop, test, and evaluate their innovative NDT applications.             
     </p>
     <div class="d-flex flex-wrap">
       <a class="btn btn-lg btn-primary me-3 mb-3" href="/docs/" style="background-color: #6f42c1; border-color: #6f42c1;">
