@@ -36,7 +36,7 @@ Visualize network status, topology changes, and traffic flows in real-time.
 {{% /blocks/feature %}}
 
 {{% blocks/feature icon="fa-solid fa-code" title="OpenFlow Support" %}}
-Fully compatible with OpenFlow standard. Seamless integration with Ryu controller.
+Fully compatible with OpenFlow standard. Seamless integration with Ryu SDN controller.
 {{% /blocks/feature %}}
 
 {{% blocks/feature icon="fab fa-github" title="Open Source" url="https://github.com/joemou/NetworkDigitalTwin" %}}
