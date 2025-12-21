@@ -14,7 +14,7 @@ menu:
       <span style="font-size: 0.7em; color: #4a4a4a;">Network Digital Twin</span>
     </h1>
     <p class="lead mb-4">
-      A digital twin system designed specifically for <strong>OpenFlow-based SDN networks</strong>.<br>
+      A digital twin framework designed for <strong>OpenFlow-based Software-defined Networking (SDN) networks</strong>.<br>
       It enables developers to define, simulate, and verify <strong>Flow Rules</strong> and control logic in real-time.
     </p>
     <div class="d-flex flex-wrap">
