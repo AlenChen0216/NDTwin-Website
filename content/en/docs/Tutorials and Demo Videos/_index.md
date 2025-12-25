@@ -1,6 +1,6 @@
 ---
-title: App Example
-description: Show your user how to work through some end to end examples.
+title: Tutorials and Demo Videos
+description: Use two NDTwin applications (for energy-saving and traffic engineering, respectively) as examples to demonstrate how to run up NDTwin Apps and how they optimize the operations of a network.
 date: 2017-01-04
 weight: 9
 ---

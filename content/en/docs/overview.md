@@ -3,7 +3,7 @@ title: Overview
 linkTitle: Overview
 weight: 1
 description: >
-  NDTwin transforms OpenFlow development through real-time visualization and high-fidelity simulation.
+  Understand what NDTwin is and its advantages achieved from using advanced digital twin technologies.
 ---
 
 {{% pageinfo %}}

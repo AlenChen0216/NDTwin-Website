@@ -44,23 +44,23 @@
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
 <title>System Architecture | NDTwin</title>
-<meta name="description" content="A deep dive into the three-layer architecture of NDTwin: from the Application layer down to the Infrastructure.">
+<meta name="description" content="Explain the three-layer architecture of NDTwin: from the Applications, through the Kernel, down to the network infrastructure.">
 <meta property="og:url" content="http://localhost:1313/docs/architecture/">
   <meta property="og:site_name" content="NDTwin">
   <meta property="og:title" content="System Architecture">
-  <meta property="og:description" content="A deep dive into the three-layer architecture of NDTwin: from the Application layer down to the Infrastructure.">
+  <meta property="og:description" content="Explain the three-layer architecture of NDTwin: from the Applications, through the Kernel, down to the network infrastructure.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
     <meta property="article:modified_time" content="2025-12-19T17:53:29+08:00">
 
   <meta itemprop="name" content="System Architecture">
-  <meta itemprop="description" content="A deep dive into the three-layer architecture of NDTwin: from the Application layer down to the Infrastructure.">
+  <meta itemprop="description" content="Explain the three-layer architecture of NDTwin: from the Applications, through the Kernel, down to the network infrastructure.">
   <meta itemprop="dateModified" content="2025-12-19T17:53:29+08:00">
   <meta itemprop="wordCount" content="479">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="System Architecture">
-  <meta name="twitter:description" content="A deep dive into the three-layer architecture of NDTwin: from the Application layer down to the Infrastructure.">
+  <meta name="twitter:description" content="Explain the three-layer architecture of NDTwin: from the Applications, through the Kernel, down to the network infrastructure.">
 <link href="/scss/main.css" rel="stylesheet">
 <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -173,7 +173,7 @@
   </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-docsarchitecture-li">
     <a href="/docs/architecture/" class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id="m-docsarchitecture"><span class="td-sidebar-nav-active-item">System Architecture</span></a>
   </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docstutorials-li">
-    <a href="/docs/tutorials/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docstutorials"><span class="">Tutorials</span></a>
+    <a href="/docs/tutorials/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docstutorials"><span class="">Installation, User, and Developer Manuals</span></a>
     <ul class="ul-2 foldable">
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docstutorialsmininet-li">
     <a href="/docs/tutorials/mininet/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docstutorialsmininet"><span class="">Mininet Environment Setup</span></a>
@@ -196,19 +196,17 @@
     <a href="/docs/tutorials/webgui/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docstutorialswebgui"><span class="">Web GUI</span></a>
   </li>
     </ul>
-  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docsthirdpartyapps-li">
-    <a href="/docs/thirdpartyapps/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsthirdpartyapps"><span class="">App Example</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-docstutorials-and-demo-videos-li">
+    <a href="/docs/tutorials-and-demo-videos/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docstutorials-and-demo-videos"><span class="">Tutorials and Demo Videos</span></a>
     <ul class="ul-2 foldable">
-      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsthirdpartyappsenergysavingapp-li">
-    <a href="/docs/thirdpartyapps/energysavingapp/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsthirdpartyappsenergysavingapp"><span class="">Energy Saving App</span></a>
-  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsthirdpartyappstrafficengineeringapp-li">
-    <a href="/docs/thirdpartyapps/trafficengineeringapp/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docsthirdpartyappstrafficengineeringapp"><span class="">Traffic Engineering App</span></a>
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docstutorials-and-demo-videosenergysavingapp-li">
+    <a href="/docs/tutorials-and-demo-videos/energysavingapp/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docstutorials-and-demo-videosenergysavingapp"><span class="">Energy Saving App</span></a>
+  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docstutorials-and-demo-videostrafficengineeringapp-li">
+    <a href="/docs/tutorials-and-demo-videos/trafficengineeringapp/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docstutorials-and-demo-videostrafficengineeringapp"><span class="">Traffic Engineering App</span></a>
   </li>
     </ul>
   </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docsdownload-li">
     <a href="/docs/download/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-docsdownload"><span class="">Download</span></a>
-  </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-docscontribution-guidelines-li">
-    <a href="/docs/contribution-guidelines/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-docscontribution-guidelines"><span class="">Contribution Guidelines</span></a>
   </li>
     </ul>
   </li>
@@ -262,7 +260,7 @@
 </nav>
 <div class="td-content">
 	<h1>System Architecture</h1>
-	<div class="lead">A deep dive into the three-layer architecture of NDTwin: from the Application layer down to the Infrastructure.</div>
+	<div class="lead">Explain the three-layer architecture of NDTwin: from the Applications, through the Kernel, down to the network infrastructure.</div>
 	<header class="article-meta">
 		
   </header>

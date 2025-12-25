@@ -3,7 +3,7 @@ title: System Architecture
 linkTitle: System Architecture
 weight: 2
 description: >
-  A deep dive into the three-layer architecture of NDTwin: from the Application layer down to the Infrastructure.
+  Explain the three-layer architecture of NDTwin: from the Applications, through the Kernel, down to the network infrastructure.
 ---
 
 {{% pageinfo %}}

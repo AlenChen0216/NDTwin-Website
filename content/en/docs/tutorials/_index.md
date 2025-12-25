@@ -1,6 +1,6 @@
 ---
-title: Tutorials
-description: Show OUR user how to work through some end to end examples.
+title: Installation, User, and Developer Manuals
+description: Detail the steps required to install and use NDTwin and develop Apps over it.
 date: 2017-01-04
 weight: 8
 ---
