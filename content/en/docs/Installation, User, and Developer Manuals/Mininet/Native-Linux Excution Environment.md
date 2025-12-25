@@ -553,12 +553,3 @@ sudo mn -c
 
 ---
 
-## Next Steps & Advanced Features
-
-Once the core system is running, you can explore additional features using the links below:
-
-* **Web GUI Interface**: [Go to Web GUI Setup Guide]({{< ref "WebGUI.md" >}})
-* **Real-time Visualization**: [Go to Animation Visualization Guide]({{< ref "TrafficVisualization.md" >}})
-* **Traffic Generation**: [Go to Traffic Generator Guide]({{< ref "NetworkTrafficGenerator(NTG).md" >}})
-* **Third-Party Apps**: [Go to Third-Party App Guide]({{< ref "Tutorials and Demo Videos">}})
-

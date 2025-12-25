@@ -135,7 +135,6 @@ For a graphical interface to monitor the network status.
     ```text
     http://localhost:3000/
     ```
-* [Detailed Web GUI Guide]({{< ref "WebGUI.md" >}})
 
 ---
 
@@ -147,7 +146,6 @@ To view real-time traffic flow animations using the JavaFX desktop application.
     cd "/home/ndtwin/Desktop/NDTwin traffic animation/NDTwin_traffic_animation_v5.5.0"
     ./run_debug.sh
     ```
-* [Detailed Animation Guide]({{< ref "TrafficVisualization.md" >}})
 
 ---
 
@@ -155,7 +153,6 @@ To view real-time traffic flow animations using the JavaFX desktop application.
 To generate massive amounts of traffic for stress testing.
 
 * To do list
-* [Detailed Traffic Generator Guide]({{< ref "NetworkTrafficGenerator(NTG).md" >}})
 
 ---
 
@@ -186,5 +183,3 @@ This application requires two components running simultaneously.
     conda activate te-env
     sudo python3 TE.py
     ```
-
-* [Detailed Third-Party Apps Guide]({{< ref "Tutorials and Demo Videos" >}})
