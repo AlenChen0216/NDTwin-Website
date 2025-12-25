@@ -1,8 +1,8 @@
 ---
-title: Tutorials and Demo Videos
-description: Use two NDTwin applications (for energy-saving and traffic engineering, respectively) as examples to demonstrate how to run up NDTwin Apps and how they optimize the operations of a network.
+title: NDTwin Installation Manual
+description: Detail the steps required to install and use NDTwin and develop Apps over it.
 date: 2017-01-04
-weight: 11
+weight: 8
 ---
 
 {{% pageinfo %}} This is a placeholder page that shows you how to use this
