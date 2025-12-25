@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Documentation on NDTwin</title>
+    <link>http://localhost:1313/docs/</link>
+    <description>Recent content in Documentation on NDTwin</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="http://localhost:1313/docs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>http://localhost:1313/docs/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/overview/</guid>
+      <description>&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;&#xA;&lt;p&gt;&lt;strong&gt;NDTwin (Network Digital Twin)&lt;/strong&gt; is a high-fidelity emulation platform designed specifically for &lt;strong&gt;OpenFlow-based SDN networks&lt;/strong&gt;. It bridges the gap between control plane logic and data plane reality.&lt;/p&gt;&#xA;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;p&gt;Debugging in traditional OpenFlow workflows is notoriously difficult. Developers often struggle to visualize how flow entries installed by the controller actually affect packet forwarding in real-time. Parsing &lt;code&gt;ovs-ofctl dump-flows&lt;/code&gt; text outputs is slow and error-prone.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;NDTwin solves this &amp;ldquo;visibility gap.&amp;rdquo;&lt;/strong&gt; By integrating a high-performance C++ core with the Ryu Controller and sFlow telemetry, we provide a visualized environment where you can verify routing logic, monitor link bandwidth, and simulate failures instantly.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>System Architecture</title>
+      <link>http://localhost:1313/docs/architecture/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/architecture/</guid>
+      <description>&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;&#xA;&lt;p&gt;The NDTwin architecture comprises three distinct layers designed to bridge the gap between physical networks and software applications. It decouples high-level network management logic from the low-level complexities of OpenFlow and telemetry.&lt;/p&gt;&#xA;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;div class=&#34;text-center&#34;&gt;&#xA;  &lt;img src=&#34;http://localhost:1313/images/NdtArcht.png&#34; class=&#34;img-fluid&#34; alt=&#34;NDTwin Architecture Diagram&#34; style=&#34;max-width: 90%; margin: 2rem 0;&#34;&gt;&#xA;&lt;/div&gt;&#xA;&lt;h2 id=&#34;1-application-layer-top&#34;&gt;1. Application Layer (Top)&lt;a class=&#34;td-heading-self-link&#34; href=&#34;#1-application-layer-top&#34; aria-label=&#34;Heading self-link&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;The top layer consists of specialized applications developed on the NDT platform, such as &lt;strong&gt;Traffic Engineering Apps&lt;/strong&gt; or &lt;strong&gt;Energy-saving Apps&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Role&lt;/strong&gt;: These applications utilizes the data and control capabilities provided by NDT to perform high-level network management tasks without needing to interact directly with OpenFlow switches.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Interaction&lt;/strong&gt;: Applications communicate with the NDT Core via &lt;strong&gt;RESTful APIs&lt;/strong&gt;, allowing for loose coupling and easy integration of third-party tools (e.g., LLM agents).&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;2-ndt-core-layer-middle&#34;&gt;2. NDT Core Layer (Middle)&lt;a class=&#34;td-heading-self-link&#34; href=&#34;#2-ndt-core-layer-middle&#34; aria-label=&#34;Heading self-link&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;The middle layer is the heart of the system, implemented in high-performance C++. It acts as a bridge, translating high-level intents into low-level network operations.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Contribution Guidelines</title>
+      <link>http://localhost:1313/docs/contribution-guidelines/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/contribution-guidelines/</guid>
+      <description>&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;&#xA;&lt;p&gt;These basic sample guidelines assume that your Docsy site is deployed using&#xA;Netlify and your files are stored in GitHub. You can use the guidelines &amp;ldquo;as is&amp;rdquo;&#xA;or adapt them with your own instructions: for example, other deployment options,&#xA;information about your doc project&amp;rsquo;s file structure, project-specific review&#xA;guidelines, versioning guidelines, or any other information your users might&#xA;find useful when updating your site.&#xA;&lt;a href=&#34;https://github.com/kubeflow/website/blob/master/README.md&#34;&gt;Kubeflow&lt;/a&gt; has a&#xA;great example.&lt;/p&gt;&#xA;&lt;p&gt;Don&amp;rsquo;t forget to link to your own doc repo rather than our example site! Also&#xA;make sure users can find these guidelines from your doc repo README: either add&#xA;them there and link to them from this page, add them here and link to them from&#xA;the README, or include them in both locations.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

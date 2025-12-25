@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mininet Environment Setup on NDTwin</title>
+    <link>http://localhost:1313/docs/tutorials/mininet/</link>
+    <description>Recent content in Mininet Environment Setup on NDTwin</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 24 Dec 2025 16:56:10 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/docs/tutorials/mininet/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VM-Linux Based Execution Environment</title>
+      <link>http://localhost:1313/docs/tutorials/mininet/vm-linux-based-excution-environment/</link>
+      <pubDate>Wed, 24 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/tutorials/mininet/vm-linux-based-excution-environment/</guid>
+      <description>&lt;h1 id=&#34;ubuntu-vm-image-user-manual&#34;&gt;Ubuntu VM Image User Manual&lt;a class=&#34;td-heading-self-link&#34; href=&#34;#ubuntu-vm-image-user-manual&#34; aria-label=&#34;Heading self-link&#34;&gt;&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;h2 id=&#34;about-this-environment&#34;&gt;About this Environment&lt;a class=&#34;td-heading-self-link&#34; href=&#34;#about-this-environment&#34; aria-label=&#34;Heading self-link&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;This tutorial is specifically designed for the &lt;strong&gt;NDT Pre-configured Ubuntu VM Image&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Zero Setup Required:&lt;/strong&gt; All necessary environments (Conda, Python, C++ libraries) and software (Ryu, Mininet, NDT Core) have been &lt;strong&gt;pre-installed and compiled&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Ready to Run:&lt;/strong&gt; You do &lt;strong&gt;not&lt;/strong&gt; need to install any software or dependencies. Simply follow the steps below to open the terminals and execute the commands for a quick experience.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;System Password:&lt;/strong&gt; The password for the system user and for &lt;code&gt;sudo&lt;/code&gt; commands is &lt;strong&gt;&lt;code&gt;ndtwin&lt;/code&gt;&lt;/strong&gt;.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;&lt;strong&gt;Pre-flight Checks:&lt;/strong&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Native-Linux Execution Environment Setup</title>
+      <link>http://localhost:1313/docs/tutorials/mininet/native-linux-excution-environment/</link>
+      <pubDate>Wed, 24 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/tutorials/mininet/native-linux-excution-environment/</guid>
+      <description>&lt;h1 id=&#34;native-linux-execution-environment-setup&#34;&gt;Native-Linux Execution Environment Setup&lt;a class=&#34;td-heading-self-link&#34; href=&#34;#native-linux-execution-environment-setup&#34; aria-label=&#34;Heading self-link&#34;&gt;&lt;/a&gt;&lt;/h1&gt;&#xA;&lt;p&gt;This guide provides step-by-step instructions to manually build the Network Digital Twin (NDT) environment on a native Linux machine.&lt;/p&gt;&#xA;&lt;h2 id=&#34;1-system-requirements&#34;&gt;1. System Requirements&lt;a class=&#34;td-heading-self-link&#34; href=&#34;#1-system-requirements&#34; aria-label=&#34;Heading self-link&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;The system has been verified on the following configuration:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;OS:&lt;/strong&gt; Ubuntu 20.04 LTS or higher (Verified on Ubuntu 24.04.3 LTS).&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Kernel:&lt;/strong&gt; Generic Linux Kernel (x86_64).&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Permissions:&lt;/strong&gt; Root access (&lt;code&gt;sudo&lt;/code&gt;) is required for Mininet and Open vSwitch operations.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;2-system-dependencies-installation&#34;&gt;2. System Dependencies Installation&lt;a class=&#34;td-heading-self-link&#34; href=&#34;#2-system-dependencies-installation&#34; aria-label=&#34;Heading self-link&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;You need to install build tools, network analysis utilities, and specific C++ libraries required by the NDT Core and Mininet.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

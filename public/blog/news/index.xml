@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>News on NDTwin</title>
+    <link>http://localhost:1313/blog/news/</link>
+    <description>Recent content in News on NDTwin</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="http://localhost:1313/blog/news/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Easy documentation with Docsy</title>
+      <link>http://localhost:1313/blog/2018/10/06/easy-documentation-with-docsy/</link>
+      <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2018/10/06/easy-documentation-with-docsy/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;This is a typical blog post that includes images.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;The front matter specifies the date of the blog post, its title, a short&#xA;description that will be displayed on the blog landing page, and its author.&lt;/p&gt;&#xA;&lt;h2 id=&#34;including-images&#34;&gt;Including images&lt;a class=&#34;td-heading-self-link&#34; href=&#34;#including-images&#34; aria-label=&#34;Heading self-link&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;Here&amp;rsquo;s an image (&lt;code&gt;featured-sunset-get.png&lt;/code&gt;) that includes a byline and a&#xA;caption.&lt;/p&gt;&#xA;&lt;figure class=&#34;card rounded p-2 td-post-card mb-4 mt-4&#34; style=&#34;max-width: 610px&#34;&gt;&#xA;&lt;img class=&#34;card-img-top&#34; src=&#34;http://localhost:1313/blog/2018/10/06/easy-documentation-with-docsy/featured-sunset-get_hu_e49876674a15b46f.png&#34; width=&#34;600&#34; height=&#34;300&#34;&gt;&#xA;&lt;figcaption class=&#34;card-body px-0 pt-2 pb-0&#34;&gt;&#xA;&lt;p class=&#34;card-text&#34;&gt;&#xA;&#xA; Fetch and scale an image in the upcoming&#xA;Hugo 0.43. &lt;small class=&#34;text-body-secondary&#34;&gt;&lt;br/&gt;Photo: Riona MacNamara / CC-BY-CA&lt;/small&gt;&#xA;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Second blog post</title>
+      <link>http://localhost:1313/blog/2018/10/06/second-blog-post/</link>
+      <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/blog/2018/10/06/second-blog-post/</guid>
+      <description>&lt;p&gt;This is a &lt;strong&gt;placeholder page&lt;/strong&gt;. For an example of the kind of content that can&#xA;be added here, see the &lt;a href=&#34;http://localhost:1313/docs/getting-started/example-page/&#34;&gt;example page&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;h2 id=&#34;welcome&#34;&gt;Welcome!&lt;a class=&#34;td-heading-self-link&#34; href=&#34;#welcome&#34; aria-label=&#34;Heading self-link&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;Welcome to the Docsy theme user guide! This guide shows you how to get started&#xA;creating technical documentation sites using Docsy, including site customization&#xA;and how to use Docsy&amp;rsquo;s blocks and templates.&lt;/p&gt;&#xA;&lt;h2 id=&#34;what-is-docsy&#34;&gt;What is Docsy?&lt;a class=&#34;td-heading-self-link&#34; href=&#34;#what-is-docsy&#34; aria-label=&#34;Heading self-link&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&#xA;&lt;p&gt;Docsy is a theme for the &lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; static site generator that&amp;rsquo;s&#xA;specifically designed for technical documentation sets and has a lot of best&#xA;practices built in. Use Docsy to get a working and reliable documentation site&#xA;up and running fast, and then get back to focusing on great content for your&#xA;users. &lt;a href=&#34;http://localhost:1313/about&#34;&gt;Learn more about Docsy&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
