@@ -1,5 +1,5 @@
 ---
-title: VM-Linux Based Execution Environment
+title: Use the Demo VM for Quick Start
 description: >
   A quick start guide designed for the pre-configured Ubuntu VM image.
   All dependencies (Ryu, Mininet, NDT Core) are pre-installed.

@@ -1,10 +1,9 @@
 ---
-title: For Operating And Physical Networks
+title: Operate a Physical (Hardware) Network
 description: >
-  A comprehensive guide to preparing the physical testbed environment.
+  A comprehensive guide to preparing the physical network environment.
   This section covers the necessary configurations for physical switches
-  (enabling OpenFlow and sFlow) and details the system and Python dependencies
-  required to deploy the SDN Controller.
+  (enabling OpenFlow and sFlow) and details the system and Python dependencies required to deploy the SDN Controller.
 date: 2025-12-24
 weight: 3
 ---

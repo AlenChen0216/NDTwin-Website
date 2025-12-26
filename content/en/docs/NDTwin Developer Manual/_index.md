@@ -1,5 +1,5 @@
 ---
-title: NDTwin Developer Manual
+title: NDTwin App Developer Manual
 description: Detail the steps required to install and use NDTwin and develop Apps over it.
 date: 2017-01-04
 weight: 10

@@ -1,6 +1,6 @@
 ---
-title: Network Traffic Generator (NTG)
+title: Network Traffic Generator
 description: >
 date: 2017-01-05
-weight: 4
+weight: 7
 ---

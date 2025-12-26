@@ -1,5 +1,5 @@
 ---
-title: Native-Linux Execution Environment Setup
+title: Install All Required Components on a Linux Server
 description: > 
   A comprehensive guide for manually installing the NDT system on a native Linux environment.
   This section covers system dependencies, building the NDT Core with Ninja, configuring Python environments, and running the full system.

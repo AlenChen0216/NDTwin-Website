@@ -2,7 +2,7 @@
 title: Web GUI
 description: >
 date: 
-weight: 6
+weight: 3
 ---
 
 ### NDTwin GUI Deployment & Startup Guide
