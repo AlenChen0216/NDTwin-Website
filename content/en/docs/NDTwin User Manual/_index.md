@@ -1,6 +1,6 @@
 ---
 title: NDTwin User Manual
-description: Detail the steps required to install and use NDTwin and develop Apps over it.
+description: Explain how to use NDTwin and its tools.
 date: 2017-01-04
 weight: 9
 ---

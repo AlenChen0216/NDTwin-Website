@@ -1,6 +1,6 @@
 ---
 title: Download
-description: Download the NDTwin package to install all of its components on a Linux server or a demo VM image in which the NDTwin package has been installed completely for a quick start.
+description: Download the whole NDTwin package to install all of its components on a Linux server or download a demo VM image in which the NDTwin package has been installed completely for a quick start.
 date: 2017-01-04
 weight: 12
 ---

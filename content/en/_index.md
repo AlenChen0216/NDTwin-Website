@@ -1,7 +1,7 @@
 ---
 title: NDTwin
 linkTitle: NDTwin
-description: Network Digital Twin - Next Generation Network Emulation Platform
+description: A network digital twin for optimizing the operation of a network 
 menu:
   main:
     weight: 10
@@ -31,12 +31,12 @@ menu:
 
 {{% blocks/section color="light" type="row" %}}
 
-{{% blocks/feature icon="fa-solid fa-network-wired" title="Digital Twin Native" %}}
-Fully utilize digital twin technologies to optimize a production network.
+{{% blocks/feature icon="fa-solid fa-network-wired" title="Digital Twin Powered" %}}
+Employ digital twin technologies to optimize a production network.
 {{% /blocks/feature %}}
 
 {{% blocks/feature icon="fa-solid fa-code" title="OpenFlow Support" %}}
-Fully compatible with OpenFlow standard. Seamless integration with Ryu SDN controller.
+Compatible with OpenFlow standard. Seamless integration with Ryu SDN controller.
 {{% /blocks/feature %}}
 
 {{% blocks/feature icon="fab fa-github" title="Open Source" url="https://github.com/joemou/NetworkDigitalTwin" %}}

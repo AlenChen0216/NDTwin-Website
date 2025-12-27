@@ -1,8 +1,7 @@
 ---
-title: Energy Saving App
+title: Energy-Saving App
 description: >
-  A short lead description about this content page. It can be **bold** or
-  _italic_ and can be split over multiple paragraphs.
+  This energy-saving application will dynamically power off a switch when the average bandwidth utilization of its links drops below a low-watermark threshold and will power it on again when its average link utilization exceeds a high-watermark threshold. For a network whose topology is like that of a datacenter network with many redundnt switches to increase the total capacity of the network and reliability, this energy-saving application can dynamically and iteratively power off many under-utilized switches to greatly reduce the energy consumption of the network without degrading the Quality of Service (QoS) of the network.  
 date: 2017-01-05
 weight: 1
 ---

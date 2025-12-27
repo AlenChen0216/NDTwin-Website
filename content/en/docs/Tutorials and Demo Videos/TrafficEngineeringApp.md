@@ -1,8 +1,7 @@
 ---
-title: Traffic Engineering App
+title: Traffic-Engineering App
 description: >
-  A short lead description about this content page. It can be **bold** or
-  _italic_ and can be split over multiple paragraphs.
+  This traffic-enginerring application will dynamically perform load-balancing among the output ports of any Equal-Cost Multi-Path (ECMP) group in the network.  In the ECMP scheme, flows are dispatched to the output ports of an ECMP group based on the hash function used by ECMP and the five-tuple infomation (i.e., the source and destination IP addresses, the source and destination port numbers, and the protocol type) in their packet headers. When the load dispatched to the output ports of many ECMP groups is imbalanced in the network, this application can significantly improve the  utilization of the network.  
 date: 2017-01-05
 weight: 2
 ---

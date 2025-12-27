@@ -3,7 +3,7 @@ title: Overview
 linkTitle: Overview
 weight: 1
 description: >
-  Understand what NDTwin is and its advantages achieved from using advanced digital twin technologies.
+  Understand what NDTwin is and its unique advantages using innovative digital twin technologies
 ---
 
 {{% pageinfo %}}
