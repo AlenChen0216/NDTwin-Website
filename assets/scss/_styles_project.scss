@@ -18,3 +18,26 @@ span.navbar-logo img {
     max-width: 150px !important; /* 多加一個最大寬度限制 */
     display: inline-block !important;
 }
+/* 覆蓋 Docsy 預設的 footer 高度 */
+footer.bg-dark {
+    /* 預設是 py-5 (約 3rem)，這裡改為 1rem 或更小 */
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+
+/* 強制統一全站字體 */
+body, 
+h1, h2, h3, h4, h5, h6, 
+p, span, a, li, 
+.td-sidebar-nav, 
+footer {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif !important;
+}
+
+/* 針對程式碼區塊維持等寬字體 */
+code, kbd, pre, samp {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+

@@ -1,0 +1,43 @@
+<footer class="bg-dark py-3 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row align-items-center">
+      
+      <div class="col-12 col-sm-6 text-center text-sm-left order-sm-1">
+        <div class="text-white d-inline-flex align-items-center justify-content-center justify-content-sm-start flex-wrap">
+          <small>
+            &copy; {{ with .Site.Params.copyright }}{{ .from_year }}-{{ now.Year }} {{ .authors | markdownify }}{{ end }}
+          </small>
+          
+          {{ with .Site.Params.privacy_policy }}
+          <small class="ml-3">
+            <a href="{{ . }}" class="text-white">Privacy Policy</a>
+          </small>
+          {{ end }}
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 text-center text-sm-right order-sm-2">
+        <ul class="list-inline mb-0">
+          
+          {{ range .Site.Params.links.user }}
+          <li class="list-inline-item mx-2" data-toggle="tooltip" title="{{ .name }}">
+            <a class="text-white" target="_blank" rel="noopener" href="{{ .url }}" style="font-size: 1.25rem;">
+              <i class="{{ .icon }}"></i>
+            </a>
+          </li>
+          {{ end }}
+
+          {{ range .Site.Params.links.developer }}
+          <li class="list-inline-item mx-2" data-toggle="tooltip" title="{{ .name }}">
+            <a class="text-white" target="_blank" rel="noopener" href="{{ .url }}" style="font-size: 1.25rem;">
+              <i class="{{ .icon }}"></i>
+            </a>
+          </li>
+          {{ end }}
+
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</footer>
