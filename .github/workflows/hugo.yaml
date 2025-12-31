@@ -1,124 +1,64 @@
-baseURL: "https://www.ndtwin.org/"
-title: NDTwin
+name: Deploy Hugo site to Pages
 
-# cSpell:ignore goldmark github hugo readingtime docsy subdir lastmod pygments linenos catmullrom norsk gu
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
 
-# Language settings
-contentDir: content/en
-defaultContentLanguage: en
-defaultContentLanguageInSubdir: false
-enableMissingTranslationPlaceholders: true
-enableRobotsTXT: true
-enableGitInfo: true
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
-# Taxonomies
-taxonomies:
-  tag: tags
-  category: categories
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
-# Highlighting config
-pygmentsCodeFences: true
-pygmentsUseClasses: false
-pygmentsUseClassic: false
-pygmentsStyle: tango
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
 
-# URL structure
-permalinks:
-  blog: /:section/:year/:month/:day/:slug/
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
 
-# Image processing
-imaging:
-  resampleFilter: CatmullRom
-  quality: 75
-  anchor: smart
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
 
-# Language configuration
-languages:
-  en:
-    languageName: English
-    title: NDTwin
-    params:
-      description: Network Digital Twin Documentation
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-markup:
-  goldmark:
-    parser:
-      attribute:
-        block: true
-    renderer:
-      unsafe: true
-  highlight:
-    style: tango
+      - name: Install Node dependencies
+        run: npm ci
 
-outputs:
-  section: [HTML, RSS]
+      - name: Build with Hugo
+        run: hugo --minify
 
-params:
-  taxonomy:
-    taxonomyCloud: [tags, categories]
-    taxonomyCloudTitle: [Tag Cloud, Categories]
-    taxonomyPageHeader: [tags, categories]
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
 
-  privacy_policy: https://policies.google.com/privacy
-
-  version_menu: Releases
-  archived_version: false
-  version: 1.0
-
-  # 連結到這份文件的主要專案 (如果是介紹某個軟體)
-  url_latest_version: https://github.com/joemou/NetworkDigitalTwin
-
-  # ★★★ 關鍵修改：設定網站本身的 GitHub 倉庫，讓「編輯此頁」功能生效 ★★★
-  github_repo: https://github.com/joemou/NDTwin-Website
-  github_branch: main
-
-  # Search config
-  offlineSearch: true
-  prism_syntax_highlighting: true
-
-  copyright:
-    authors:
-      Wang's Lab | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
-    from_year: 2025
-
-  # UI Configuration
-  ui:
-    breadcrumb_disable: false
-    navbar_logo: true
-    navbar_translucent_over_cover_disable: false
-    sidebar_menu_compact: true
-    sidebar_search_disable: true
-    showLightDarkModeMenu: true
-    feedback:
-      enable: false
-    readingtime:
-      enable: false
-  favicon: true
-
-  links:
-    # End user relevant links
-    user:
-      # (已暫時註解掉範例連結，你需要時再打開修改)
-      # - name: User mailing list
-      #   url: https://example.org/mail
-      #   icon: fa fa-envelope
-      #   desc: Discussion and help from your fellow users
-    # Developer relevant links
-    developer:
-      - name: GitHub
-        url: https://github.com/joemou/NDTwin-Website
-        icon: fab fa-github
-        desc: Website Source Code
-      # - name: Slack
-      #   url: https://example.org/slack
-      #   icon: fab fa-slack
-      #   desc: Chat with other project developers
-
-module:
-  hugoVersion:
-    extended: true
-    # 修改為較穩定的版本需求，避免報錯
-    min: 0.120.0
-  imports:
-    - path: github.com/google/docsy
-      disable: false
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
