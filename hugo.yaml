@@ -1,6 +1,87 @@
 baseURL: "https://www.ndtwin.org/"
 title: NDTwin
 
+# ★★★ 關鍵修正：強制使用相對路徑，解決 CSS 找不到的問題 ★★★
+relativeURLs: true
+canonifyURLs: false
+
+# Language settings
+contentDir: content/en
+defaultContentLanguage: en
+defaultContentLanguageInSubdir: false
+enableMissingTranslationPlaceholders: true
+enableRobotsTXT: true
+enableGitInfo: true
+
+# Taxonomies
+taxonomies:
+  tag: tags
+  category: categories
+
+# Highlighting config
+pygmentsCodeFences: true
+pygmentsUseClasses: false
+pygmentsUseClassic: false
+pygmentsStyle: tango
+
+# URL structure
+permalinks:
+  blog: /:section/:year/:month/:day/:slug/
+
+# Image processing
+imaging:
+  resampleFilter: CatmullRom
+  quality: 75
+  anchor: smart
+
+# Language configuration
+languages:
+  en:
+    languageName: English
+    title: NDTwin
+    params:
+      description: Network Digital Twin Documentation
+
+markup:
+  goldmark:
+    parser:
+      attribute:
+        block: true
+    renderer:
+      unsafe: true
+  highlight:
+    style: tango
+
+outputs:
+  section: [HTML, RSS]
+
+params:
+  # 保持關閉指紋，避免 SRI 錯誤
+  fingerprint: false
+
+  taxonomy:
+    taxonomyCloud: [tags, categories]
+    taxonomyCloudTitle: [Tag Cloud, Categories]
+    taxonomyPageHeader: [tags, categories]
+
+  privacy_policy: https://policies.google.com/privacy
+
+  version_menu: Releases
+  archived_version: false
+  version: 1.0
+
+  url_latest_version: https://github.com/joemou/NetworkDigitalTwin
+  github_repo: https://github.com/joemou/NDTwin-Website
+  github_branch: main
+
+  # Search config
+  offlineSearch: true
+  prism_syntax_highlighting: true
+
+  copyright:
+    authors:baseURL: "https://www.ndtwin.org/"
+title: NDTwin
+
 # Language settings
 contentDir: content/en
 defaultContentLanguage: en
@@ -76,6 +157,38 @@ params:
 
   copyright:
     authors:
+      Wang's Lab | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
+    from_year: 2025
+
+  # UI Configuration
+  ui:
+    breadcrumb_disable: false
+    navbar_logo: true
+    navbar_translucent_over_cover_disable: false
+    sidebar_menu_compact: true
+    sidebar_search_disable: true
+    showLightDarkModeMenu: true
+    feedback:
+      enable: false
+    readingtime:
+      enable: false
+  favicon: true
+
+  links:
+    user:
+    developer:
+      - name: GitHub
+        url: https://github.com/joemou/NDTwin-Website
+        icon: fab fa-github
+        desc: Website Source Code
+
+module:
+  hugoVersion:
+    extended: true
+    min: 0.120.0
+  imports:
+    - path: github.com/google/docsy
+      disable: false
       Wang's Lab | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
     from_year: 2025
 
