@@ -1,0 +1,124 @@
+baseURL: "https://www.ndtwin.org/"
+title: NDTwin
+
+# cSpell:ignore goldmark github hugo readingtime docsy subdir lastmod pygments linenos catmullrom norsk gu
+
+# Language settings
+contentDir: content/en
+defaultContentLanguage: en
+defaultContentLanguageInSubdir: false
+enableMissingTranslationPlaceholders: true
+enableRobotsTXT: true
+enableGitInfo: true
+
+# Taxonomies
+taxonomies:
+  tag: tags
+  category: categories
+
+# Highlighting config
+pygmentsCodeFences: true
+pygmentsUseClasses: false
+pygmentsUseClassic: false
+pygmentsStyle: tango
+
+# URL structure
+permalinks:
+  blog: /:section/:year/:month/:day/:slug/
+
+# Image processing
+imaging:
+  resampleFilter: CatmullRom
+  quality: 75
+  anchor: smart
+
+# Language configuration
+languages:
+  en:
+    languageName: English
+    title: NDTwin
+    params:
+      description: Network Digital Twin Documentation
+
+markup:
+  goldmark:
+    parser:
+      attribute:
+        block: true
+    renderer:
+      unsafe: true
+  highlight:
+    style: tango
+
+outputs:
+  section: [HTML, RSS]
+
+params:
+  taxonomy:
+    taxonomyCloud: [tags, categories]
+    taxonomyCloudTitle: [Tag Cloud, Categories]
+    taxonomyPageHeader: [tags, categories]
+
+  privacy_policy: https://policies.google.com/privacy
+
+  version_menu: Releases
+  archived_version: false
+  version: 1.0
+
+  # 連結到這份文件的主要專案 (如果是介紹某個軟體)
+  url_latest_version: https://github.com/joemou/NetworkDigitalTwin
+
+  # ★★★ 關鍵修改：設定網站本身的 GitHub 倉庫，讓「編輯此頁」功能生效 ★★★
+  github_repo: https://github.com/joemou/NDTwin-Website
+  github_branch: main
+
+  # Search config
+  offlineSearch: true
+  prism_syntax_highlighting: true
+
+  copyright:
+    authors:
+      Wang's Lab | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
+    from_year: 2025
+
+  # UI Configuration
+  ui:
+    breadcrumb_disable: false
+    navbar_logo: true
+    navbar_translucent_over_cover_disable: false
+    sidebar_menu_compact: true
+    sidebar_search_disable: true
+    showLightDarkModeMenu: true
+    feedback:
+      enable: false
+    readingtime:
+      enable: false
+  favicon: true
+
+  links:
+    # End user relevant links
+    user:
+      # (已暫時註解掉範例連結，你需要時再打開修改)
+      # - name: User mailing list
+      #   url: https://example.org/mail
+      #   icon: fa fa-envelope
+      #   desc: Discussion and help from your fellow users
+    # Developer relevant links
+    developer:
+      - name: GitHub
+        url: https://github.com/joemou/NDTwin-Website
+        icon: fab fa-github
+        desc: Website Source Code
+      # - name: Slack
+      #   url: https://example.org/slack
+      #   icon: fab fa-slack
+      #   desc: Chat with other project developers
+
+module:
+  hugoVersion:
+    extended: true
+    # 修改為較穩定的版本需求，避免報錯
+    min: 0.120.0
+  imports:
+    - path: github.com/google/docsy
+      disable: false
