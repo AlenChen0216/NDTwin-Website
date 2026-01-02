@@ -41,7 +41,6 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      # ★★★ 這裡我改了！從 npm ci 改成 npm install，這樣就不會報錯了 ★★★
       - name: Install Node dependencies
         run: npm install
 
