@@ -68,9 +68,8 @@ params:
   # 連結到這份文件的主要專案 (如果是介紹某個軟體)
   url_latest_version: https://github.com/joemou/NetworkDigitalTwin
 
-  # ★★★ 關鍵修改：設定網站本身的 GitHub 倉庫，讓「編輯此頁」功能生效 ★★★
-  github_repo: https://github.com/joemou/NDTwin-Website
-  github_branch: main
+  #github_repo: https://github.com/joemou/NDTwin-Website
+  #github_branch: main
 
   # Search config
   offlineSearch: true
