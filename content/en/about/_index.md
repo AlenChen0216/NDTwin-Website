@@ -6,5 +6,3 @@ menu:
   main:
     weight: 20
 ---
-
-## NDTwin
