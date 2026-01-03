@@ -3,37 +3,23 @@ title: Overview
 linkTitle: Overview
 weight: 1
 description: >
-  Understand what NDTwin is and its unique advantages using innovative digital twin technologies
+  Understand what NDTwin is and its features
 ---
 
 {{% pageinfo %}}
 **NDTwin (Network Digital Twin)** is an open source framework that employs innovative digital twin technologies to optimally operate and manage a network.
 {{% /pageinfo %}}
 
-## What is NDTwin?
+## Features
 
-NDTwin is a software system that functions as the digital twin of a network. It has the following features:
-
-* **Real-time collection of network and flow states**: NDTwin continuously polls the SDN controller to update its real-time graph of switches and links. Besides, it uses the industry-standard sFlow mechanism, which is supported by switches of any brands, to continuously get the real-time states of all flows in the network.  
-* **Simulation and AI/ML-assited Decision Making**: A built-in sFlow collector listens for telemetry data to calculate bandwidth utilization and identify traffic patterns (like Elephant Flows) with high precision.
-* **Deployment Flexibility**: Whether you are running a simulation in **Mininet** or deploying on a physical **Testbed** with hardware switches, NDTwin adapts its monitoring strategy accordingly.
-
-## Why Choose NDTwin?
-
-If your team is developing advanced network applications such as dynamic routing, load balancing, or energy-aware traffic engineering, NDTwin offers distinct advantages over standard monitoring tools.
-
-### Key Benefits
-
-* **Native OpenFlow Support**: Fully compatible with OpenFlow 1.0/1.3 standards. It seamlessly integrates with standard SDN controllers like **Ryu** or ONOS.
-* **Real-time Flow Visualization**: Eliminate manual CLI debugging. Our graphical interface displays active Flow Rules and packet match counters, mapped directly to the topology.
-* **Precise Traffic Monitoring**: Unlike simple counters, our integrated sFlow technology performs **5-tuple sampling** (Src/Dst IP, Port, Protocol) to analyze real-time bandwidth usage and detect congestion bottlenecks.
-* **Dynamic Topology Awareness**: The system automatically detects Link Failures or new switch connections, triggering alerts to help you verify if your rerouting algorithms react correctly.
-
-## Use Cases
-
-| Scenario | Description |
-| :--- | :--- |
-| **Algorithm Verification** | Validate if your new shortest-path or multipath routing algorithms work as expected under load. |
-| **Network Education** | Help students visualize the abstract concept of the "Match-Action" mechanism in OpenFlow. |
-| **Energy-Saving Research** | Simulate network behavior when specific switch ports are powered down to save energy, and verify connectivity is maintained. |
+* **Create a network digital twin that is faithful to the physical network at any time**: NDTwin updates its perceived network topology whenever a switch or link changes its status. Besides, it uses the sFlow standard, which is supported by all switches, to quickly detect flows emerging or existing in the network and accurately estimate their current bandwidth usages in real time.  
+* **Use a digital-twin-powered simulation platform to quickly find the optimal solution to the current or forthcoming problem**: NDTwin provides a general-purpose simulation platform where different-purpose simulator programs can be installed and invoked on-demand to simulate many what-if conditions in parallel. Based on the digital-twin-powered simulation results, NDTwin applications can quickly find the optimal solution to the current problem or a forthcoming problem that they are designed to handle. 
+* **Employ a Software-Defined Network (SDN) controller to real-time control a network based on the digital-twin-found optimal solution**: NDTwin can operate a network composed of switches that support the OpenFlow protocol. It uses an SDN controller (e.g., Ryu) to real-time control the network based on the optimal solution found by its digital-twin-powered applications.
+* **Provide useful digital-twin-powered applications that optimally control a network**: NDTwin currently provides serveral useful applications that optimally control a network. The energy-saving application will automatically power off under-utilized switches when the network load drops below a low watermark threshold, thus greatly saving the energy consumption of a network without lowering its Quality of Service (QoS). The load-balancing application will dynamically adjust each Equal-Cost Multi-Path (ECMP) group's flow dispatching mapping, thus balancing the loads of the links of each ECMP group and significantly increasing the average link utilization of a network. More useful digital-twin-powered applications are being developed. 
+* **Provide an open source development platform for any one to develop innovative digital-twin-powered applicatons**: NDTwin is open source. Its kernel provides a useful and rich set of API functions for any one to develop innovative digital-twin-powered applications.  
+* **Provide easy-to-use Web GUI and real-time flow visualization**: NDTwin provides an easy-to-use Web GUI tool by which the user no longer needs to use Command Line Interface (CLI) to issue network commands, read network settings, or debug network problems. NDTwin also provides a real-time network traffic visualizer by which the user can real-time "see" where current flows exist in the network, what routing paths they are taking, and their relative current bandwidth usages.  
+* **Work correctly for both physical networks and emulated networks**: NDTwin has been rigorously tested and verified that it works correctly for physical networks composed of tens of hardware switches (Brocade and HPE) and hundreds of hosts using fat-tree-like network topologies. Besides, NDTwin has been rigorously tested and verified that it works correctly for Mininet-emulated networks.
+* **Provide a large language model (LLM)-powered intent-based network management interface**: NDTwin employs LLMs to support intent-based network management. From its Web GUI tool, NDTwin users can use natural language to easily ask NDTwin to retrieve real-time information about a network or request NDTwin to carry out their desired operations.   
+* **Provide a network traffic generation (NTG) framework by which a very large number of flows can be automatically generated and laucnhed without any human efforts**: NDTwin provides a powerful network traffic generation framework by which hundreds or thousands of UDP or TCP flows can be automatically generated and launched over time without human efforts among the hosts of a network (which can be either a physical network or a Mininet-emulated network). The characteristics of generated network traffic can be easily set and varied according to a configuration file in which flow size, flow duration, flow protocol, flow sending rate, and other important parameters can be set. This NTG framework is very useful for testing the functions and evaluating the real-life performance of an NDTwin application under development. 
+* **Is being actively developed and maintained**: NDTwin is being actively developed and maintained. More useful digital-twin-powered applications will be added in the future. Besides, its functions, performance, and quality will be continuously enhanced.
 
