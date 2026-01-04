@@ -11,7 +11,6 @@ description: >
 {{% /pageinfo %}}
 
 ## Features
-<<<<<<< HEAD
 
 * **Create a network digital twin that is faithful to the physical network at any time**: NDTwin updates its perceived network topology whenever a switch or link changes its status. Besides, it uses the sFlow standard, which is supported by all switches, to quickly detect flows emerging or existing in the network and accurately estimate their current bandwidth usages in real time.  
 * **Use a digital-twin-powered simulation platform to quickly find the optimal solution to the current or forthcoming problem**: NDTwin provides a general-purpose simulation platform where different-purpose simulator programs can be installed and invoked on-demand to simulate many what-if conditions in parallel. Based on the digital-twin-powered simulation results, NDTwin applications can quickly find the optimal solution to the current problem or a forthcoming problem that they are designed to handle. 
