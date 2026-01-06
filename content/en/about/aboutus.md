@@ -1,5 +1,5 @@
 ---
-title: "About us"
+title: "About Us"
 weight: 1
 description: "Meet the researchers and engineers behind NDTwin."
 ---

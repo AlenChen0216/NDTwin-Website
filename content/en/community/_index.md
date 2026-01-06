@@ -14,7 +14,7 @@ menu:
       url="mailto:your-email@example.com" 
       btnText="Email Us" 
       btnIcon="fas fa-paper-plane" 
-      color="#F3A26D" >}} 
+      color="#ED7D31" >}} 
     Have questions, suggestions, or collaboration ideas?<br>
     Feel free to reach out to the development team directly.
   {{< /clickable-card >}}

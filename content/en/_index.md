@@ -6,7 +6,7 @@ menu: {main: {weight: 10}}
 
 {{< rawhtml >}}
 
-<section class="w-100 p-0 m-0 d-flex align-items-center justify-content-center" style="background-color: #2E74B5; min-height: 90vh;">
+<section class="w-100 p-0 m-0 d-flex align-items-center justify-content-center" style="background-color: #2D75B2; min-height: 90vh;">
     <div class="container py-5">
         <div class="row align-items-center">
             <div class="col-lg-6 text-left text-white">
@@ -41,18 +41,18 @@ menu: {main: {weight: 10}}
 <section class="w-100 py-5 bg-white">
     <div class="container mt-4 mb-4">
         <div class="text-center mb-5">
-            <h2 class="font-weight-bold display-5" style="color: #2E74B5;">How NDTwin Works</h2>
+            <h2 class="font-weight-bold display-5" style="color: #2D75B2;">How NDTwin Works</h2>
             <div style="width: 60px; height: 4px; background: #ED7D31; margin: 1rem auto;"></div>
         </div>
         <div class="row">
             <div class="col-md-6 mb-4 px-lg-5 text-center">
-                <h4 class="font-weight-bold mb-3"><i class="fas fa-microchip mr-2" style="color: #2E74B5;"></i> The Kernel</h4>
+                <h4 class="font-weight-bold mb-3"><i class="fas fa-microchip mr-2" style="color: #2D75B2;"></i> The Kernel</h4>
                 <p class="text-muted" style="font-size: 1.1rem; line-height: 1.8;">
                     Its Kernel continuously collects real-time network, device, and flow states. It acts as the brain, ensuring synchronization between the physical network and the digital twin.
                 </p>
             </div>
             <div class="col-md-6 mb-4 px-lg-5 text-center">
-                <h4 class="font-weight-bold mb-3"><i class="fas fa-robot mr-2" style="color: #2E74B5;"></i> AI & Apps</h4>
+                <h4 class="font-weight-bold mb-3"><i class="fas fa-robot mr-2" style="color: #2D75B2;"></i> AI & Apps</h4>
                 <p class="text-muted" style="font-size: 1.1rem; line-height: 1.8;">
                     Supports advanced AI/ML algorithms and LLM integration for traffic prediction, anomaly detection, and automated network optimization.
                 </p>
@@ -67,7 +67,7 @@ menu: {main: {weight: 10}}
             
             <div class="col-md-4 mb-5">
                 <div class="mb-3 p-3 d-inline-block rounded-circle bg-white shadow-sm">
-                    <i class="fas fa-project-diagram fa-2x" style="color: #2E74B5;"></i>
+                    <i class="fas fa-project-diagram fa-2x" style="color: #2D75B2;"></i>
                 </div>
                 <h3 class="h4 font-weight-bold mb-3 mt-2">Digital Twin Powered</h3>
                 <p class="text-muted px-3">
@@ -77,7 +77,7 @@ menu: {main: {weight: 10}}
 
             <div class="col-md-4 mb-5">
                 <div class="mb-3 p-3 d-inline-block rounded-circle bg-white shadow-sm">
-                    <i class="fas fa-code fa-2x" style="color: #2E74B5;"></i>
+                    <i class="fas fa-code fa-2x" style="color: #2D75B2;"></i>
                 </div>
                 <h3 class="h4 font-weight-bold mb-3 mt-2">OpenFlow Support</h3>
                 <p class="text-muted px-3">
@@ -87,13 +87,13 @@ menu: {main: {weight: 10}}
 
             <div class="col-md-4 mb-5">
                 <div class="mb-3 p-3 d-inline-block rounded-circle bg-white shadow-sm">
-                    <i class="fab fa-github fa-2x" style="color: #2E74B5;"></i>
+                    <i class="fab fa-github fa-2x" style="color: #2D75B2;"></i>
                 </div>
                 <h3 class="h4 font-weight-bold mb-3 mt-2">Open Source</h3>
                 <p class="text-muted px-3">
                     Join our community on GitHub and contribute.
                 </p>
-                <a href="https://github.com/joemou/NetworkDigitalTwin" class="font-weight-bold" style="color: #2E74B5; text-decoration: none;">
+                <a href="https://github.com/joemou/NetworkDigitalTwin" class="font-weight-bold" style="color: #2D75B2; text-decoration: none;">
                     Read more <i class="fas fa-arrow-right small ms-1"></i>
                 </a>
             </div>
