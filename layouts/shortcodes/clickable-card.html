@@ -1,0 +1,16 @@
+<div class="col-lg-5 col-md-6 mb-4">
+    <div class="card h-100 text-center shadow-sm" style="border-top: 5px solid {{ .Get "color" | default "#007bff" }};">
+        <div class="card-body py-5">
+            <div class="mb-4">
+                <i class="{{ .Get "icon" }} fa-4x" style="color: {{ .Get "color" | default "#333" }};"></i>
+            </div>
+            <h3 class="card-title">{{ .Get "title" }}</h3>
+            <p class="card-text text-muted mb-4">
+                {{ .Inner }}
+            </p>
+            <a href="{{ .Get "url" }}" target="_blank" class="btn btn-lg px-4" style="background-color: {{ .Get "color" | default "#007bff" }}; color: white;">
+                <i class="{{ .Get "btnIcon" }} mr-2"></i> {{ .Get "btnText" }}
+            </a>
+        </div>
+    </div>
+</div>

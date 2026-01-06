@@ -1,11 +1,7 @@
 ---
-title: "About Us"
-type: docs  
+title: "About us"
 weight: 1
-
-description: >
-  Explain who we are
-
+description: "Meet the researchers and engineers behind NDTwin."
 ---
 The NDTwin development and maintenance team is formed and led by Prof. Shie-Yuan Wang of National Yang Ming Chiao Tung University (also affiliated with Academia Sinica since November 2024 until now).
 

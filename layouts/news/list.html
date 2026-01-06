@@ -1,0 +1,80 @@
+{{ define "main" }}
+<section style="
+    width: 100vw; 
+    position: relative; 
+    left: 50%; 
+    right: 50%; 
+    margin-left: -50vw; 
+    margin-right: -50vw; 
+    background: #00809D; 
+    color: white; 
+    padding-top: 6rem;  
+    padding-bottom: 6rem;">
+    <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10 text-center">
+        
+        <h1 class="display-4 font-weight-bold mb-4" style="text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+          {{ .Title }}
+        </h1>
+        
+        <div class="lead mx-auto" style="font-size: 1.4rem; max-width: 800px; line-height: 1.7; opacity: 0.9;text-wrap: balance;">
+          {{ .Description }}
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container mt-5 mb-5">
+  <div class="row">
+    
+    {{ range .Pages.ByDate.Reverse }}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card h-100 shadow-sm" style="border: none; transition: transform 0.2s;">
+        <div class="card-body d-flex flex-column">
+          
+          <small class="text-muted mb-2">
+            <i class="far fa-calendar-alt mr-1"></i> {{ .Date.Format "Jan 2, 2006" }}
+          </small>
+          
+          <h5 class="card-title font-weight-bold">
+            <a href="{{ .RelPermalink }}" class="text-dark" style="text-decoration: none;">
+              {{ .Title }}
+            </a>
+          </h5>
+          
+          <p class="card-text text-secondary flex-grow-1">
+            {{ if .Description }}
+              {{ .Description }}
+            {{ else }}
+              {{ .Summary | truncate 80 }}
+            {{ end }}
+          </p>
+          
+          <a href="{{ .RelPermalink }}" class="btn btn-outline-primary btn-sm mt-3 align-self-start">
+            Read More &rarr;
+          </a>
+          
+        </div>
+      </div>
+    </div>
+    {{ end }}
+
+    {{ if not .Pages }}
+    <div class="col-12 text-center py-5">
+      <h3 class="text-muted">No news yet. Stay tuned!</h3>
+    </div>
+    {{ end }}
+
+  </div>
+</section>
+
+<style>
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+  }
+</style>
+{{ end }}

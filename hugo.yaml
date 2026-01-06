@@ -86,7 +86,7 @@ params:
     navbar_translucent_over_cover_disable: false
     sidebar_menu_compact: true
     sidebar_search_disable: true
-    showLightDarkModeMenu: true
+    showLightDarkModeMenu: false
     feedback:
       enable: false
     readingtime:
@@ -96,21 +96,28 @@ params:
   links:
     # End user relevant links
     user:
-      # (已暫時註解掉範例連結，你需要時再打開修改)
-      # - name: User mailing list
-      #   url: https://example.org/mail
-      #   icon: fa fa-envelope
-      #   desc: Discussion and help from your fellow users
+      - name: User mailing list
+        url: https://example.org/mail
+        icon: fa fa-envelope
+        desc: Discussion and help from your fellow users
     # Developer relevant links
+      - name: Facebook
+        url: https://www.facebook.com/  # 記得換成你的 FB 網址
+        icon: fab fa-facebook           # FB 圖示
+        desc: Follow us on Facebook
+      - name: X               # 名稱改成 X
+        url: https://x.com/   # 網址改成 x.com
+        icon: fab fa-x-twitter # 圖示改成 X 的 logo
+        desc: Follow us on X
+      - name: YouTube
+        url: https://www.youtube.com/   # 記得換成你的 YouTube 網址
+        icon: fab fa-youtube            # YouTube 紅色播放鍵
+        desc: Watch our videos
     developer:
       - name: GitHub
         url: https://github.com/joemou/NDTwin-Website
         icon: fab fa-github
         desc: Website Source Code
-      # - name: Slack
-      #   url: https://example.org/slack
-      #   icon: fab fa-slack
-      #   desc: Chat with other project developers
 
 module:
   hugoVersion:

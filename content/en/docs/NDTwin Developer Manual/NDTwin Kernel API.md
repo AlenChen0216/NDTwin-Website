@@ -1,7 +1,7 @@
 ---
 title: NDTwin Kernel API
 description: >
- NDT RESTful API Documentation
+
 date: 2017-01-05
 weight: 3
 ---
