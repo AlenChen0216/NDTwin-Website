@@ -6,20 +6,80 @@ menu: {main: {weight: 10}}
 
 {{< rawhtml >}}
 
-<section class="w-100 p-0 m-0 d-flex align-items-center justify-content-center" style="background-color: #2D75B2; min-height: 90vh;">
-    <div class="container py-5">
+<section class="w-100 d-flex flex-column" style="background-color: #2D75B2; min-height: 100vh; padding-top: 80px; padding-bottom: 50px;">
+    
+    <div class="container my-auto">
         <div class="row align-items-center">
-            <div class="col-lg-6 text-left text-white">
-                <h1 class="display-4 font-weight-bold mb-4">
-                    Network Digital Twin <br>
+            
+            <div class="col-lg-6 text-left text-white px-4 px-lg-0">
+                <h1 class="display-4 font-weight-bold mb-3">
+                    Network Digital Twin
                 </h1>
-                <div class="mb-5" style="font-size: 1.05rem; line-height: 1.7; opacity: 0.95; font-weight: 300;">
-                    A novel network digital twin (NDT) open source framework designed for optimally operating and managing a network.<br><br> 
-                    
-                    Its Kernel continuously collects real-time network, device, and flow states. Its Apps use simulation and AI/ML technologies to: 1) evaluate/predict the outcome of many "what-if" conditions, 2) find the optimal solution to the current or a predicted situation, and 3) issue commands to network devices in real time to perform the best solution. Its Tools feature a Web GUI that uses Large Language Model (LLM) to support intent-based network management and a real-time network traffic visualizer.<br><br>
-                    
-                    NDTwin operates correctly and successfully on both physical networks composed of hardware switches and emulated networks formed by Mininet. It can be used as an automatic system to optimize the operation of a production network or as an academic platform to conduct NDT-based research. Developers can use this framework to develop, test, evaluate, and deploy their innovative NDT applications
+                
+                <p class="lead mb-4" style="font-weight: 400; opacity: 1; line-height: 1.6;">
+                    A novel network digital twin (NDT) open source framework designed for optimally operating and managing a network.
+                </p>
+
+                <div class="mb-2" style="font-size: 1rem; line-height: 1.6; opacity: 0.95; font-weight: 300;">
+                    <ul class="list-unstyled">
+                        <li class="mb-3 d-flex align-items-start">
+                            <div class="mt-1 me-3 flex-shrink-0" style="width: 24px; text-align: center;">
+                                <i class="fas fa-microchip" style="color: #ED7D31;"></i>
+                            </div>
+                            <span class="flex-grow-1">
+                                Its Kernel continuously collects real-time network, device, and flow states.
+                            </span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-start">
+                            <div class="mt-1 me-3 flex-shrink-0" style="width: 24px; text-align: center;">
+                                <i class="fas fa-brain" style="color: #ED7D31;"></i>
+                            </div>
+                            <span class="flex-grow-1">
+                                Its Apps use simulation and AI/ML technologies to: 1) evaluate/predict the outcome of many "what-if" conditions, 2) find the optimal solution to the current or a predicted situation, and 3) issue commands to network devices in real time to perform the best solution.
+                            </span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-start">
+                            <div class="mt-1 me-3 flex-shrink-0" style="width: 24px; text-align: center;">
+                                <i class="fas fa-desktop" style="color: #ED7D31;"></i>
+                            </div>
+                            <span class="flex-grow-1">
+                                Its Tools feature a Web GUI that uses Large Language Model (LLM) to support intent-based network management and a real-time network traffic visualizer.
+                            </span>
+                        </li>
+                    </ul>
                 </div>
+
+                <div class="my-3"></div>
+
+                <div class="mb-5" style="font-size: 1rem; line-height: 1.6; opacity: 0.95; font-weight: 300;">
+                    <ul class="list-unstyled">
+                        <li class="mb-3 d-flex align-items-start">
+                            <div class="mt-1 me-3 flex-shrink-0" style="width: 24px; text-align: center;">
+                                <i class="fas fa-network-wired" style="color: #ED7D31;"></i>
+                            </div>
+                            <span class="flex-grow-1">
+                                NDTwin operates correctly and successfully on both physical networks composed of hardware switches and emulated networks formed by Mininet.
+                            </span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-start">
+                            <div class="mt-1 me-3 flex-shrink-0" style="width: 24px; text-align: center;">
+                                <i class="fas fa-cogs" style="color: #ED7D31;"></i>
+                            </div>
+                            <span class="flex-grow-1">
+                                It can be used as an automatic system to optimize the operation of a production network or as an academic platform to conduct NDT-based research.
+                            </span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-start">
+                            <div class="mt-1 me-3 flex-shrink-0" style="width: 24px; text-align: center;">
+                                <i class="fas fa-laptop-code" style="color: #ED7D31;"></i>
+                            </div>
+                            <span class="flex-grow-1">
+                                Developers can use this framework to develop, test, evaluate, and deploy their innovative NDT applications
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="d-flex flex-wrap">
                     <a class="btn btn-lg me-3 mb-3 shadow" href="/docs/" style="background-color: #ED7D31; color: #fff; font-weight: 800; padding: 0.8rem 2rem; border-radius: 50px;">
                         Get Started <i class="fas fa-arrow-right ms-2"></i>
@@ -29,9 +89,12 @@ menu: {main: {weight: 10}}
                     </a>
                 </div>
             </div>
-            <div class="col-lg-6 text-center mt-5 mt-lg-0">
-                <div class="bg-white p-2 rounded shadow-lg" style="transform: perspective(1000px) rotateY(-5deg) rotateX(2deg); transition: transform 0.3s;">
-                    <img src="images/NdtArcht.png" class="img-fluid rounded" alt="NDTwin Architecture">
+            
+            <div class="col-lg-6 text-center mt-5 mt-lg-0 px-4 px-lg-0">
+                <div class="bg-white p-2 rounded shadow-lg">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal" title="Click to enlarge">
+                        <img src="images/NdtArcht.png" class="img-fluid rounded" alt="NDTwin Architecture" style="cursor: pointer;">
+                    </a>
                 </div>
             </div>
         </div>
@@ -64,7 +127,6 @@ menu: {main: {weight: 10}}
 <section class="w-100 py-5" style="background-color: #f8f9fa; border-top: 1px solid #e9ecef;">
     <div class="container py-4">
         <div class="row text-center">
-            
             <div class="col-md-4 mb-5">
                 <div class="mb-3 p-3 d-inline-block rounded-circle bg-white shadow-sm">
                     <i class="fas fa-project-diagram fa-2x" style="color: #2D75B2;"></i>
@@ -97,9 +159,19 @@ menu: {main: {weight: 10}}
                     Read more <i class="fas fa-arrow-right small ms-1"></i>
                 </a>
             </div>
-
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content bg-transparent border-0" style="box-shadow: none;">
+      <div class="modal-body p-0 position-relative text-center">
+        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close" style="z-index: 1051; filter: drop-shadow(0px 0px 2px black);"></button>
+        <img src="images/NdtArcht.png" class="img-fluid rounded shadow-lg" alt="NDTwin Architecture High Res" style="max-height: 90vh; object-fit: contain;">
+      </div>
+    </div>
+  </div>
+</div>
 
 {{< /rawhtml >}}
