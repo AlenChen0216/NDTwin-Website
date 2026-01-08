@@ -26,51 +26,52 @@
 </section>
 
 <section class="container mt-5 mb-5">
-  <div class="row justify-content-center">
+  <div class="row">
+    
     <div class="col-lg-8">
-      <div class="td-content" style="font-size: 1.15rem; line-height: 1.9; color: #333;">
+      <div class="td-content pr-lg-4" style="font-size: 1.15rem; line-height: 1.9; color: #333;">
         {{ .Content }}
       </div>
     </div>
-  </div>
-</section>
 
-{{ if .Pages }}
-  {{ range .Pages }}
-  <section class="bg-light py-5" style="
-      width: 100vw; 
-      position: relative; 
-      left: 50%; 
-      right: 50%; 
-      margin-left: -50vw; 
-      margin-right: -50vw;">
+    <div class="col-lg-4 mt-5 mt-lg-0">
       
-    <div class="container">
-      <div class="row align-items-center justify-content-center">
+      <div style="position: sticky; top: 2rem;">
         
-        <div class="col-md-6 mb-4 mb-md-0">
-          <h2 class="font-weight-bold mb-3" style="color: #243949;">
-            {{ .Title }}
-          </h2>
-          <p class="text-secondary mb-4" style="font-size: 1.1rem; line-height: 1.6;">
-            {{ .Description | default .Summary }}
-          </p>
-          
-          <a href="{{ .RelPermalink }}" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
-            Meet the Researchers &rarr;
-          </a>
-        </div>
+        {{ if .Pages }}
+          {{ range .Pages }}
+          <div class="card shadow-sm border-0 rounded-lg" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+            <div class="card-body p-4 text-center">
+              
+              <div class="mb-3" style="font-size: 4rem; color: #2D75B2;">
+                <i class="fas fa-users"></i>
+              </div>
 
-        <div class="col-md-4 text-center">
-          <div style="font-size: 8rem; color: #cbd5e0;">
-            <i class="fas fa-users"></i>
+              <h3 class="h4 font-weight-bold mb-3" style="color: #243949;">
+                {{ .Title }}
+              </h3>
+
+              <p class="text-secondary mb-4" style="font-size: 1rem; line-height: 1.5;">
+                {{ .Description | default .Summary }}
+              </p>
+
+              <a href="{{ .RelPermalink }}" class="btn btn-primary btn-block rounded-pill py-2 shadow-sm font-weight-bold">
+                Meet the Team &rarr;
+              </a>
+
+            </div>
           </div>
-        </div>
+          {{ end }}
+        {{ else }}
+          <div class="p-4 bg-light rounded text-center">
+             <p class="text-muted">No related pages found.</p>
+          </div>
+        {{ end }}
 
       </div>
     </div>
-  </section>
-  {{ end }}
-{{ end }}
+
+  </div>
+</section>
 
 {{ end }}
