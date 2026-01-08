@@ -4,7 +4,7 @@ description: >
 date: 2017-01-05
 weight: 7
 ---
-# Network Traffic Generator — User Manual
+# Network Traffic Generator — Installation Manual
 
 ![](working.png)
 
@@ -14,8 +14,7 @@ This guide explains how to setup and use commands in our **Network Traffic Gener
 - [NTG configuration](#network-traffic-generator-configuration)
 - [Flow generation configuration](#flow-command-configuration)
 - [Support commands in NTG](#support-commands-in-ntg)
-- [How to use NTG in Mininet](#how-to-use-ntg-in-mininet)
-- [How to use NTG in Hardware Testbed](#how-to-use-ntg-in-hardware)
+
 
 ## Required environment and libraries for NTG
 
@@ -70,18 +69,18 @@ Ensure the following files exist and match your environment.
 `NTG.yaml`
 ```yaml
 inventory:
-  plugin: SimpleInventory
-  options:
-    host_file: "./setting/Hardware.yaml"
-    group_file: "./setting/API_server_startup.yaml"
+  plugin: SimpleInventory
+  options:
+    host_file: "./setting/Hardware.yaml"
+    group_file: "./setting/API_server_startup.yaml"
 
 runner:
-  plugin: threaded
-  options:
-    num_workers: 5
+  plugin: threaded
+  options:
+    num_workers: 5
 
 logging:
-  enabled: false
+  enabled: false
 ```
 Notes:
 - If you want to use `Mininet`, please change the path of `host_file` to `./setting/Mininet.yaml`
@@ -89,11 +88,11 @@ Notes:
 `setting/API_server_startup.yaml`
 ```yaml
 worker_node_servers:
-  data:
-    startup_commands:
-      - "source ~/ntg/bin/activate && cd Desktop/NTG && pwd && nohup uvicorn worker_node:app --host 0.0.0.0 --port 8000 > uvi.log 2>&1 &"
-    shutdown_commands:
-      - "killall -9 uvicorn"
+  data:
+    startup_commands:
+      - "source ~/ntg/bin/activate && cd Desktop/NTG && pwd && nohup uvicorn worker_node:app --host 0.0.0.0 --port 8000 > uvi.log 2>&1 &"
+    shutdown_commands:
+      - "killall -9 uvicorn"
 ```
 Notes:
 - `startup_commands` should start your FastAPI server (e.g., `uvicorn worker_node:app ...`) on each worker node.
@@ -102,23 +101,23 @@ Notes:
 `setting/Hardware.yaml` (abbreviated; tailor to your hosts)
 ```yaml
 Hardware_Testbed:
-  hostname: "hardware_testbed"
-  data:
-    ndtwin_server: "http://10.10.xx.xx:8000"
-    recycle_interval: 10
+  hostname: "hardware_testbed"
+  data:
+    ndtwin_server: "http://10.10.xx.xx:8000"
+    recycle_interval: 10
 
 worker_node1:
-  hostname: 10.10.xx.xx
-  username: "server1"
-  password: "xxooxx"
-  port: 22
-  groups:
-    - worker_node_servers
-  data:
-    worker_node_server: "http://10.10.xx.xx:8000"
-    on_site_hosts:
-      h1: "192.168.yy.yy"
-      # ... continue for h2–hzz
+  hostname: 10.10.xx.xx
+  username: "server1"
+  password: "xxooxx"
+  port: 22
+  groups:
+    - worker_node_servers
+  data:
+    worker_node_server: "http://10.10.xx.xx:8000"
+    on_site_hosts:
+      h1: "192.168.yy.yy"
+      # ... continue for h2–hzz
 
 # Repeat similarly for worker_node2–worker_node4 with their ranges
 ```
@@ -135,10 +134,10 @@ Notes:
 
 ```yaml
 Mininet_Testbed:
-  hostname: "mininet_testbed"
-  data:
-    ndtwin_server: "http://127.0.0.1:8000"
-    mode: "cli"
+  hostname: "mininet_testbed"
+  data:
+    ndtwin_server: "http://127.0.0.1:8000"
+    mode: "cli"
 ```
 
 Notes:
@@ -170,16 +169,16 @@ Common fields inside `fixed_traffic`:
 Parameter format rules:
 
 - `size(bytes)`: integer or suffixed with `K`, `M`, `G` (e.g., `10K`, `2M`)
-  - Defining how many bytes you want to send.
+  - Defining how many bytes you want to send.
 - `rate(bits)`: integer or suffixed with `K`, `M`, `G` (e.g., `37.4M` allowed where implementation supports decimals)
-  - Defining the sending rate of flows.
-- `duration(sec)`: positive integer seconds. 
-  - Defining how long will the flow keep alive.
+  - Defining the sending rate of flows.
+- `duration(sec)`: positive integer seconds. 
+  - Defining how long will the flow keep alive.
 - Provide only the parameters that make sense for the chosen type:
-  - limited size → requires `size(bytes)`
-  - limited rate → requires `rate(bits)`
-  - limited duration → requires `duration(sec)`
-  - udp types include `-u` internally; tcp types do not.
+  - limited size → requires `size(bytes)`
+  - limited rate → requires `rate(bits)`
+  - limited duration → requires `duration(sec)`
+  - udp types include `-u` internally; tcp types do not.
 
 Supported flow types for `varied_traffic`:
 
@@ -209,36 +208,36 @@ Example snippet (already present in `flow_template.json`):
 
 ```json
 {
-  "traffic_generator(iperf_or_iperf3)": "iperf3",
-  "intervals": [
-    {
-      "interval_duration(d/h/m/s)": "3s",
-      "varied_traffic": {
-        "flow_arrival_rate(flow/sec)": 5,
-        "flow_distance_probability": {"near": 0.0, "middle": 0.5, "far": 0.5},
-        "flow_type_probability": {
-          "limited_size_limited_rate_tcp": 0.1,
-          "limited_size_unlimited_rate_udp": 0.9
-        },
-        "flow_parameters": {
-          "limited_size_limited_rate_tcp": {"size(bytes)": "2M", "rate(bits)": "30M"},
-          "limited_size_unlimited_rate_udp": {"size(bytes)": "4K"}
-        }
-      },
-      "fixed_traffic":{
-        "fixed_flow_number": 8,
-        "flow_distance_probability": {"near": 0.0, "middle": 0.3, "far": 0.7},
-        "flow_type_probability": {
-          "limited_size_limited_rate_tcp": 0.2,
-          "limited_size_unlimited_rate_udp": 0.8
-        },
-        "flow_parameters": {
-          "limited_size_limited_rate_tcp": {"size(bytes)": "5K", "rate(bits)": "5M"},
-          "limited_size_unlimited_rate_udp": {"size(bytes)": "4K"}
-        }
-      }
-    }
-  ]
+  "traffic_generator(iperf_or_iperf3)": "iperf3",
+  "intervals": [
+    {
+      "interval_duration(d/h/m/s)": "3s",
+      "varied_traffic": {
+        "flow_arrival_rate(flow/sec)": 5,
+        "flow_distance_probability": {"near": 0.0, "middle": 0.5, "far": 0.5},
+        "flow_type_probability": {
+          "limited_size_limited_rate_tcp": 0.1,
+          "limited_size_unlimited_rate_udp": 0.9
+        },
+        "flow_parameters": {
+          "limited_size_limited_rate_tcp": {"size(bytes)": "2M", "rate(bits)": "30M"},
+          "limited_size_unlimited_rate_udp": {"size(bytes)": "4K"}
+        }
+      },
+      "fixed_traffic":{
+        "fixed_flow_number": 8,
+        "flow_distance_probability": {"near": 0.0, "middle": 0.3, "far": 0.7},
+        "flow_type_probability": {
+          "limited_size_limited_rate_tcp": 0.2,
+          "limited_size_unlimited_rate_udp": 0.8
+        },
+        "flow_parameters": {
+          "limited_size_limited_rate_tcp": {"size(bytes)": "5K", "rate(bits)": "5M"},
+          "limited_size_unlimited_rate_udp": {"size(bytes)": "4K"}
+        }
+      }
+    }
+  ]
 }
 ```
 
@@ -246,23 +245,23 @@ Example snippet (already present in `flow_template.json`):
 
 ```json
 {
-    "interval_duration(d/h/m/s)": "10s",
-    "fixed_traffic": {
-        "fixed_flow_number": 20,
-        "flow_distance_probability": {
-            "near": 0.0,
-            "middle": 0.5,
-            "far": 0.5
-        },
-        "flow_type_probability": {
-            "unlimited_size_limited_rate_limited_duration_tcp": 1.0
-        },
-        "flow_parameters": {
-            "unlimited_size_limited_rate_limited_duration_tcp": {
-                "rate(bits)": "37.4M"
-            }
-        }
-    }
+    "interval_duration(d/h/m/s)": "10s",
+    "fixed_traffic": {
+        "fixed_flow_number": 20,
+        "flow_distance_probability": {
+            "near": 0.0,
+            "middle": 0.5,
+            "far": 0.5
+        },
+        "flow_type_probability": {
+            "unlimited_size_limited_rate_limited_duration_tcp": 1.0
+        },
+        "flow_parameters": {
+            "unlimited_size_limited_rate_limited_duration_tcp": {
+                "rate(bits)": "37.4M"
+            }
+        }
+    }
 }
 ```
 
@@ -294,42 +293,42 @@ Example snippet (already present in `dist_template.json`):
 
 ```json
 {
-    "traffic_generator(iperf_or_iperf3)": "iperf3",
-    "flow_size_csv": "./distribution_flow_size.csv",
-    "flow_duration_csv": "./distribution_flow_duration.csv",
-    "flow_sending_rate_csv": "./distribution_flow_sending_rate.csv",
-    "intervals": [
-        {
-            "interval_duration(d/h/m/s)": "2s",
-            "fixed_traffic": {
-                "fixed_flow_number": 5,
-                "flow_distance_probability": {
-                    "near": 0.0,
-                    "middle": 0.5,
-                    "far": 0.5
-                },
-                "flow_type_probability": {
-                    "unlimited_size_limited_rate_limited_duration_tcp": 1.0
-                }
-            }
-        },
-        {
-            "interval_duration(d/h/m/s)": "3s",
-            "varied_traffic": {
-                "flow_arrival_rate(flow/sec)": 2,
-                "flow_distance_probability": {
-                    "near": 0.0,
-                    "middle": 0.3,
-                    "far": 0.7
-                },
-                "flow_type_probability": {
-                    "unlimited_size_unlimited_rate_limited_duration_tcp": 0.3,
-                    "limited_size_unlimited_rate_tcp": 0.3,
-                    "unlimited_size_limited_rate_limited_duration_tcp": 0.4
-                }
-            }
-        }
-    ]
+    "traffic_generator(iperf_or_iperf3)": "iperf3",
+    "flow_size_csv": "./distribution_flow_size.csv",
+    "flow_duration_csv": "./distribution_flow_duration.csv",
+    "flow_sending_rate_csv": "./distribution_flow_sending_rate.csv",
+    "intervals": [
+        {
+            "interval_duration(d/h/m/s)": "2s",
+            "fixed_traffic": {
+                "fixed_flow_number": 5,
+                "flow_distance_probability": {
+                    "near": 0.0,
+                    "middle": 0.5,
+                    "far": 0.5
+                },
+                "flow_type_probability": {
+                    "unlimited_size_limited_rate_limited_duration_tcp": 1.0
+                }
+            }
+        },
+        {
+            "interval_duration(d/h/m/s)": "3s",
+            "varied_traffic": {
+                "flow_arrival_rate(flow/sec)": 2,
+                "flow_distance_probability": {
+                    "near": 0.0,
+                    "middle": 0.3,
+                    "far": 0.7
+                },
+                "flow_type_probability": {
+                    "unlimited_size_unlimited_rate_limited_duration_tcp": 0.3,
+                    "limited_size_unlimited_rate_tcp": 0.3,
+                    "unlimited_size_limited_rate_limited_duration_tcp": 0.4
+                }
+            }
+        }
+    ]
 }
 ```
 
@@ -344,185 +343,3 @@ Our NTG support commands as below :
 - `exit` : exit the NTG.
 
 **Notice that when using `flow` and `dist` command, you must add `--config flow_template.json` to specify which flow configuration files to use in one experiment.**
-
-### How to Use
-
-Our NTG support **path complete** and **syntax complete**. Thus, you can use `tab` and `arrow keys` to type the command.
-![complete1](complete1.png)
-![complete2](complete2.png)
-![complete3](complete3.png)
-![complete4](complete4.png)
-![complete5](complete5.png)
-
-If your'e configuration file and command are correct, NTG will start generate flows as below:
-![success1](success1.png)
-However, If you have syntax error or configuration file error, it will show some error words as below:
-![error1](./error1.png)
-![error1](./error2.png)
-
-### Notice
-
-- Our NTG do not support experiment interrupt. Thus, if you want to interrupt one running experiment, it will immediately shut down the NTG as below:
-  
-![interrupt1](./interrupt1.png)
-
-## How to use NTG in Mininet
-
-### Pre-request
-
-- You must have installed `Mininet`, `Ryu`, and `NDTwin`.
-- You must have downloaded `NTG` and move those files and directories into folders with Mininet topology file written in `python`.
-- You must modify the `NTG.yaml`'s `host_file` into `./setting/Mininet.yaml ` and parameters in `./setting/Mininet.yaml`.
-
-### Demonstrating Mininet topology
-
-```python
-from mininet.topo import Topo
-from mininet.net import Mininet
-from mininet.cli import CLI
-from mininet.node import RemoteController
-
-class MyTopo(Topo):
-  def build(self):
-    s1 = self.addSwitch("s1")
-    h1 = self.addHost("h1")
-    h2 = self.addHost("h2")
-
-    self.addLink(h1,s1)
-    self.addLink(h2,s1)
-
-if __name__ == "__main__":
-  topo = MyTopo()
-  net = Mininet(
-        topo=topo,
-        controller=RemoteController)
-  net.start()
-  CLI(net)
-```
-
-### Start Up Process
-
-1. Modify the topology `python` code to import `interactive_commands.py` and replace Mininet's CLI to our NTG's CLI.
-
-```python
-from mininet.topo import Topo
-from mininet.net import Mininet
-#from mininet.cli import CLI
-from mininet.node import RemoteController
-from interactive_commands import interactive_command_mode
-
-class MyTopo(Topo):
-  def build(self):
-    s1 = self.addSwitch("s1")
-    h1 = self.addHost("h1")
-    h2 = self.addHost("h2")
-
-    self.addLink(h1,s1)
-    self.addLink(h2,s1)
-
-if __name__ == "__main__":
-  topo = MyTopo()
-  net = Mininet(
-        topo=topo,
-        controller=RemoteController)
-  net.start()
-  #CLI(net)
-  interactive_command_mode(net)
-```
-
-2. Start the Ryu Controller.
-
-```bash
-ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp-tcp-listen-port 6633 --observe-link
-```
-
-![ryu](./ryu.png)
-
-3. Start the topology.
-
-```bash
-sudo python ./topo.py
-```
-
-![mininet](./mininet.png)
-
-4. Since NTG need some topology information from NDTwin, you need to wait for the Ryu Controller to install all flow rules into switches.
-
-![mininet1](./mininet1.png)
-
-5. Start the NDTwin.
-
-```bash
-sudo bin/ndt_main
-```
-![ndtwin](./ndtwin.png)
-
-6. Now, you can start using NTG
-
-![mininet2](./mininet2.png)
-
-## How to use NTG in Hardware
-
-### Pre-request
-
-- You must have installed `Ryu`, and `NDTwin`.
-- You must have downloaded `NTG`.
-- You must modify the `NTG.yaml`'s `host_file` into `./setting/Hardware.yaml ` and parameters in `./setting/Hardware.yaml`.
-- For hardware testbed, we use **master and worker** architecture to generate flows. Thus, you need to prepare some machines running in **Linux** and install python libraries as below and move `worker_node.py` into those machines:
-
-  - `fastapi`
-  - `uvicorn` (used to start the API server)
-  - `pydantic`
-  - `loguru`
-  - `orjson` (required by `ORJSONResponse`)
-
-  ```bash
-  pip install --upgrade pip
-  pip install fastapi "uvicorn[standard]" pydantic loguru orjson
-  ```
-
-  Also, you need to make sure NTG can connect to those worker nodes.
-
-### Start Up Process
-
-1. Start the Ryu Controller
-
-```bash
-ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp-tcp-listen-port 6633 --observe-link
-```
-
-2. Start the NDTwin
-
-```bash
-sudo bin/ndt_main
-```
-
-3. Start the NTG
-
-```bash
-python interactive_commands.py
-```
-
-4. Manually Start worker node API servers on machines if the worker nodes do not start up correctly.
-
-```bash
-uvicorn worker_node:app --host 0.0.0.0 --port 8000
-```
-
-5. Now, you can use `NTG` to generate flows.
-
-## Tips
-
-- Ensure all `data.worker_node_server` URLs in `Hardware.yaml` are reachable and the servers are running.
-- Keep `flow_distance_probability` and `flow_type_probability` values normalized (sum to 1.0) for each section.
-- Validate parameter names and formats in `flow_parameters` to match the selected types.
-- For multiple consecutive experiments, the tool **resets internal state after completion**.
-- For one experiment, it will be **ended only when all of flows, exclude flows with unlimited duration, are fininshed**.
-
-## Troubleshooting
-
-- If flows do not start: 
-  - Confirm API servers are up, ports opened, and the `interactive_commands.py` process can reach them.
-  - It may due to the CPU resources are not enough for you're flow configurations. Please lower the `flow numbers` or parameters to fix the question.
-- If Nornir inventory errors occur: double-check that `groups` is a YAML list and host keys/fields are correctly indented.
-- If `uvicorn` fails to start: verify your virtualenv and ensure `uvicorn` is installed (`pip install uvicorn fastapi`).
