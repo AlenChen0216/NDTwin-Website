@@ -8,16 +8,6 @@ date: 2025-12-24
 weight: 1
 ---
 
-# Ubuntu VM Image User Manual
-
-## About this Environment
-This tutorial is specifically designed for the **NDT Pre-configured Ubuntu VM Image**.
-
-* **Zero Setup Required:** All necessary environments (Conda, Python, C++ libraries) and software (Ryu, Mininet, NDT Core) have been **pre-installed and compiled**.
-* **Ready to Run:** You do **not** need to install any software or dependencies. Simply follow the steps below to open the terminals and execute the commands for a quick experience.
-* **System Password:** The password for the system user and for `sudo` commands is **`ndtwin`**.
----
-
 **Pre-flight Checks:**
 
 * Please prepare **3 separate Terminal windows**.

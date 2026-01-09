@@ -8,178 +8,48 @@ date: 2025-12-24
 weight: 1
 ---
 
-# Ubuntu VM Image User Manual
+# Ubuntu VM Image Installation Manual
 
 ## About this Environment
-This tutorial is specifically designed for the **NDT Pre-configured Ubuntu VM Image**.
 
-* **Zero Setup Required:** All necessary environments (Conda, Python, C++ libraries) and software (Ryu, Mininet, NDT Core) have been **pre-installed and compiled**.
-* **Ready to Run:** You do **not** need to install any software or dependencies. Simply follow the steps below to open the terminals and execute the commands for a quick experience.
-* **System Password:** The password for the system user and for `sudo` commands is **`ndtwin`**.
+This environment is a pre-configured **Ubuntu** virtual machine designed to help you get started with **NDTwin** immediately. It eliminates the need for manual setup by providing a ready-to-use system with all necessary dependencies pre-installed and configured.
+
+Included in this image:
+* **Operating System:** Ubuntu (Pre-configured)
+* **Core Components:** NDT Core, Ryu SDN Controller, Mininet
+* **Dependencies:** All required Python libraries, system tools, and network configurations.
+
+### 1. Download the Image
+You can obtain the latest version of the VM image (`.ova` or `.iso`) from our official **Download** page.
+
+[**> Go to Download Page**](/workspaces/NDTwin-Website/content/en/docs/Download/_index.md)
+
+### 2. Prerequisites
+To run this image, you will need virtualization software installed on your host machine. We recommend **VMware** for the best compatibility:
+* **Windows/Linux:** VMware Workstation Player (Free) or VMware Workstation Pro.
+* **macOS:** VMware Fusion.
+
+### 3. Installation Guide (VMware)
+Once you have downloaded the image file, follow these brief steps to import it:
+
+1.  **Open VMware:** Launch your VMware Workstation or Fusion application.
+2.  **Import the Virtual Machine:**
+    * Click on **"Open a Virtual Machine"** (or `File` > `Open`).
+    * Locate and select the downloaded `.ova` file.
+3.  **Configure Settings:**
+    * Choose a name for the new virtual machine and a storage path.
+    * Click **Import**.
+    * *Note: If prompted about OVF specification compliance, click "Retry" or "Relax" to proceed.*
+4.  **Launch:** Once the import is complete, select the new VM from the list and click **"Power on this virtual machine"**.
+
+### 4. Default Login Credentials
+After the system boots up, use the following credentials to log in:
+
+| Account Type | Username | Password |
+| :--- | :--- | :--- |
+| **System User** | `ndtwin` | `ndtwin` |
+| **Root (Sudo)** | `root` | `ndtwin` |
+
+> **Note:** For security reasons, we strongly recommend changing these passwords immediately after your first login using the `passwd` command.
 ---
 
-**Pre-flight Checks:**
-
-* Please prepare **3 separate Terminal windows**.
-* **Startup Order is Critical:** Please execute Terminals 1 through 3 in the exact order listed below.
-
----
-
-## Terminal 1: Ryu Controller (SDN Controller)
-
-* **Path:** `Desktop`
-* **Environment:** `ryu-env` (Python 3.8)
-
-1. Navigate to the directory:
-```bash
-cd ~/Desktop/
-
-```
-
-
-2. Activate the environment:
-```bash
-conda activate ryu-env
-
-```
-
-
-3. Execute the controller:
-```bash
-ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp-tcp-listen-port 6633 --observe-link
-
-```
-
-
-
----
-
-## Terminal 2: Mininet (Virtual Network Topology)
-
-* **Path:** `Desktop`
-* **Environment:** System Native (Root)
-
-1. Navigate to the directory:
-```bash
-cd ~/Desktop/
-
-```
-
-
-2. Clean up old network artifacts (**Crucial step**):
-```bash
-sudo mn -c
-
-```
-
-
-3. Start the topology:
-```bash
-sudo python3 my_topo.py
-
-```
-
-
-
----
-
-## Terminal 3: NDT Core (Digital Twin Core)
-
-* **Path:** `NetworkDigitalTwin-main/build`
-* **Note:** Requires API Key. Use `-E` to preserve environment variables for sudo.
-
-1. Navigate to the build directory:
-```bash
-cd ~/Desktop/NetworkDigitalTwin-main/build
-
-```
-
-
-2. Set API Key (Skip if already configured in shell profile):
-```bash
-export OPENAI_API_KEY="sk-proj-xxxxxxxxxxxxxxxx"
-
-```
-
-
-3. Execute the main program:
-```bash
-sudo -E bin/ndt_main --loglevel info
-
-```
-
----
-
-## Safe Shutdown Procedure
-
-When finishing your experiment, please close the system in **reverse order** and perform cleanup to avoid errors in future runs:
-
-1. In **Terminal 2 (Mininet)**, type `exit` to quit the CLI.
-2. In **Terminal 2**, run the cleanup command:
-```bash
-sudo mn -c
-
-```
-3. Close all other terminal windows.
-
-
-## Next Steps & Advanced Features
-
-Once the core system is running, you can explore additional features using the instructions below:
-
-### 1. Web GUI Interface 
-For a graphical interface to monitor the network status.
-
-* **Action:** Open your web browser (Firefox/Chrome).
-* **URL:** Navigate to the following address:
-    ```text
-    http://localhost:3000/
-    ```
-
----
-
-### 2. Real-time Visualization 
-To view real-time traffic flow animations using the JavaFX desktop application.
-
-* **Command:**
-    ```bash
-    cd "/home/ndtwin/Desktop/NDTwin traffic animation/NDTwin_traffic_animation_v5.5.0"
-    ./run_debug.sh
-    ```
-
----
-
-### 3. Network Traffic Generation 
-To generate massive amounts of traffic for stress testing.
-
-* To do list
-
----
-
-### 4. Third-Party Applications 
-
-To run external modules. Please open **new terminal windows** for these applications.
-
-#### Option A: Energy Saving App
-This application requires two components running simultaneously.
-
-* **Step 1: Start Simulation Server**
-    ```bash
-    cd "/home/ndtwin/Desktop/Energy Saving App/NDT-Simulation-Server-master/"
-    sudo ./server
-    ```
-
-* **Step 2: Start Power App (New Terminal)**
-    ```bash
-    cd "/home/ndtwin/Desktop/Energy Saving App/NDT-Power-master/"
-    sudo ./power_app
-    ```
-
-#### Option B: Traffic Engineering App
-
-* **Command:**
-    ```bash
-    cd "/home/ndtwin/Desktop/Traffic Engineering App/"
-    conda activate te-env
-    sudo python3 TE.py
-    ```
