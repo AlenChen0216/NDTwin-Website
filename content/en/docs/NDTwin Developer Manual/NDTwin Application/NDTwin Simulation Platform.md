@@ -3,7 +3,7 @@ title: NDTwin Simulation Platform
 description: >
  NDTwin Simulation Platform
 date: 2026-01-04
-weight: 4
+weight: 3
 ---
 
 # NDTwin Simulation Subsystem Documentation
