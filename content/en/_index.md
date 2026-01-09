@@ -1,6 +1,7 @@
 ---
-title: "NDTwin"
+title: "NDTwin - Network Digital Twin Framework"
 linkTitle: "NDTwin"
+description: "NDTwin is an open source Network Digital Twin framework designed for optimally operating and managing a network."
 menu: {main: {weight: 10}}
 ---
 
@@ -12,12 +13,14 @@ menu: {main: {weight: 10}}
         <div class="row align-items-center">
             
             <div class="col-lg-6 text-left text-white px-4 px-lg-0">
+                
                 <h1 class="display-4 font-weight-bold mb-3">
                     Network Digital Twin
                 </h1>
                 
                 <p class="lead mb-4" style="font-weight: 400; opacity: 1; line-height: 1.6;">
-                    A novel network digital twin (NDT) open source framework designed for optimally operating and managing a network.
+                    <span style="color: #ED7D31; font-weight: 800; font-size: 1.1em;">NDTwin</span>
+                    is a novel network digital twin (NDT) open source framework designed for optimally operating and managing a network.
                 </p>
 
                 <div class="mb-2" style="font-size: 1rem; line-height: 1.6; opacity: 0.95; font-weight: 300;">
@@ -74,7 +77,7 @@ menu: {main: {weight: 10}}
                                 <i class="fas fa-laptop-code" style="color: #ED7D31;"></i>
                             </div>
                             <span class="flex-grow-1">
-                                Developers can use this framework to develop, test, evaluate, and deploy their innovative NDT applications
+                                Developers can use this framework to develop, test, evaluate, and deploy their innovative NDT applications.
                             </span>
                         </li>
                     </ul>
@@ -93,7 +96,7 @@ menu: {main: {weight: 10}}
             <div class="col-lg-6 text-center mt-5 mt-lg-0 px-4 px-lg-0">
                 <div class="bg-white p-2 rounded shadow-lg">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal" title="Click to enlarge">
-                        <img src="images/NdtArcht.png" class="img-fluid rounded" alt="NDTwin Architecture" style="cursor: pointer;">
+                        <img src="images/NdtArcht.png" class="img-fluid rounded" alt="NDTwin Architecture Diagram" style="cursor: pointer;">
                     </a>
                 </div>
             </div>
@@ -168,7 +171,7 @@ menu: {main: {weight: 10}}
     <div class="modal-content bg-transparent border-0" style="box-shadow: none;">
       <div class="modal-body p-0 position-relative text-center">
         <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close" style="z-index: 1051; filter: drop-shadow(0px 0px 2px black);"></button>
-        <img src="images/NdtArcht.png" class="img-fluid rounded shadow-lg" alt="NDTwin Architecture High Res" style="max-height: 90vh; object-fit: contain;">
+        <img src="images/NdtArcht.png" class="img-fluid rounded shadow-lg" alt="High Resolution NDTwin Architecture Diagram" style="max-height: 90vh; object-fit: contain;">
       </div>
     </div>
   </div>
