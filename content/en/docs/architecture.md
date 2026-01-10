@@ -3,25 +3,30 @@ title: System Architecture
 linkTitle: System Architecture
 weight: 2
 description: >
-  Explain the three-layer architecture of NDTwin--from the Applications, through the Kernel, down to the network infrastructure--and its modules, tools, and operations.
+  Explain the three-layer architecture of NDTwin and the functional modules in its kernel.
 ---
 
 {{% pageinfo %}}
-The NDTwin architecture comprises three distinct layers designed to bridge the gap between physical networks and software applications. It decouples high-level network management logic from the low-level complexities of OpenFlow and telemetry.
+The NDTwin architecture comprises three layers. From the top to the bottom, they are application, kernel, and network, respectively.
 {{% /pageinfo %}}
 
 <div class="text-center">
   <img src="/images/NdtArcht.png" class="img-fluid" alt="NDTwin Architecture Diagram" style="max-width: 90%; margin: 2rem 0;">
 </div>
 
-## 1. Application Layer (Top)
+## Application Layer 
 
-The top layer consists of specialized applications developed on the NDT platform, such as **Traffic Engineering Apps** or **Energy-saving Apps**.
+The application layer consists of various applications developed on the NDTwin platform. Currently, NDTwin provides the **Traffic-engineering App** and **Energy-saving App**. More applications will be added by the NDTwin development team in the future. Additionally, any one can develop his/her own applications from the NDTwin open source project.
 
-* **Role**: These applications utilizes the data and control capabilities provided by NDT to perform high-level network management tasks without needing to interact directly with OpenFlow switches.
-* **Interaction**: Applications communicate with the NDT Core via **RESTful APIs**, allowing for loose coupling and easy integration of third-party tools (e.g., LLM agents).
+Each NDTwin application is a separate program running independently, and it communicates with the NDTwin kernel via **RESTful APIs** to get services and receive notifications from the kernel. This design provides many advantages as follows:
 
-## 2. NDT Core Layer (Middle)
+* **Easy Integration**: NDTwin applications can be independently developed and written in different programming languages.  
+* **High Performance**: Multiple NDTwin applications can execute in parallel over multiple CPU cores or on different machines to fully utilize the available processing power. 
+* **Fault Isolation**: A faulty or buggy NDTwin application will not fail the operations of the NDTwin kernel or other NDTwin applications.
+
+ 
+
+## Kernel Layer 
 
 The middle layer is the heart of the system, implemented in high-performance C++. It acts as a bridge, translating high-level intents into low-level network operations.
 
@@ -48,15 +53,12 @@ Manages the physical state of network devices beyond standard OpenFlow capabilit
 #### Application Registration & Coordination
 Manages the lifecycle of applications running on NDT. It includes a conflict resolution mechanism to coordinate actions between different applications, preventing conflicting network policies (e.g., one app trying to power off a switch while another routes traffic through it).
 
-## 3. Infrastructure Layer (Bottom)
+## Network Layer 
 
-The bottom layer represents the target network environment. NDTwin supports a hybrid deployment model:
+The network layer represents the target network that is operated and managed by NDTwin:
 
-* **Control Plane**: Managed by an **SDN Controller** (Ryu) using the standard OpenFlow 1.3 protocol.
-* **Data Plane**:
-    * **Emulated Network**: Uses **Mininet** with Open vSwitch (OVS). NDTwin includes specific logic to map Mininet interface indices to OpenFlow ports.
-    * **Physical Network**: Supports hardware OpenFlow switches (e.g., Brocade, HPE) via a physical testbed mode.
+* **Control Plane**: NDTwin uses an SDN Controller (e.g., Ryu) to control the swithes in real time. To be controlled by NDTwin, the switches need to support the OpenFlow protocol. 
+* **Data Plane**: NDTwin can correctly operate the following two types of networks:
+    * **Emulated Network**: which is constructed by Mininet with Open vSwitch (OVS). 
+    * **Physical Network**: which is composed of hardware switches that support OpenFlow (e.g., Brocade, HPE).
 
-## Extensibility
-
-NDTwin is designed for integration. **Third-party tools** (such as external Simulation Servers, Data Analyzers, or Chatbots) interact with the architecture primarily through the RESTful API layer. This design allows researchers to extend NDTwin's capabilities without modifying the C++ kernel source code.
