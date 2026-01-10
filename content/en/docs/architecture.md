@@ -3,7 +3,7 @@ title: System Architecture
 linkTitle: System Architecture
 weight: 2
 description: >
-  Explain the three-layer architecture of NDTwin and the functional modules in its kernel.
+  Explain the three-layer architecture of NDTwin and the core functions in its kernel.
 ---
 
 {{% pageinfo %}}
@@ -28,7 +28,7 @@ Each NDTwin application is a separate program running independently, and it comm
 
 ## Kernel Layer 
 
-The middle layer is the heart of the system, implemented in high-performance C++. It acts as a bridge, translating high-level intents into low-level network operations.
+The kernel layer is the heart of NDTwin and is implemented in high-performance C++. It acts as the digital twin of the network, with real-time states of network switches and flows. NDTwin applications can get their desired information from the kernel or request the kernel to control specific network switches based on their plans. The kernel can also call the RESTful APIs provided by an NDTwin application to actively notify the NDTwin application of a specific situation or asynchronously transfer data/results to it.
 
 ### Core Functions
 
