@@ -3,32 +3,34 @@ title: System Architecture
 linkTitle: System Architecture
 weight: 2
 description: >
-  Explain the three-layer architecture of NDTwin and the core functions in its kernel.
+  Explain the architecture of NDTwin, the core functions in its kernel, and its important tools.
 ---
 
 {{% pageinfo %}}
-The NDTwin architecture comprises three layers. From the top to the bottom, they are application, kernel, and network, respectively.
+The NDTwin architecture comprises four components: applications, kernel, network, and tools, respectively.
 {{% /pageinfo %}}
 
 <div class="text-center">
   <img src="/images/NdtArcht.png" class="img-fluid" alt="NDTwin Architecture Diagram" style="max-width: 90%; margin: 2rem 0;">
 </div>
 
-## Application Layer 
+## Application 
 
-The application layer consists of various applications developed on the NDTwin platform. Currently, NDTwin provides the **Traffic-engineering App** and **Energy-saving App**. More applications will be added by the NDTwin development team in the future. Additionally, any one can develop his/her own applications from the NDTwin open source project.
+The application component consists of various applications developed on the NDTwin platform. Currently, NDTwin provides the **Traffic-engineering App** and **Energy-saving App**. More applications will be added by the NDTwin development team in the future. Additionally, any one can develop his/her own applications from the NDTwin open source project.
 
-Each NDTwin application is a separate program running independently, and it communicates with the NDTwin kernel via **RESTful APIs** to get services and receive notifications from the kernel. This design provides many advantages as follows:
+Each NDTwin application is a separate program running independently, and it communicates with the NDTwin kernel via **RESTful APIs** to actively get services from the kernel or request the kernel to control specified network devices. An NDTwin application can provide its RESTful APIs to the kernel so that the kernel can actively call its provided APIs to asynchronously send notifications, data, or requests to it. 
 
-* **Easy Integration**: NDTwin applications can be independently developed and written in different programming languages.  
-* **High Performance**: Multiple NDTwin applications can execute in parallel over multiple CPU cores or on different machines to fully utilize the available processing power. 
-* **Fault Isolation**: A faulty or buggy NDTwin application will not fail the operations of the NDTwin kernel or other NDTwin applications.
+This RESTful APIs-based design provides many advantages as follows:
+
+* **Easy Integration**: NDTwin applications can be independently developed and written in different programming languages. They can be implemented as single-threaded or multi-threaded for high performance.  
+* **High Performance**: Since each NDTwin application runs as an independent process, multiple NDTwin applications can execute in parallel simultanously using multiple CPU cores or on different machines to fully utilize the available processing power. 
+* **Fault Isolation**: Since each NDTwin application runs as a different process, a faulty or buggy NDTwin application will not fail the operations of the NDTwin kernel or other NDTwin applications.
 
  
 
-## Kernel Layer 
+## Kernel  
 
-The kernel layer is the heart of NDTwin and is implemented in high-performance C++. It acts as the digital twin of the network, with real-time states of network switches and flows. NDTwin applications can get their desired information from the kernel or request the kernel to control specific network switches based on their plans. The kernel can also call the RESTful APIs provided by an NDTwin application to actively notify the NDTwin application of a specific situation or asynchronously transfer data/results to it.
+The kernel is the heart of NDTwin. It is implemented in high-performance C++ and runs as a multi-threaded process for achieving high throughput and low latency. It acts as the digital twin of the network, with real-time states of network switches and flows. NDTwin applications can get their desired information from the kernel or request the kernel to control specific network switches based on their plans. The kernel can also call the RESTful APIs provided by an NDTwin application to actively notify the NDTwin application of a specific situation or asynchronously transfer data/results to it.
 
 ### Core Functions
 
@@ -53,7 +55,7 @@ Manages the physical state of network devices beyond standard OpenFlow capabilit
 #### Application Registration & Coordination
 Manages the lifecycle of applications running on NDT. It includes a conflict resolution mechanism to coordinate actions between different applications, preventing conflicting network policies (e.g., one app trying to power off a switch while another routes traffic through it).
 
-## Network Layer 
+## Network  
 
 The network layer represents the target network that is operated and managed by NDTwin:
 
