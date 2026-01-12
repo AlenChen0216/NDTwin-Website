@@ -30,7 +30,7 @@ This RESTful APIs-based design provides many advantages as follows:
 
 Like an NDTwin application, an NDTwin tool is a process that uses RESTful APIs to communicate with the kernel bidirectionally. While the goal of an NDTwin application is to optimally control the network, the goal of an NDTwin tool is to support the NDTwin kernel or the NDTwin user. Similar to NDTwin applications, NDTwin tools can all run on a single server or separately run on different servers to achieve more computational and storage resources.    
 
-The tools that are currently included in the NDTwin are explained as follows:
+The tools that are currently included in NDTwin are listed as follows:
 
 * **Web GUI**: This tool provides Web-based GUI to the NDTwin user. The NDTwin user can use any web browser to run up this tool to easily view the real-time states of the network and flows or control the network in real time. This tool supports an LLM-powered intent-based network management interface.    
 * **Network Traffic Visualizer**: This tool has a GUI by which the NDTwin user can "see" how the packets of flows are traversing over the network in real time.  
