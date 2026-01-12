@@ -3,7 +3,7 @@ title: Overview
 linkTitle: Overview
 weight: 1
 description: >
-  Understand what NDTwin is and its features
+  Understand what NDTwin is and its features.
 ---
 
 {{% pageinfo %}}

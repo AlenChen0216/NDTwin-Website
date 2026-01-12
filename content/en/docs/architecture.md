@@ -3,7 +3,7 @@ title: System Architecture
 linkTitle: System Architecture
 weight: 2
 description: >
-  Explain the architecture, applications, tools, kernel, and network of NDTwin
+  Explain the architecture, applications, tools, kernel, and network of NDTwin.
 ---
 
 {{% pageinfo %}}
