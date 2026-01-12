@@ -8,7 +8,7 @@ menu:
 ---
 
 ## Our Goal
-Our goal is to develop a network digital twin that integrates the digital twin, simulation, and AI/ML technologies to automatically optimize the operation a network at any time.
+Our goal is to develop a network digital twin that integrates the digital twin, simulation, and AI/ML technologies to automatically optimize the operation of a network at any time.
 
 ## What We Do
 * **Research:** Proposing cutting-edge algorithms, protocols, and system design and implementation for network optimization.
