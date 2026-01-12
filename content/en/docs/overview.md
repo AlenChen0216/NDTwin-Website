@@ -7,7 +7,7 @@ description: >
 ---
 
 {{% pageinfo %}}
-**NDTwin (Network Digital Twin)** is an open source framework that employs innovative digital twin technologies to optimally operate and manage a network.
+**NDTwin (Network Digital Twin)** is an open source framework that employs innovative digital twin, simulation, and AI/ML technologies to optimally operate and manage a network.
 {{% /pageinfo %}}
 
 ## Features
