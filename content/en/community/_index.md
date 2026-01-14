@@ -22,7 +22,7 @@ menu:
   {{< clickable-card 
       title="Contribute" 
       icon="fab fa-github" 
-      url="https://github.com/joemou/NDTwin-Website" 
+      url="https://github.com/ndtwin/NDTwin-Kernel" 
       btnText="Visit GitHub" 
       btnIcon="fab fa-github" 
       color="#343a40" >}}

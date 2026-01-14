@@ -65,7 +65,7 @@ params:
   version: 1.0
 
   # 連結到這份文件的主要專案 (如果是介紹某個軟體)
-  url_latest_version: https://github.com/joemou/NetworkDigitalTwin
+  url_latest_version: https://github.com/ndtwin/NDTwin-Kernel
 
   #github_repo: https://github.com/joemou/NDTwin-Website
   #github_branch: main
@@ -115,7 +115,7 @@ params:
         desc: Watch our videos
     developer:
       - name: GitHub
-        url: https://github.com/joemou/NDTwin-Website
+        url: https://github.com/ndtwin/NDTwin-Kernel
         icon: fab fa-github
         desc: Website Source Code
 
