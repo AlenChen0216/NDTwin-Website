@@ -1,5 +1,5 @@
 ---
-title: NDTwin Simulation Platform
+title: Simulation Platform
 description: >
  NDTwin Simulation Platform
 date: 2026-01-04
