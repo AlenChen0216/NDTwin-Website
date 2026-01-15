@@ -1,5 +1,5 @@
 ---
-title: Simulation Platform
+title: Simulation Platform Manager
 description: >
     This workflow describes a scalable, parallel simulation system designed to optimize network decisions through a coordinated process. It relies on a shared file system for data exchange and a distributed architecture for processing.
 date: 2017-01-05

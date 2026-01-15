@@ -1,7 +1,7 @@
 ---
 title: Simulation Platform
 description: >
- NDTwin Simulation Platform
+ NDTwin Simulation Platform Manager
 date: 2026-01-04
 weight: 3
 ---
