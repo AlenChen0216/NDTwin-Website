@@ -2,7 +2,7 @@
 title: Use the Demo VM for a Quick Start
 description: >
   A quick start guide designed for the pre-configured Ubuntu VM image.
-  All dependencies (Ryu, Mininet, NDT Core) are pre-installed.
+  All dependencies (Ryu, Mininet, NDT Kernel) are pre-installed.
   Users can skip installation steps and directly run the system.
 date: 2025-12-24
 weight: 1
@@ -73,7 +73,7 @@ sudo python3 my_topo.py
 
 ---
 
-## Terminal 3: NDT Core (Digital Twin Core)
+## Terminal 3: NDT Kernel (Digital Twin Core)
 
 * **Path:** `NetworkDigitalTwin-main/build`
 * **Note:** Requires API Key. Use `-E` to preserve environment variables for sudo.

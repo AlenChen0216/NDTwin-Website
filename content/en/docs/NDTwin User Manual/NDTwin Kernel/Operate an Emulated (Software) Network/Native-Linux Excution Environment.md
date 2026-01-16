@@ -2,7 +2,7 @@
 title: Install All Required Components on a Linux Server
 description: > 
   A comprehensive guide for manually installing the NDT system on a native Linux environment.
-  This section covers system dependencies, building the NDT Core with Ninja, configuring Python environments, and running the full system.
+  This section covers system dependencies, building the NDT Kernel with Ninja, configuring Python environments, and running the full system.
 date: 2025-12-24
 weight: 2
 ---
@@ -44,7 +44,7 @@ sudo python3 testbed_topo.py
 
 ```
 
-### Terminal 3: NDT Core
+### Terminal 3: NDT Kernel
 
 * **Purpose:** Starts the Digital Twin Engine.
 * **Environment:** System Native (Root).

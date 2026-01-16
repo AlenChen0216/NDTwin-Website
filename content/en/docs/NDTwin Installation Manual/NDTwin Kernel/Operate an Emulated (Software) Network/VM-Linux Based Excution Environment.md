@@ -2,7 +2,7 @@
 title: Use the Demo VM for a Quick Start
 description: >
   A quick start guide designed for the pre-configured Ubuntu VM image.
-  All dependencies (Ryu, Mininet, NDT Core) are pre-installed.
+  All dependencies (Ryu, Mininet, NDT Kernel) are pre-installed.
   Users can skip installation steps and directly run the system.
 date: 2025-12-24
 weight: 1
@@ -16,7 +16,7 @@ This environment is a pre-configured **Ubuntu** virtual machine designed to help
 
 Included in this image:
 * **Operating System:** Ubuntu (Pre-configured)
-* **Core Components:** NDT Core, Ryu SDN Controller, Mininet
+* **Core Components:** NDT Kernel, Ryu SDN Controller, Mininet
 * **Dependencies:** All required Python libraries, system tools, and network configurations.
 
 ### 1. Download the Image

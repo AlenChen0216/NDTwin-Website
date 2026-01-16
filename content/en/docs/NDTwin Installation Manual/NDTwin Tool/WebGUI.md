@@ -132,7 +132,7 @@ In the project root directory, you need to create and configure the `.env` file 
     ```
 
 3. Configure the NDT API Base URL:
-Find the `NDT_API_BASE_URL` line in the `.env` file and update it to your NDT core server IP address.
+Find the `NDT_API_BASE_URL` line in the `.env` file and update it to your NDT Kernel server IP address.
 For example, if your NDT server (mininet or testbed) is running at `http://192.168.10.189:8000`, set it as:
     ```bash
     NDT_API_BASE_URL=http://192.168.10.189:8000

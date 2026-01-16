@@ -2,7 +2,7 @@
 title: Install All Required Components on a Linux Server
 description: > 
   A comprehensive guide for manually installing the NDT system on a native Linux environment.
-  This section covers system dependencies, building the NDT Core with Ninja, configuring Python environments, and running the full system.
+  This section covers system dependencies, building the NDT Kernel with Ninja, configuring Python environments, and running the full system.
 date: 2025-12-24
 weight: 2
 ---
@@ -23,7 +23,7 @@ The system has been verified on the following configuration:
 
 ## 2. System Dependencies Installation
 
-You need to install build tools, network analysis utilities, and specific C++ libraries required by the NDT Core and Mininet.
+You need to install build tools, network analysis utilities, and specific C++ libraries required by the NDT Kernel and Mininet.
 
 
 
@@ -121,7 +121,7 @@ pip install networkx==3.6.1 requests==2.32.5 loguru==0.7.3
 
 ---
 
-## 4. Download & Compile NDT Core
+## 4. Download & Compile NDT Kernel
 
 We use CMake and Ninja to compile the C++ core.
 

@@ -19,7 +19,7 @@ To accommodate different user needs, we provide two distinct ways to set up this
 👉 **Go to:** [VM-Linux Based Execution Environment]({{< ref "VM-Linux Based Excution Environment.md" >}})
 
 * **Best for:** Users who want to experience the NDT system immediately without spending time on installation and debugging.
-* **What you get:** A pre-configured Ubuntu Virtual Machine image with all environments (Ryu, Mininet, NDT Core) ready to run.
+* **What you get:** A pre-configured Ubuntu Virtual Machine image with all environments (Ryu, Mininet, NDT Kernel) ready to run.
 * **Prerequisites:** None (just download and run).
 * **Pros:** Zero setup time, guaranteed compatibility.
 
