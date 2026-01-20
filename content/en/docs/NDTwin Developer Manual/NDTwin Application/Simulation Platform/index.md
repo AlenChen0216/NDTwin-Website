@@ -1,7 +1,7 @@
 ---
 title: Simulation Platform
-description: >
- NDTwin Simulation Platform Manager
+description: 
+Explain how an NDTwin application uses the simulation platform to simulate many “what-if” cases in parallel
 date: 2026-01-04
 weight: 3
 ---

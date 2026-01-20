@@ -1,6 +1,6 @@
 ---
 title: Application Examples
-description: Source code of the deployed network applications including energy-saving app and traffic-engineering app.
+description: Provide the source code of energy-saving app and traffic-engineering app for reference.
 date: 2017-01-05
 weight: 5
 ---
