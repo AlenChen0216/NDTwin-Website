@@ -1,6 +1,6 @@
 ---
 title: Application Structure
-description: >
+description: Explain the structure of an NDTwin application.
 date: 2017-01-05
 weight: 1
 ---

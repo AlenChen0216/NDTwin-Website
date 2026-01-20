@@ -1,6 +1,6 @@
 ---
 title: NDTwin Kernel API
-description: >
+description: Explain how an NDTWin application calls the NDTWin kernel API for requesting various services.
 
 date: 2017-01-05
 weight: 2
