@@ -173,43 +173,6 @@ We rely on a custom Python script (`testbed_topo.py`) to solve **sFlow routing c
 ```python
 #!/usr/bin/env python3
 
-"""
-==========================================================================================
-Mininet Topology Template for Stable sFlow Monitoring with Host Internet Coexistence
-==========================================================================================
-This script creates a Mininet network topology and configures sFlow monitoring
-for each switch. It is meticulously designed to solve a common, complex problem:
-how to send identifiable sFlow data from each switch to a local collector (like sflow-tool)
-without disrupting the host machine's internet connection.
-
-The Core Challenge:
------------------------------
-1.  Source IP: sFlow packets need a unique source IP to be identifiable (e.g., s1 -> 192.168.123.11).
-2.  Destination IP: The collector (e.g., sflow-tool) often listens on localhost (127.0.0.1).
-3.  The Conflict: Sending a packet from 192.168.123.11 to 127.0.0.1 is a cross-subnet routing problem.
-4.  The Trap: Using IPs from the 127.0.0.0/8 range for switches will break the host's DNS and network.
-
-The "IP Alias" Solution:
--------------------------------------------
-This script elegantly solves the problem by creating a virtual "management network" within
-the host machine's loopback interface.
-
-1.  A dedicated private subnet (e.g., 192.168.123.0/24) is chosen for sFlow management.
-2.  Each switch is assigned a unique IP from this subnet (e.g., s1 gets 192.168.123.11).
-3.  A special IP Alias (e.g., 192.168.123.1) is added to the host's loopback ('lo') interface.
-4.  Switches send sFlow packets to this IP Alias. Since the destination is on the 'lo' interface,
-    the Linux kernel routes the packets internally directly to the collector, without any conflicts.
-
-This ensures all three goals are met: Host network is safe, sFlow is delivered, and the source is identifiable.
-
-----------------------------------------
-A Note from the Developer:
-----------------------------------------
-If you're wondering how we cracked this tricky sFlow problem without breaking everything,
-you're not alone! This elegant "IP Alias" solution was the result of a long and insightful
-troubleshooting session with Google's Gemini. It's a great example of how AI can be a
-powerful partner in research and development. Big thanks to our digital lab assistant!
-"""
 
 from mininet.topo import Topo
 from mininet.net import Mininet
