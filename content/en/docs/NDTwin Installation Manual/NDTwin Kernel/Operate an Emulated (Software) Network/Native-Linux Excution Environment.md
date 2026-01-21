@@ -131,7 +131,7 @@ If you haven't downloaded the project yet, clone it to your Desktop (or preferre
 
 ```bash
 cd ~/Desktop
-git clone [https://github.com/ndtwin/NDTwin-Kernel](https://github.com/ndtwin/NDTwin-Kernel) NetworkDigitalTwin-main
+git clone [https://github.com/ndtwin-lab](https://github.com/ndtwin-lab) NetworkDigitalTwin-main
 
 ```
 

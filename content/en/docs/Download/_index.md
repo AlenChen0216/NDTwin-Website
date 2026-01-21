@@ -24,7 +24,7 @@ The NDTwin Kernel.
 
 | Component | Version | Description | Download |
 | :--- | :--- | :--- | :--- |
-| **NDTwin Kernel** | v1.0.0 | The core module of the NDTwin architecture. | [Link](#) |
+| **NDTwin Kernel** | v1.0.0 | The core module of the NDTwin architecture. | [Link](https://github.com/ndtwin-lab/NDTwin-Kernel) |
 
 
 
@@ -33,19 +33,19 @@ Utilities for traffic generation, visualization, and logging.
 
 | Component | Version | Description | Download |
 | :--- | :--- | :--- | :--- |
-| **Simulation Platform** | v1.0.0 | The environment for running network simulations. | [Link](#) |
-| **Web GUI** | v1.0.0 | Browser-based interface for management and monitoring. | [Link](#) |
-| **Network Traffic Visualizer** | v1.0.0 | Real-time graphical representation of network flows. | [Link](#) |
-| **Network Traffic Generator** | v1.0.0 | Tool for generating synthetic traffic patterns for testing. | [Link](#) |
-| **Network State Recorder** | v1.0.0 | Captures and logs network states for replay and analysis. | [Link](#) |
+| **Simulation Platform** | v1.0.0 | The environment for running network simulations. | [Link](https://github.com/ndtwin-lab/Simulation-Platform-Manager) |
+| **Web GUI** | v1.0.0 | Browser-based interface for management and monitoring. | [Link](https://github.com/ndtwin-lab/Web-GUI) |
+| **Network Traffic Visualizer** | v1.0.0 | Real-time graphical representation of network flows. | [Link](https://github.com/ndtwin-lab/Network-Traffic-Visualizer) |
+| **Network Traffic Generator** | v1.0.0 | Tool for generating synthetic traffic patterns for testing. | [Link](https://github.com/ndtwin-lab/Network-Traffic-Generator) |
+| **Network State Recorder** | v1.0.0 | Captures and logs network states for replay and analysis. | [Link](https://github.com/ndtwin-lab/Network-State-Recorder) |
 
 ### Applications
 Sample and production applications designed to run on top of NDTwin.
 
 | Component | Version | Description | Download |
 | :--- | :--- | :--- | :--- |
-| **Energy-Saving App** | v1.0.0 | Algorithm for optimizing power consumption in the network. | [Link](#) |
-| **Traffic-Engineering App** | v1.0.0 | Application for dynamic routing and flow optimization. | [Link](#) |
+| **Energy-Saving App** | v1.0.0 | Algorithm for optimizing power consumption in the network. | [Link](https://github.com/ndtwin-lab/Energy-Saving-App) |
+| **Traffic-Engineering App** | v1.0.0 | Application for dynamic routing and flow optimization. | [Link](https://github.com/ndtwin-lab/Traffic-Engineering-App) |
 
 ---
 

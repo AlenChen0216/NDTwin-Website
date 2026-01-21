@@ -87,7 +87,7 @@ menu: {main: {weight: 10}}
                     <a class="btn btn-lg me-3 mb-3 shadow" href="/docs/" style="background-color: #ED7D31; color: #fff; font-weight: 800; padding: 0.8rem 2rem; border-radius: 50px;">
                         Get Started <i class="fas fa-arrow-right ms-2"></i>
                     </a>
-                    <a class="btn btn-lg btn-outline-light me-3 mb-3" href="https://github.com/ndtwin/NDTwin-Kernel" style="border-width: 2px; font-weight: bold; padding: 0.8rem 2rem; border-radius: 50px;">
+                    <a class="btn btn-lg btn-outline-light me-3 mb-3" href="https://github.com/ndtwin-lab" style="border-width: 2px; font-weight: bold; padding: 0.8rem 2rem; border-radius: 50px;">
                         Download <i class="fab fa-github ms-2"></i>
                     </a>
                 </div>
@@ -158,7 +158,7 @@ menu: {main: {weight: 10}}
                 <p class="text-muted px-3">
                     Join our community on GitHub and contribute.
                 </p>
-                <a href="https://github.com/ndtwin/NDTwin-Kernel" class="font-weight-bold" style="color: #2D75B2; text-decoration: none;">
+                <a href="https://github.com/ndtwin-lab" class="font-weight-bold" style="color: #2D75B2; text-decoration: none;">
                     Read more <i class="fas fa-arrow-right small ms-1"></i>
                 </a>
             </div>
