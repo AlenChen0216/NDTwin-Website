@@ -47,13 +47,6 @@ iii. simulation platform Responsible for the heavy lifting, this server receives
 * **NDT Kernel (NFS Server):** Exports file directories, acting as the central storage hub.
 * **Client App & simulation platform (NFS Clients):** Mount these directories to perform direct read/write operations.
 
-#### Data Flow Strategy
-
-| Stage | Client Application | simulation platform |
-| --- | --- | --- |
-| **Pre-Simulation** | **Writes** simulation input parameters | **Reads** input parameters to initialize |
-| **Post-Simulation** | **Reads** simulation results | **Writes** performance metrics/results |
-
 ---
 
 ### 4. Simulation Request Protocol
