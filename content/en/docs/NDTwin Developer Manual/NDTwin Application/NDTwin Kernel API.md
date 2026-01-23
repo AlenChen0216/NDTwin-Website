@@ -1,12 +1,3 @@
----
-title: NDTwin Kernel API
-description: Explain the NDTwin kernel RESTful APIs that are called by NDTwin applications for requesting various services.
-
-date: 2017-01-05
-weight: 2
----
-
-
 # NDT RESTful API Documentation
 ## 1. POST /ndt/link_failure_detected
 ### Description
@@ -134,7 +125,7 @@ Returned when an unknown exception type is thrown.
 ### Description
 Returns the complete graph topology configured in *setting/StaticNetworkTopology.json* including nodes and edges, flow information, and edge status.
 **vertex_type = 0** means a switch, and **vertex_type = 1** means a host.
-**is_up** suggests whether a device reply ping.
+**is_up** suggests whether a switch reply ping or whether a host is detected by Ryu.
 **is_enable** in switch node suggests whether the switch is connected to controller. 
 At the edge between the switch and host, the dpid and interface on the host side are set to 0.
 
@@ -588,17 +579,19 @@ Returned when an unknown exception type is thrown.
 
 ### Description
 
-Sends a power control command to one of the network switches by interacting with the smart plug associated with it.
+Controls the operational state of a switch.
+* TESTBED mode: Sends a power control command to a physical switch by interacting with the smart plug associated with it.
+* MININET mode: Simulates switch power ON/OFF by adding (on) or removing (off) the corresponding OVS bridge via ovs-vsctl commands.
 
 ### Request
 * Method: **POST**
 * Content-Type: **application/json**
 * Query Parameters:
 
-| Parameter | Type   | Description                            |
+| Field | Type   | Description                            |
 | --------- | ------ | -------------------------------------- |
-| `ip`      | string | IP address of the switch               |
-| `action`  | string | Desired power state: `"on"` or `"off"` |
+| `ip`      | `string` | IP address of the switch               |
+| `action`  | `string` | Desired power state: `"on"` or `"off"` |
 
 * Body
   None
@@ -715,9 +708,9 @@ Returned when an unknown exception type is thrown.
 ### Description
 Deletes a flow entry from a switch based on match fields. 
 
-* If the request body does not include "priority", NDT forwards the request to Ryu **/stats/flowentry/delete** (non-strict delete).
+* If the request body does not include "priority", NDTwin forwards the request to Ryu **/stats/flowentry/delete** (non-strict delete).
 
-* If the request body includes "priority", NDT forwards the request to Ryu **/stats/flowentry/delete_strict** (strict delete, exact match+priority).
+* If the request body includes "priority", NDTwin forwards the request to Ryu **/stats/flowentry/delete_strict** (strict delete, exact match+priority).
 
 
 ### Request
@@ -869,14 +862,16 @@ In MININET mode, dummy values are generated for demonstration purposes.
 
 ## 14. GET /ndt/inform_switch_entered
 ### Description
-Called by Ryu to notify the NDT system that a new switch has entered the network (i.e., connected). This will mark the switch as UP in the internal topology.
+Called by Ryu to notify the NDTwin system that a new switch has entered the network (i.e., connected). This will mark the switch as UP in the internal topology.
 
 ```shell
 GET "http://localhost:8000/ndt/inform_switch_entered?dpid=106225808402492"
 ```
 ### Request
 * Method: **GET**
-* Query Parameter: dpid
+* Query Parameter: 
+
+  dpid
 ### Response
 #### Success
 * Status: **200 OK**
@@ -931,7 +926,7 @@ Returned when an unknown exception type is thrown.
 
 ## 15. POST /ndt/modify_device_name
 ### Description
-Updates the name of a switch or host in the NDT topology and StaticNetworkTopology.json.
+Updates the name of a switch or host in the NDTwin topology and StaticNetworkTopology.json.
 
 
 ### Request
@@ -1006,95 +1001,12 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 16. GET /ndt/get_static_topology_json
-### Description
-Generates the current topology StaticNetworkTopology content.
-
-**Note:** src_ip/dst_ip are in network order.
-### Request
-* Method: **GET**
-
-### Response
-#### Success
-* Status: **200 OK**
-```json
-{
-    "edges": [
-        {
-        "dst_dpid": 1,
-        "dst_ip": [
-            192653504
-        ],
-        "dst_interface": 2,
-        "link_bandwidth_bps": 1000000000,
-        "src_dpid": 4,
-        "src_ip": [
-            242985152
-        ],
-        "src_interface": 1
-        },
-        ...
-    ],
-
-    "nodes": [
-        {
-        "brand_name": "OVS",
-        "device_layer": 1,
-        "device_name": "s4",
-        "dpid": 4,
-        "ip": [
-            242985152
-        ],
-        "mac": 0,
-        "vertex_type": 0
-        },
-
-        ...
-    ]
-}
-```
-
-
-### Response
-#### Success
-* Status: **200 OK**
-```json
-{
-  "status": "success"
-}
-```
-
-#### Error
-Returned when the request body is not valid JSON, or JSON fields have invalid types/format.
-* Status: **400 Bad Request**
-```json
-{
-  "error": "JSON parsing error",
-  "details": "<exception message>"
-}
-```
-Returned when an unexpected runtime error occurs (e.g., invalid state, missing dependency, system failure).
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "Internal server error",
-  "details": "<exception message>"
-}
-```
-Returned when an unknown exception type is thrown.
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "An unknown error occurred"
-}
-```
-
-## 17. POST /ndt/app_register
+## 16. POST /ndt/app_register
 ### Description
 Registers a new application with the server.
 When an application is registered:
 
-- The server assigns it a unique app_id.
+- The server assigns it a unique `app_id`.
 
 - Creates a dedicated folder for the application in the NFS export directory (e.g., /srv/nfs/sim/<app_id>).
 
@@ -1152,11 +1064,11 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 18. POST /ndt/received_a_simulation_case
+## 17. POST /ndt/received_a_simulation_case
 
 ### Description
 
-Notifies the NDT server that a new simulation case has been dispatched by an external simulator and reply the response from simulation server.
+Notifies the NDTwin server that a new simulation case has been dispatched by an external simulator and reply the response from simulation server.
 
 ### Request
 * Method: **POST**
@@ -1165,11 +1077,11 @@ Notifies the NDT server that a new simulation case has been dispatched by an ext
 
 | Field       | Type   | Description                                                             |
 | ----------- | ------ | ----------------------------------------------------------------------- |
-| `simulator` | string | Name of the simulator (e.g., `"NetSquid"`)                              |
-| `version`   | string | Version identifier of the simulator (e.g., `"v1.2.3"`)                  |
-| `app_id`    | string | Identifier of the registered application (as returned by app\_register) |
-| `case_id`   | string | Unique identifier for this simulation case                              |
-| `inputfile` | string | Path or URL where the simulator can fetch its input description         |
+| `simulator` | `string` | Name of the simulator (e.g., `"NetSquid"`)                              |
+| `version`   | `string` | Version identifier of the simulator (e.g., `"v1.2.3"`)                  |
+| `app_id`    | `string` | Identifier of the registered application (as returned by app\_register) |
+| `case_id`   | `string` | Unique identifier for this simulation case                              |
+| `inputfile` | `string` | Path or URL where the simulator can fetch its input description         |
 
 ```json
 {
@@ -1218,11 +1130,11 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 19. POST /ndt/simulation_completed
+## 18. POST /ndt/simulation_completed
 
 ### Description
 
-Called by the external simulator when a simulation finishes. The server will forward the result URL to the registered application via the SimulationRequestManager’s callback.
+Called by the external simulator when a simulation finishes. The NDTwin will forward the result URL to the registered application.
 
 ### Request
 * Method: **POST**
@@ -1231,9 +1143,9 @@ Called by the external simulator when a simulation finishes. The server will for
 
 | Field        | Type   | Description                                                   |
 | ------------ | ------ | ------------------------------------------------------------- |
-| `app_id`     | string | Identifier of the application that submitted the simulation   |
-| `case_id`    | string | Identifier of the simulation case that has completed          |
-| `outputfile` | string | Path or URL where the simulator has deposited its output file |
+| `app_id`     | `string` | Identifier of the application that submitted the simulation   |
+| `case_id`    | `string` | Identifier of the simulation case that has completed          |
+| `outputfile` | `string` | Path or URL where the simulator has deposited its output file |
 
 ```json
 {
@@ -1280,7 +1192,7 @@ Returned when an unknown exception type is thrown.
 ```
 
 
-## 20. GET /ndt/get_nickname
+## 19. GET /ndt/get_nickname
 ### Description
 
 Retrieves the **nickname** of a single device from the network topology. The device must be identified by one of the query parameters: `dpid`, `mac`, or `name`.
@@ -1364,7 +1276,7 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 21. POST /ndt/modify_nickname
+## 20. POST /ndt/modify_nickname
 ### Description
 
 Updates the nickname of a device (e.g., a switch or host) in the network topology. The device can be identified by its **DPID**, **MAC address**, or its current **name**(e.g., name or nickname).
@@ -1446,7 +1358,7 @@ This error is returned for invalid request formats, such as malformed JSON, miss
 }
 ```
 
-## 22. GET /ndt/get_temperature
+## 21. GET /ndt/get_temperature
 
 ### Description
 
@@ -1502,7 +1414,7 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 23. GET /ndt/get_path_switch_count
+## 22. GET /ndt/get_path_switch_count
 
 ### Description
 
@@ -1521,9 +1433,11 @@ Retrieves the number of switches along network paths.
 | `dst_ip`  | `string` | No       | The destination IP address of the path (e.g., "10.0.0.2"). If omitted, all paths will be returned. |
 
 * Example URLs:
-  * For a specific path:
+
+  For a specific path:
     `/ndt/get_path_switch_count?src_ip=10.0.0.1&dst_ip=10.0.0.2`
-  * For all paths (empty query):
+
+  For all paths (empty query):
     `/ndt/get_path_switch_count`
 
 ### Response
@@ -1599,38 +1513,42 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 24. POST /ndt/install_flow_entries_modify_flow_entries_and_delete_flow_entries
+## 23. POST /ndt/install_flow_entries_modify_flow_entries_and_delete_flow_entries
 
 ### Description
 
-Installs, modifies and deletes OpenFlow entries in one request. For each installation/modification/deletion, the server updates rules and recalculates affected paths, then returns a success status.
+Installs, modifies and deletes OpenFlow entries in one request. 
+
+**Implementation details:**
+To minimize update time, the controller uses a producer–consumer architecture: the request handler (producer) parses and validates flow actions, then pushes them into an internal queue. A dedicated worker (consumer) dequeues actions and applies them to switches, reducing per-request overhead and improving flow update throughput.
 
 ### Request
 * Method: **POST**
 * Content-Type: **application/json**
 * Body Parameters:
 
-  | Field        | Type   | Description                                                   |
-  | ------------ | ------ | ------------------------------------------------------------- |
-  | `install_flow_entries`     | array | Array of install entries. Each item must include dpid, match, and actions; priority optional (0 as default value).   |
-  | `modify_flow_entries`     | array | Array of modify entries. Each item must include dpid, match, and actions; priority optional (0 as default value).   |
-  | `delete_flow_entries`    | array | Array of delete entries. Each item must include dpid and match.          |
+| Field        | Type   | Description                                                   |
+| ------------ | ------ | ------------------------------------------------------------- |
+| `install_flow_entries`     | `array` | Array of install entries. Each item must include dpid, match, and actions; priority optional (0 as default value).   |
+| `modify_flow_entries`     | `array` | Array of modify entries. Each item must include dpid, match, and actions; priority optional (0 as default value).   |
+| `delete_flow_entries`    | `array` | Array of delete entries. Each item must include dpid and match.          |
 
 * **Install/Modify entry fields**
 
   | Field        | Type   | Description                                                   |
   | ------------ | ------ | ------------------------------------------------------------- |
-  | `dpid`     | integer | Switch datapath ID (uint64).   |
-  | `priority`    | integer | 	Rule priority (optional; defaults to 0 if missing).          |
-  | `match`    | object | 	Match fields.          |
-  | `actions`    | array | 	List of actions.          |
+  | `dpid`     | `uint64_t` | Switch datapath ID.   |
+  | `priority`    | `int` | 	Rule priority (optional; defaults to 0 if missing).          |
+  | `match`    | `object` | 	Match fields.          |
+  | `actions`    | `array` | 	List of actions.          |
 
 * **Delete entry fields**
+
   | Field        | Type   | Description                                                   |
   | ------------ | ------ | ------------------------------------------------------------- |
-  | `dpid`     | integer | Switch datapath ID (uint64).   |
-  | `match`    | object | 	Match fields.          |
-  | `priority`   | integer | 	Rule priority (optional; defaults to -1 if missing)          |
+  | `dpid`     | `uint64_t` | Switch datapath ID.   |
+  | `match`    | `object` | 	Match fields.          |
+  | `priority`   | `int` | 	Rule priority (optional; defaults to -1 if missing)          |
 
 
 ```json
@@ -1773,6 +1691,32 @@ Installs, modifies and deletes OpenFlow entries in one request. For each install
     "delete_flow_entries": []
 }
 ```
+```json
+{
+  "install_flow_entries": [
+    {
+      "dpid": 5,
+      "match": {
+        "ip_proto": 6,
+        "eth_type": 2048,
+        "ipv4_src": "10.0.0.1/24",
+        "ipv4_dst": "10.0.0.2/24",
+        "tcp_src": 12345,
+        "tcp_dst": 443
+      },
+      "actions": [
+        {
+          "type": "OUTPUT",
+          "port": 2
+        }
+      ],
+      "priority": 201
+    }
+  ],
+  "modify_flow_entries": [],
+  "delete_flow_entries": []
+}
+```
 
 ### Response
 
@@ -1832,474 +1776,11 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 25. POST /ndt/install_group_entry
-### Description
-Installs a new OpenFlow group entry in a specific switch via the Ryu controller. 
-
-The API constructs and sends a **groupentry/add** POST request to Ryu.
-
-### Request
-* Method: **POST**
-* Content-Type: **application/json**
-* Body
-```json
-{
-    "dpid": 334525264558512,
-    "type": "ALL",
-    "group_id": 10,
-    "buckets": [
-      { "actions": [ { "type": "OUTPUT", "port": 25 } ] },
-      { "actions": [ { "type": "OUTPUT", "port": 26 } ] }
-    ]
-}
-```
-### Response
-#### Success
-* Status: **200 OK**
-* Body 
-```json
-{
-  "status":"Group entry installed"
-}
-```
-#### Error
-Returned when the request body is not valid JSON, or JSON fields have invalid types/format.
-* Status: **400 Bad Request**
-```json
-{
-  "error": "JSON parsing error",
-  "details": "<exception message>"
-}
-```
-Returned when an unexpected runtime error occurs (e.g., invalid state, missing dependency, system failure).
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "Internal server error",
-  "details": "<exception message>"
-}
-```
-Returned when an unknown exception type is thrown.
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "An unknown error occurred"
-}
-```
 
 
-## 26. POST /ndt/delete_group_entry
-### Description
-Deletes a new OpenFlow group entry in a specific switch via the Ryu controller. 
-
-The API constructs and sends a **groupentry/delete** POST request to Ryu.
-
-### Request
-* Method: **POST**
-* Content-Type: **application/json**
-* Body
-```json
-{
-    "dpid": 106225808398208	,
-    "group_id": 10,
-    "type": "ALL"
-}
-```
-### Response
-#### Success
-* Status: **200 OK**
-* Body 
-```json
-{
-  "status":"Group entry deleted"
-}
-```
-#### Error
-Returned when the request body is not valid JSON, or JSON fields have invalid types/format.
-* Status: **400 Bad Request**
-```json
-{
-  "error": "JSON parsing error",
-  "details": "<exception message>"
-}
-```
-Returned when an unexpected runtime error occurs (e.g., invalid state, missing dependency, system failure).
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "Internal server error",
-  "details": "<exception message>"
-}
-```
-Returned when an unknown exception type is thrown.
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "An unknown error occurred"
-}
-```
-
-## 27. POST /ndt/modify_group_entry
-### Description
-Modifies a new OpenFlow group entry in a specific switch via the Ryu controller. 
-
-The API constructs and sends a **groupentry/modify** POST request to Ryu.
-
-### Request
-* Method: **POST**
-* Content-Type: **application/json**
-* Body
-```json
-{
-    "dpid": 106225808398208	,
-    "type": "INDIRECT",
-    "group_id": 20,
-    "buckets": [
-      { "actions": [ { "type": "OUTPUT", "port": 22 } ] }
-    ]
-}
-```
-### Response
-#### Success
-* Status: **200 OK**
-* Body 
-```json
-{
-  "status":"Group entry modified"
-}
-```
-#### Error
-Returned when the request body is not valid JSON, or JSON fields have invalid types/format.
-* Status: **400 Bad Request**
-```json
-{
-  "error": "JSON parsing error",
-  "details": "<exception message>"
-}
-```
-Returned when an unexpected runtime error occurs (e.g., invalid state, missing dependency, system failure).
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "Internal server error",
-  "details": "<exception message>"
-}
-```
-Returned when an unknown exception type is thrown.
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "An unknown error occurred"
-}
-```
-
-## 28. POST /ndt/install_meter_entry
-### Description
-Installs a new OpenFlow meter entry in a specific switch via the Ryu controller. 
-
-The API constructs and sends a **meterentry/add** POST request to Ryu.
-
-### Request
-* Method: **POST**
-* Content-Type: **application/json**
-* Body
-```json
-{
-    "dpid": 106225808398208,
-    "flags": ["KBPS", "BURST", "STATS"],
-    "meter_id": 5,
-    "bands": [
-      { "type": "DROP", "rate": 5000, "burst_size": 1000 }
-    ]
-}
-```
-### Response
-#### Success
-* Status: **200 OK**
-* Body 
-```json
-{
-  "status":"Meter entry installed"
-}
-```
-#### Error
-Returned when the request body is not valid JSON, or JSON fields have invalid types/format.
-* Status: **400 Bad Request**
-```json
-{
-  "error": "JSON parsing error",
-  "details": "<exception message>"
-}
-```
-Returned when an unexpected runtime error occurs (e.g., invalid state, missing dependency, system failure).
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "Internal server error",
-  "details": "<exception message>"
-}
-```
-Returned when an unknown exception type is thrown.
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "An unknown error occurred"
-}
-```
-
-## 29. POST /ndt/delete_meter_entry
-### Description
-Deletes a new OpenFlow meter entry in a specific switch via the Ryu controller. 
-
-The API constructs and sends a **meterentry/delete** POST request to Ryu.
-
-### Request
-* Method: **POST**
-* Content-Type: **application/json**
-* Body
-```json
-{
-    "dpid": 106225808398208,
-    "meter_id": 5
-}
-```
-### Response
-#### Success
-* Status: **200 OK**
-* Body 
-```json
-{
-  "status":"Meter entry deleted"
-}
-```
-#### Error
-Returned when the request body is not valid JSON, or JSON fields have invalid types/format.
-* Status: **400 Bad Request**
-```json
-{
-  "error": "JSON parsing error",
-  "details": "<exception message>"
-}
-```
-Returned when an unexpected runtime error occurs (e.g., invalid state, missing dependency, system failure).
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "Internal server error",
-  "details": "<exception message>"
-}
-```
-Returned when an unknown exception type is thrown.
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "An unknown error occurred"
-}
-```
-
-## 30. POST /ndt/modify_meter_entry
-### Description
-Modifies a new OpenFlow meter entry in a specific switch via the Ryu controller. 
-
-The API constructs and sends a **meterentry/modify** POST request to Ryu.
-
-### Request
-* Method: **POST**
-* Content-Type: **application/json**
-* Body
-```json
-{
-    "dpid": 106225808398208,
-    "flags": ["KBPS", "BURST", "STATS"],
-    "meter_id": 5,
-    "bands": [
-      { "type": "DROP", "rate": 10000, "burst_size": 2000 }
-    ]
-}
-```
-### Response
-#### Success
-* Status: **200 OK**
-* Body 
-```json
-{
-  "status":"Meter entry modified"
-}
-```
-#### Error
-Returned when the request body is not valid JSON, or JSON fields have invalid types/format.
-* Status: **400 Bad Request**
-```json
-{
-  "error": "JSON parsing error",
-  "details": "<exception message>"
-}
-```
-Returned when an unexpected runtime error occurs (e.g., invalid state, missing dependency, system failure).
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "Internal server error",
-  "details": "<exception message>"
-}
-```
-Returned when an unknown exception type is thrown.
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "An unknown error occurred"
-}
-```
 
 
-## 31. GET /ndt/get_openflow_capacity
-### Description
-
-### Request
-* Method: **GET**
-### Response
-#### Success
-* Status: **200 OK**
-```json
-{
-    "BrocadeICX7250": {
-        "groups": {
-            "types": [
-                "ALL",
-                "INDIRECT",
-                "FF"
-            ]
-        },
-        "meters": {
-            "bands": [
-                "DROP"
-            ],
-            "flags": [
-                "KBPS",
-                "BURST",
-                "STATS"
-            ],
-            "supported": true
-        },
-        "openflow_versions": [
-            "1.0",
-            "1.3"
-        ],
-        "tables": [
-            {
-                "actions": [
-                    "OUTPUT",
-                    "SET_FIELD",
-                    "DROP",
-                    "GROUP"
-                ],
-                "id": 0,
-                "instructions": [
-                    "APPLY_ACTIONS",
-                    "WRITE_ACTIONS",
-                    "METER"
-                ],
-                "matches": [
-                    "in_port",
-                    "eth_src",
-                    "eth_dst",
-                    "eth_type",
-                    "ipv4_dst"
-                ],
-                "max_entries": 3072
-            }
-        ]
-    },
-    ...
-}
-```
-#### Error
-Returned when the request body is not valid JSON, or JSON fields have invalid types/format.
-* Status: **400 Bad Request**
-```json
-{
-  "error": "JSON parsing error",
-  "details": "<exception message>"
-}
-```
-Returned when an unexpected runtime error occurs (e.g., invalid state, missing dependency, system failure).
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "Internal server error",
-  "details": "<exception message>"
-}
-```
-Returned when an unknown exception type is thrown.
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "An unknown error occurred"
-}
-```
-
-## 32. GET /ndt/historical_logging
-### Description
-Enable or disable historical logging in the system.
-The state is set by passing the query parameter state with value enable or disable.
-
-### Request
-* Method: **GET**
-* Query Parameters:
-    * state (required): must be either "enable" or "disable"
-### Example
-```shell
- GET "http://127.0.0.1:8000/ndt/historical_logging?state=enable"
-```
-### Response
-#### Success
-* Status: **200 OK**
-```json
-{
-  "status": "success",
-  "message": "Historical data logging has been enabled."
-}
-```
-
-#### Error
-* Status: **400 Bad Request**
-```json
-{
-  "error": "Invalid or missing 'state' parameter. Use 'enable' or 'disable'."
-}
-```
-Returned when the request body is not valid JSON, or JSON fields have invalid types/format.
-* Status: **400 Bad Request**
-```json
-{
-  "error": "JSON parsing error",
-  "details": "<exception message>"
-}
-```
-* Status: **500 Internal Server Error**
-```json
-{
-  "status": "error",
-  "message": "Historical data manager not available."
-}
-```
-Returned when an unexpected runtime error occurs (e.g., invalid state, missing dependency, system failure).
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "Internal server error",
-  "details": "<exception message>"
-}
-```
-Returned when an unknown exception type is thrown.
-* Status: **500 Internal Server Error**
-```json
-{
-  "error": "An unknown error occurred"
-}
-```
-
-## 33. GET /ndt/get_average_link_usage
+## 24. GET /ndt/get_average_link_usage
 ### Description
 Returns the average link utilization across all UP inter-switch links (host-facing links are excluded).
 Only links with non-zero link_bandwidth_usage_bps are included in the average.
@@ -2345,7 +1826,7 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 34. POST /ndt/get_total_input_traffic_load_passing_a_switch
+## 25. POST /ndt/get_total_input_traffic_load_passing_a_switch
 ### Description
 Returns the total incoming traffic load (bps) for a given switch.
 It sums link_bandwidth_usage_bps for all edges whose destination DPID equals the provided dpid
@@ -2396,13 +1877,11 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 35. POST /ndt/get_num_of_flows_passing_a_switch
+## 26. POST /ndt/get_num_of_flows_passing_a_switch
 ### Description
-Returns the number of flows passing a switch, computed by summing flowSet.size() over all
+Returns the number of flows passing a switch, computed by summing the number of flows over all
 edges whose destination DPID equals the provided dpid (i.e., incoming links to that switch).
 
-**Note:** This is an aggregate count across edges; if the same flow appears on multiple incoming
-edges it will be counted multiple times (no global deduplication).
 
 ### Request
 * Method: **POST**
@@ -2449,13 +1928,18 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 36. POST /ndt/acquire_lock
+## 27. POST /ndt/acquire_lock
 ### Description
 Acquires a global lock (typed lock) to prevent application conflicts (mutual exclusion).
 Supports optional type and ttl (seconds). If the JSON body is missing/invalid, defaults are used.
 
-* type: lock category/name (string)
-* ttl: lock time-to-live in seconds (integer)
+* Body Parameters:
+
+| Field       | Type   | Description                                                             |
+| ----------- | ------ | ----------------------------------------------------------------------- |
+| `type` | `string` | lock category/name                              |
+| `ttl`   | `int` | lock time-to-live in seconds                  |
+
 
 ### Request
 * Method: **POST**
@@ -2512,7 +1996,7 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 37. POST /ndt/renew_lock
+## 28. POST /ndt/renew_lock
 ### Description
 Renews (extends) the TTL of an existing lock to keep exclusive access.
 Supports optional type and ttl. If missing/invalid JSON, defaults are used.
@@ -2572,7 +2056,7 @@ Returned when an unknown exception type is thrown.
 }
 ```
 
-## 38. POST /ndt/release_lock
+## 29. POST /ndt/release_lock
 ### Description
 Releases a previously acquired lock, allowing other applications to proceed.
 Supports optional type. If missing/invalid JSON, the default lock type is used.
