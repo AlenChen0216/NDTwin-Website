@@ -165,7 +165,7 @@ When the external simulator finishes, it calls NDTwin, which then forwards the r
 
 ---
 
-### 3. Error Handling Reference
+#### 3. Error Handling Reference
 
 The NDTwin API uses standard HTTP status codes. Below are common error responses:
 
@@ -177,7 +177,7 @@ The NDTwin API uses standard HTTP status codes. Below are common error responses
 
 ---
 
-### 4. Summary Table of Operations
+#### 4. Summary Table of Operations
 
 | Operation | Method | Endpoint |
 | --- | --- | --- |
