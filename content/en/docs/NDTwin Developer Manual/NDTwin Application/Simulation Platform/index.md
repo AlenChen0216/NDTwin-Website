@@ -20,7 +20,6 @@ ii. Simulation Request & Reply Manager Acts as the central communication bridge,
 iii. simulation platform Responsible for the heavy lifting, this server receives cases and forks processes to simulate them in parallel on a multi-core CPU. It evaluates the outcomes, writes the results back to NFS, and sends a completion reply to the NDT Kernel to notify the Client Application.
 
 
-
 ---
 
 ### 2. Workflow Execution Cycle
@@ -49,19 +48,7 @@ iii. simulation platform Responsible for the heavy lifting, this server receives
 
 ---
 
-### 4. Simulation Request Protocol
-
-As illustrated in the system design, a simulation request carries specific metadata required for routing and execution.
-
-| Field | Description |
-| --- | --- |
-| **Simulator Name** | Identifies which simulator program the server should execute. |
-| **Version** | Specifies the target version of the simulator (supporting multi-version environments). |
-| **App ID** | The unique ID of the requesting NDT Application. This ensures the NDT Kernel routes the reply back to the correct application in a multi-user environment. |
-| **Case ID** | A unique identifier used by the application to track and distinguish its specific simulation cases. |
-| **Input File Path** | The absolute path to the input file on NFS, allowing the server to locate and read the case data. |
-
-### 5. Integration Workflow
+### 4. Integration Workflow
 This section provides developers with a comprehensive walkthrough on how to register applications, prepare distributed simulation tasks, and handle asynchronous results within the NDTwin ecosystem
 
 ---
