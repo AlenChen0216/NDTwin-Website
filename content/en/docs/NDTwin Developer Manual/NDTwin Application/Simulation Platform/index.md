@@ -15,9 +15,9 @@ The system comprises three main components:
 
 i. Client Application (e.g., NDT App) This component analyzes system states to generate candidate simulation cases. It handles data preparation by storing input files on the shared Network File System (NFS) and subsequently dispatches simulation requests to the NDT Kernel.
 
-ii. Simulation Request & Reply Manager Acts as the central communication bridge, relaying requests and replies between the Client Application and the Simulation Server.
+ii. Simulation Request & Reply Manager Acts as the central communication bridge, relaying requests and replies between the Client Application and the simulation platform.
 
-iii. Simulation Server Responsible for the heavy lifting, this server receives cases and forks processes to simulate them in parallel on a multi-core CPU. It evaluates the outcomes, writes the results back to NFS, and sends a completion reply to the NDT Kernel to notify the Client Application.
+iii. simulation platform Responsible for the heavy lifting, this server receives cases and forks processes to simulate them in parallel on a multi-core CPU. It evaluates the outcomes, writes the results back to NFS, and sends a completion reply to the NDT Kernel to notify the Client Application.
 
 
 
@@ -26,7 +26,7 @@ iii. Simulation Server Responsible for the heavy lifting, this server receives c
 ### 2. Workflow Execution Cycle
 
 1. **Initiation:** The Client Application generates simulation scenarios, writes the input data to NFS, and signals the NDT Kernel.
-2. **Processing:** The Simulation Server reads the inputs, executes simulations in parallel, and writes the results back to NFS.
+2. **Processing:** The simulation platform reads the inputs, executes simulations in parallel, and writes the results back to NFS.
 3. **Completion & Decision:**
 * The Client Application waits for replies confirming all cases are finished.
 * It reads the output files from NFS to retrieve the detailed results.
@@ -45,11 +45,11 @@ iii. Simulation Server Responsible for the heavy lifting, this server receives c
 #### Roles and Responsibilities
 
 * **NDT Kernel (NFS Server):** Exports file directories, acting as the central storage hub.
-* **Client App & Simulation Server (NFS Clients):** Mount these directories to perform direct read/write operations.
+* **Client App & simulation platform (NFS Clients):** Mount these directories to perform direct read/write operations.
 
 #### Data Flow Strategy
 
-| Stage | Client Application | Simulation Server |
+| Stage | Client Application | simulation platform |
 | --- | --- | --- |
 | **Pre-Simulation** | **Writes** simulation input parameters | **Reads** input parameters to initialize |
 | **Post-Simulation** | **Reads** simulation results | **Writes** performance metrics/results |
@@ -68,7 +68,7 @@ As illustrated in the system design, a simulation request carries specific metad
 | **Case ID** | A unique identifier used by the application to track and distinguish its specific simulation cases. |
 | **Input File Path** | The absolute path to the input file on NFS, allowing the server to locate and read the case data. |
 
-### 5.Integration Workflow
+### 5. Integration Workflow
 This section provides developers with a comprehensive walkthrough on how to register applications, prepare distributed simulation tasks, and handle asynchronous results within the NDTwin ecosystem
 
 ---
