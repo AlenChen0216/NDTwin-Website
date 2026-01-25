@@ -1,12 +1,23 @@
 ---
 title: AI/ML Model Training and Inference
-description: Explain how an NDTwin application trains and inferences an AI/ML model for prediction and optimal control.
+description: Explain how an NDTwin application trains and inferences an AI/ML model for prediction and optimal control of the network.
 
 date: 2017-01-05
 weight: 4
 ---
 
-Here, we use an example to explain how an NDTwin application uses LSTNet to train a time-series model and uses the trained model for prediction and optimally operate the network. The LSTNet model is trained in PyTorch and exported as a .pt file. The NDTwin application is a C++ program. This article explains how a C++ NDTwin application imports a model trained in PyTorch and calls the prediction function of the trained model.
+AI/ML model training and inference involve data, training, and inferecne. Here, we explain how an NDTwin application gets data from the NDTwin kernel for trainning a model and how it uses the trained model for inference. Performing inferences can be used to classify a packet/flow/situation, etc. or to predict the future outcome of a flow/switch/link/network, etc. The purposes of using AI/ML models in an NDTWin application can be various. 
+
+Nowadays, most people use the Python language and Python-based platforms (e.g., scikit-learn, PyTorch,TensorFlow, etc.) to write programs for training and inferencing an AI/ML model. If the NDTWin application program is written in Python, it can use these Python-based platforms for training and inferencing a model as any non-NDTWin application program. After inferencing a model to get the classification result or the predicted future outcome, the NDTWin application can issue appropriate NDTWin kernel APIs to optimally control the network.
+
+Regarding obtaining appropriate data to train an AI/ML model, what data need to be collected to train the model depends on how an NDTWin application will use the trained model. For network data, the NDTwin application can (maybe periodically) issue appropriate NDTWin kernel APIs to get the data. The network state recorder (NSR) tool of NDTWin can also be used to automatically and periodically record the network data during a specified period into files, which can later be opend by the NDTwin application for model trainning.
+
+AI/ML model trainning can be performed offline. Thus, there is no need to perform model trainning on the NDTWin framework. NDTwin application developers can train their models on any machine they want. If the model trainning requires a considerable amount of GPU or CPU time, the developers can facilitate their model trainning on a powerful machine that is not part of NDTwin.
+
+After an AI/ML model has been trained on a machine that is not part of NDTwin, the NDTWin application can use the trained model for inference and optimal control of the network. Normally, the trained model needs to be exported into a file (e.g., exported to a .pt file if the PyTorch platform is used for trainning). If the NDTwin application program is written in Python, it can import the trained model from the exported model file and then calls appropriate prediction functions to make inferences. This usage is the same as that for non-NDTwin application in the real world. 
+
+If the NDTWin application program is not written in Python but in a different language such as C++, the NDTwin application needs to perform some operations to import a trained model and call its prediction function for inference.
+Below, we use an example to explain how an NDTwin application uses LSTNet to train a time-series model and uses the trained model for prediction and optimal control of the network. In this example, the LSTNet model is trained in PyTorch and exported as a .pt file. The NDTwin application is a C++ program. 
 
 # Training Phase
 ## 1) Prerequisites
