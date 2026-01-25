@@ -1,6 +1,6 @@
 ---
 title: "Community"
-description: "NDTwin is an open source project built by the community, for the community. We welcome contributions of any kind, from code to documentation."
+description: "NDTwin is an open source project built for the community. We welcome contributions of any kind, from code to documentation."
 menu:
   main:
     weight: 40

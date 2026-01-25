@@ -17,3 +17,5 @@ Our goal is to develop a network digital twin that integrates the digital twin, 
 
 ## Our Testbed
 See the photo of the hardware network testbed that we use to test NDTwin here.
+
+![](IMG_7917.jpg )
