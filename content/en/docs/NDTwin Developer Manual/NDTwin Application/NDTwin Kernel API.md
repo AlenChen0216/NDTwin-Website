@@ -1,6 +1,6 @@
 ---
 title: NDTwin Kernel API
-description: 
+description: Explain the usages of NDTWin kernel API, which is used by NDTWin applications and NDTWin tools for requesting data/services from the NDTwin kernel or asking the NDTwin kernel to control the network.  
 date: 2017-01-05
 weight: 5
 ---

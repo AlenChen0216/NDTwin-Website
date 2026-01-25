@@ -6,11 +6,11 @@ weight: 1
 ---
 
 # NDTwin Application Structure
-This section describes the overall architecture and execution flow of an NDTwin application.
+This article describes the overall structure and execution flow of an NDTwin application.
 The application operates in two cooperating execution contexts:
 
-* a **periodic main control thread**
-* an **event-driven I/O thread** for simulation callbacks
+* A **periodic main control thread**
+* An **event-driven I/O thread** for simulation callbacks
 
 ---
 ## 1. High-Level Pseudo Code

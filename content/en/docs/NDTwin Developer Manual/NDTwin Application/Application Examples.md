@@ -1,8 +1,8 @@
 ---
 title: Application Examples
-description: Provide the source code of energy-saving app and traffic-engineering app for reference.
+description: Provide the source code of energy-saving application and traffic-engineering application for the NDTwin application developer's reference.
 date: 2017-01-05
-weight: 5
+weight: 6
 ---
 
 ## Energy-Saving App

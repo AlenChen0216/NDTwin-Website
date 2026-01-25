@@ -1,7 +1,7 @@
 ---
 title: Simulation Platform
 description: 
-Explain how an NDTwin application uses the simulation platform to simulate many “what-if” cases in parallel.
+Explain how an NDTwin application uses the simulation platform to simulate many “what-if” cases in parallel and then find the best solution to a problem.
 date: 2026-01-04
 weight: 3
 ---
