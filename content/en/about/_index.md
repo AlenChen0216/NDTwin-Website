@@ -16,3 +16,4 @@ Our goal is to develop a network digital twin that integrates the digital twin, 
 * **Test:** Testing NDTwin rigorously to ensure its high quality, performance, and reliability before releasing it to the community.
 
 ## Our Testbed
+See the photo of the hardware network testbed that we use to test NDTwin here.
