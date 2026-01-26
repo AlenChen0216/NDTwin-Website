@@ -27,33 +27,33 @@ The system requires two specific Python environments to handle version conflicts
 
 **Prerequisite:** Ensure [Miniconda](https://docs.anaconda.com/miniconda/) or Anaconda is installed.
 
-### 2.1 Create the Ryu Conda Environment (`ryu38`)
+### Step 2.1 Create the Ryu Conda Environment (`ryu-env`)
 
 This environment runs the SDN controller.
 
 ```bash
-conda create -n ryu38 python=3.8 -y
-conda activate ryu38
+conda create -n ryu-env python=3.8 -y
+conda activate ryu-env
 python --version   # should be Python 3.8.x
 ```
 
-### 2.2 Install System Build Dependencies
+### Step 2.2 Install System Build Dependencies
 ```bash
 sudo apt update
 sudo apt install -y build-essential python3-dev libssl-dev libffi-dev libxml2-dev libxslt1-dev
 ```
-### 2.3 Install Ryu + Compatible Python Libraries
-2.3.1. **Upgrade pip / setuptools / wheel (compatible versions)**
+### Step 2.3 Install Ryu + Compatible Python Libraries
+1. **Upgrade pip / setuptools / wheel (compatible versions)**
 ```bash
 pip install --upgrade "pip<24" "setuptools<68" wheel
 ```
 
-2.3.2. **Install Ryu (disable PEP-517)**
+2. **Install Ryu (disable PEP-517)**
 ```bash
 pip install ryu --no-use-pep517
 ```
 
-2.3.3. **Pin required libraries**
+3. **Pin required libraries**
 ```bash
 # Eventlet must be <0.33 (0.30–0.31 works)
 pip install eventlet==0.30.2
@@ -64,7 +64,7 @@ pip install "greenlet<3"
 # dnspython <2.3
 pip install "dnspython<2.3"
 ```
-### 2.4 Verify Installation
+### Step 2.4 Verify Installation
 ```bash
 pip list | grep -E "eventlet|greenlet|dnspython|ryu"
 
@@ -75,28 +75,34 @@ pip list | grep -E "eventlet|greenlet|dnspython|ryu"
 # ryu             4.34
 ```
 
-### 2.5 Test Ryu
+### Step 2.5 Test Ryu
 ```bash
 ryu-manager ryu.app.simple_switch_13
 ```
-### 2.6 Prepare the Customized Ryu Controller App
+### Step 2.6 Prepare the Customized Ryu Controller App
 This project uses a customized Ryu (OpenFlow 1.3) controller to:
 * Install all-destination IPv4 forwarding entries during startup (proactive routing bootstrap)
 * Support static topology mode (load topology from JSON)
 * Support dynamic discovery mode if the static file is missing (topology events + host learning via packet-in/ICMP)
 * Compute paths and push flow entries to each switch once the topology is ready
 
-* *Note: Update `static_topology_file_path` to the path of your static topology file in the NDTwin-Kernel project on your host machine.*
+*Note: Update `static_topology_file_path` to the path of your static topology file in the NDTwin-Kernel project on your host machine.*
 
-2.6.1 **Create the Ryu App file**
+1. **Create the Ryu App file**
 ```bash
 cd ryu/ryu/app
 nano intelligent_router.py
 ```
-2.6.2 **Paste the controller code**
+2. **Paste the controller code**
 The full controller implementation is shown below:
 
-{{< codefile path="assets/snippets/intelligent_router.py" lang="python" opts="linenos=table" >}}
+<details>
+  <summary><b>Click to expand: intelligent_router.py</b></summary>
+
+{{< codefile path="assets/snippet/intelligent_router.py" lang="python" opts="linenos=table" >}}
+
+</details>
+
 
 
 ---
