@@ -1034,7 +1034,7 @@ def enable_sflow(switch, agent_iface, collector_ip, collector_port=6343):
     # as the source IP for sFlow datagrams. This is crucial for identification.
     cmd = (
         f"ovs-vsctl -- --id=@sflow create sflow agent={agent_iface} "
-        f'target=\\"{target}\\" header=128 sampling=1000 polling=0 '
+        f'target=\\"{target}\\" header=128 sampling=256 polling=0 '
         f"-- set bridge {switch} sflow=@sflow"
     )
     os.system(cmd)
