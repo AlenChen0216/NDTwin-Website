@@ -5,13 +5,13 @@ date: 2017-01-05
 weight: 30
 ---
 
-Here are the **Installation Manual** and **User Manual** specifically for the **Simulation Subsystem** (Simulation Server & Power Simulator).
+Here are the **Installation Manual** and **User Manual** specifically for the **Simulation Platform**.
 
 ---
 
 # Installation Manual: Simulation Subsystem
 
-**Scope:** Simulation Server, Power Simulator (Algorithm), and NFS Configuration.
+**Scope:** simulation platform, Power Simulator (Algorithm), and NFS Configuration.
 
 ## 1. System Requirements
 
@@ -42,14 +42,10 @@ sudo apt install libssl-dev
 
 ```
 
-### 2.2 Why are these needed?
-
-* **libssl-dev (OpenSSL):** Critical for the Power Simulator. It is used to compute `SHA256` hashes for global all-destination flow rules during recalculation.
-* **boost-process:** Allows the Simulation Server to asynchronously spawn the Power Simulator executable and handle the results.
 
 ## 3. NFS Configuration
 
-The Simulation Server must share a file system with the NDT (Network Digital Twin).
+The simulation platform must share a file system with the NDT (Network Digital Twin).
 
 ### 3.1 Server-Side Setup (On NDT Machine)
 
@@ -63,7 +59,7 @@ sudo chmod 777 /srv/nfs/sim
 
 
 2. **Configure Exports:**
-Edit `/etc/exports` to include the Simulation Server's IP:
+Edit `/etc/exports` to include the simulation platform's IP:
 ```txt
 /srv/nfs/sim <Sim_Server_IP>(rw,sync,no_subtree_check,all_squash)
 
@@ -78,7 +74,7 @@ sudo systemctl restart nfs-kernel-server
 
 
 
-### 3.2 Client-Side Setup (On Simulation Server Machine)
+### 3.2 Client-Side Setup (On simulation platform Machine)
 
 1. **Install Client:**
 ```bash
@@ -104,10 +100,10 @@ sudo mkdir -p /mnt/nfs/sim
 
 ### 4.2 Simulator Registration (Crucial Step)
 
-The Simulation Server does not compile the simulator logic directly into itself; it runs it as an external binary. You must "register" the Power Simulator by placing the compiled binary in a specific directory.
+The simulation platform does not compile the simulator logic directly into itself; it runs it as an external binary. You must "register" the Power Simulator by placing the compiled binary in a specific directory.
 
 1. **Compile** the Power Simulator code.
-2. **Deploy** the binary to the following path structure inside the Simulation Server directory:
+2. **Deploy** the binary to the following path structure inside the simulation platform directory:
 **Path:** `NDT-Simulation-Server/registered/power_sim/1.0/`
 **Filename:** `executable`
 **Command Example:**
@@ -121,7 +117,7 @@ cp ./build/power_sim ./registered/power_sim/1.0/executable
 
 ### 4.3 NDT Integration Check
 
-For the Simulation Server to receive tasks, the NDT must know its address.
+For the simulation platform to receive tasks, the NDT must know its address.
 
 * **Action:** Update `main.cpp` in the **NDT** source code:
 ```cpp

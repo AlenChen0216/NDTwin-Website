@@ -36,6 +36,7 @@ Once you have downloaded the image file, follow these brief steps to import it:
 2.  **Import the Virtual Machine:**
     * Click on **"Open a Virtual Machine"** (or `File` > `Open`).
     * Locate and select the downloaded `.ova` file.
+![](vm.png)
 3.  **Configure Settings:**
     * Choose a name for the new virtual machine and a storage path.
     * Click **Import**.
