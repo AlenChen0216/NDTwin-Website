@@ -1,0 +1,5 @@
+{{- $path := .Get "path" -}}
+{{- $lang := .Get "lang" | default "text" -}}
+{{- $opts := .Get "opts" | default "linenos=table" -}}
+
+{{- highlight (readFile $path) $lang $opts -}}
