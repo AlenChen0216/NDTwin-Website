@@ -8,140 +8,84 @@ date: 2025-12-24
 weight: 3
 ---
 
-Here is the complete **Installation & Setup Handbook** in English. You can save this as `README.md` or `INSTALL.md` in your project root to help other developers set up the environment correctly.
 
----
+**Pre-flight Checks:**
 
-# NDTwin / SDN Monitor Project - Setup Guide
+1. **Source Code:** Ensure `NDTwin-Kernel` is in your `~/Desktop` (or adjust paths below).
+2. **Compilation:** Ensure `ndtwin_kernel` exists in `build/bin/` (from [Installation Manual](../../../NDTwin%20Installation%20Manual/NDTwin%20Kernel/Operate%20an%20Emulated%20(Software)%20Network/)).
+3. **Topology Script:** Ensure `testbed_topo.py` exists (from [Installation Manual](../../../NDTwin%20Installation%20Manual/NDTwin%20Kernel/Operate%20an%20Emulated%20(Software)%20Network/)).
 
-This guide details the installation of system dependencies, C++ libraries, and the specific Python environment required to build and run the SDN Monitoring modules (`FlowLinkUsageCollector`, `TopologyAndFlowMonitor`).
+**Startup Order is Critical:** Please execute Terminals 1 through 2 in the **exact order** listed below.
 
-## ⚠️ Critical Requirement: Python Version
+### Terminal 1: Ryu Controller
 
-**You must use Python 3.8.**
-
-This project relies on the **Ryu SDN Controller**, which depends on the `eventlet` library.
-
-* **Do NOT use Python 3.10 or newer.**
-* Newer Python versions (3.10+) removed `collections.Iterable`, causing Ryu to crash immediately with `AttributeError`.
-
----
-
-## 1. System Requirements
-
-* **OS:** Linux (Ubuntu 20.04 LTS or 22.04 LTS recommended).
-* **Compiler:** GCC or Clang with **C++17** support (required for `std::filesystem`, `std::shared_mutex`).
-* **Privileges:** `sudo` access is required to install packages and interact with Open vSwitch (OVS).
-
----
-
-## 2. Install C++ Build Dependencies
-
-Install the necessary compilers and development libraries used in the C++ source code (Boost Graph Library, SPDLog, JSON, OpenSSL).
+* **Purpose:** Starts the SDN Logic.
+* **Environment:** `ryu-env` (Python 3.8).
 
 ```bash
-sudo apt update
-sudo apt install -y build-essential cmake
-
-# 1. Boost C++ Libraries (Used for Graph structures)
-sudo apt install -y libboost-all-dev
-
-# 2. SPDLog (High-performance logging)
-sudo apt install -y libspdlog-dev
-
-# 3. nlohmann/json (JSON parsing for REST API)
-sudo apt install -y nlohmann-json3-dev
-
-# 4. OpenSSL (Used for SHA256 hashing)
-sudo apt install -y libssl-dev
-
-# 5. Curl (CLI tool used by the C++ code to fetch topology)
-sudo apt install -y curl
+conda activate ryu-env
+# 'intelligent_router.py' is our custom controller app
+ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp-tcp-listen-port 6633 --observe-link
 
 ```
 
----
+**Note:** After lanuching, wait seconds to let the customized Ryu app connect to all network devices, finish host discovery and path installation (you will see "all-destination paths installed" message).
+Only then start launching NDTwin (backend/GUI), otherwise NDTwin may query Ryu before the topology is fully detected.
+![Alt text](/images/all_destination_flow_entries_installed_on_testbed.png)
 
-## 3. Install Runtime Dependencies (SDN Tools)
 
-The C++ code interacts directly with system-level network tools via shell commands (e.g., `popen("sudo ovs-vsctl ...")`).
+
+
+### Terminal 2: NDTwin Kernel
+
+* **Purpose:** Starts the NDTwin Kernel.
+* **Environment:** System Native (Root).
 
 ```bash
-# 1. Open vSwitch (OVS)
-# Required for "ovs-vsctl" commands to map interfaces to ports.
-sudo apt install -y openvswitch-switch
+cd ~/Desktop/NDTwin-Kernel/build
 
-# Ensure the OVS service is running
-sudo service openvswitch-switch start
+# Set API Key
+# If you do not have a valid OpenAI API key, you can input any random string 
+# (e.g., "12345") to bypass the check. The system will run, but LLM features will be disabled.
+export OPENAI_API_KEY="any-random-string-here"
 
-# 2. Mininet (Optional/Mode Dependent)
-# Required if running in utils::MININET mode.
-sudo apt install -y mininet
+# Execute with sudo, preserving the environment variable (-E)
+sudo -E bin/ndtwin_kernel --loglevel info
+```
+![Alt text](/images/ndtwin_lanuching_on_testbed.png)
 
+
+### Generating Traffic (Validation)
+
+To test if the system is working, you can generate traffic.
+
+1. **Start an iperf3 server on Host 1 (192.168.2.180):**
+```bash
+iperf3 -s
 ```
 
----
 
-## 4. Python Environment Setup (Ryu Controller)
-
-As stated above, **Python 3.8 is mandatory**. We recommend using `Conda` or `venv` to isolate the environment.
-
-### Option A: Using Conda (Recommended)
-
+2. **Run a client on Host 2:**
 ```bash
-# 1. Create a Python 3.8 environment
-conda create -n sdn_env python=3.8 -y
-
-# 2. Activate the environment
-conda activate sdn_env
-
-# 3. Install Python dependencies (Ryu, etc.)
-pip install -r requirements.txt
-
-```
-
-### Option B: Using venv (Standard)
-
-```bash
-# 1. Install Python 3.8 (if not already on your system)
-sudo apt install -y python3.8 python3.8-venv
-
-# 2. Create the virtual environment
-python3.8 -m venv venv
-
-# 3. Activate the environment
-source venv/bin/activate
-
-# 4. Install Python dependencies
-pip install -r requirements.txt
-
-```
-
----
-
-## 5. Build & Run Instructions
-
-### Building the C++ Project
-
-Assuming a standard CMake project structure:
-
-```bash
-mkdir build && cd build
-cmake ..
-make -j$(nproc)
+iperf3 -c 192.168.2.180 -t 300
 
 ```
 
 
+3. **Verify detected flow data (NDTwin API):**
+Use the following command to query NDTwin and confirm whether flow data has been successfully captured/recorded by the system:
+```bash
+curl -X GET http://localhost:8000/ndt/get_detected_flow_data
+```
 
-### Troubleshooting
+**Expected:** The API returns a JSON response containing the currently detected flow records (or an empty list if no flows have been captured yet).
 
-**Issue:** `AttributeError: module 'collections' has no attribute 'Iterable'` when starting Ryu.
+![Alt text](/images/ndtwin_api_call_succeeded_on_testbed.png)
 
-* **Cause:** You are running Python 3.10+.
-* **Fix:** Switch to the Python 3.8 environment created in Step 4.
+See more NDTwin API docs in [this link](../../NDTwin%20Developer%20Manual/NDTwin%20Application/NDTwin%20Kernel%20API.md).
 
-**Issue:** `popen() failed` or `Permission denied` in logs.
 
-* **Cause:** The application was run without `sudo`, or the user does not have permission to run `ovs-vsctl`.
-* **Fix:** Run the application with `sudo`.
+---
+
+
+

@@ -8,140 +8,345 @@ date: 2025-12-24
 weight: 3
 ---
 
-Here is the complete **Installation & Setup Handbook** in English. You can save this as `README.md` or `INSTALL.md` in your project root to help other developers set up the environment correctly.
-
----
-
-# NDTwin / SDN Monitor Project - Setup Guide
-
-This guide details the installation of system dependencies, C++ libraries, and the specific Python environment required to build and run the SDN Monitoring modules (`FlowLinkUsageCollector`, `TopologyAndFlowMonitor`).
-
-## ⚠️ Critical Requirement: Python Version
-
-**You must use Python 3.8.**
-
-This project relies on the **Ryu SDN Controller**, which depends on the `eventlet` library.
-
-* **Do NOT use Python 3.10 or newer.**
-* Newer Python versions (3.10+) removed `collections.Iterable`, causing Ryu to crash immediately with `AttributeError`.
 
 ---
 
 ## 1. System Requirements
 
-* **OS:** Linux (Ubuntu 20.04 LTS or 22.04 LTS recommended).
-* **Compiler:** GCC or Clang with **C++17** support (required for `std::filesystem`, `std::shared_mutex`).
-* **Privileges:** `sudo` access is required to install packages and interact with Open vSwitch (OVS).
+The system has been verified on the following configuration:
+
+* **OS:** Ubuntu 20.04 LTS or higher (Verified on Ubuntu 24.04.3 LTS).
+* **Kernel:** Generic Linux Kernel (x86_64).
 
 ---
 
-## 2. Install C++ Build Dependencies
+## 2. Python Environment Setup (for Ryu)
 
-Install the necessary compilers and development libraries used in the C++ source code (Boost Graph Library, SPDLog, JSON, OpenSSL).
+The system requires two specific Python environments to handle version conflicts. **Ryu requires Python 3.8** due to specific library dependencies, while other components may use newer versions.
+
+**Prerequisite:** Ensure [Miniconda](https://docs.anaconda.com/miniconda/) or Anaconda is installed.
+
+### Step 2.1: Create the Ryu Conda Environment (`ryu-env`)
+
+This environment runs the SDN controller.
+
+```bash
+conda create -n ryu-env python=3.8 -y
+conda activate ryu-env
+python --version   # should be Python 3.8.x
+```
+
+### Step 2.2: Install System Build Dependencies
+```bash
+sudo apt update
+sudo apt install -y build-essential python3-dev libssl-dev libffi-dev libxml2-dev libxslt1-dev
+```
+### Step 2.3: Install Ryu + Compatible Python Libraries
+1. **Upgrade pip / setuptools / wheel (compatible versions)**
+```bash
+pip install --upgrade "pip<24" "setuptools<68" wheel
+```
+
+2. **Install Ryu (disable PEP-517)**
+```bash
+pip install ryu --no-use-pep517
+```
+
+3. **Pin required libraries**
+```bash
+# Eventlet must be <0.33 (0.30–0.31 works)
+pip install eventlet==0.30.2
+
+# Greenlet <3
+pip install "greenlet<3"
+
+# dnspython <2.3
+pip install "dnspython<2.3"
+```
+### Step 2.4: Verify Installation
+```bash
+pip list | grep -E "eventlet|greenlet|dnspython|ryu"
+
+# Expected output:
+# dnspython       1.16.0
+# eventlet        0.30.2
+# greenlet        2.0.2
+# ryu             4.34
+```
+
+### Step 2.5: Test Ryu
+```bash
+ryu-manager ryu.app.simple_switch_13
+```
+![Alt text](/images/ryu_installation_success.png)
+
+### Step 2.6: Prepare the Customized Ryu Controller App
+This project uses a customized Ryu (OpenFlow 1.3) controller to:
+* Install all-destination IPv4 forwarding entries during startup (proactive routing bootstrap)
+* Support static topology mode (load topology from JSON)
+* Support dynamic discovery mode if the static file is missing (topology events + host learning via packet-in/ICMP)
+* Compute paths and push flow entries to each switch once the topology is ready
+
+**Note:** Update `static_topology_file_path` to the path of your static topology file in the NDTwin-Kernel project on your host machine.
+
+1. **Create the Ryu App file**
+```bash
+nano intelligent_router.py
+```
+2. **Paste the controller code**
+The full controller implementation is shown below:
+
+<details>
+  <summary><b>Click to expand: intelligent_router.py</b></summary>
+
+{{< codefile path="assets/snippet/intelligent_router.py" lang="python" opts="linenos=table" >}}
+
+</details>
+
+3. **Set the expected number of switches (`switch_num`)**
+
+The controller waits until **all switches are connected** before loading the topology and proactively installing the **all-destination IPv4 flow entries**.  
+Update `switch_num` in `intelligent_router.py` to match the number of switches in your deployment.
+
+```python
+# Number of switches expected to connect before installing initial routing entries
+switch_num = 10   # TODO: change to your switch count
+```
+
+### Step 2.7: Install required Python libraries for the customized Ryu app
+```bash
+# Graph algorithms used by the controller
+pip install -U networkx
+
+# Pin requests/urllib3 to compatible versions (avoid runtime conflicts)
+pip install -U "requests<2.29" "urllib3<2"
+```
+
+---
+
+## 3. System Dependencies Installation
+
+You need to install build tools, network analysis utilities, and specific C++ libraries required by the NDTwin Kernel.
+
+
+
+### Step 3.1: Update & Install Build Tools
+
+We use `ninja-build` for faster compilation and `iperf3`/`wireshark` for traffic generation and analysis.
 
 ```bash
 sudo apt update
-sudo apt install -y build-essential cmake
-
-# 1. Boost C++ Libraries (Used for Graph structures)
-sudo apt install -y libboost-all-dev
-
-# 2. SPDLog (High-performance logging)
-sudo apt install -y libspdlog-dev
-
-# 3. nlohmann/json (JSON parsing for REST API)
-sudo apt install -y nlohmann-json3-dev
-
-# 4. OpenSSL (Used for SHA256 hashing)
-sudo apt install -y libssl-dev
-
-# 5. Curl (CLI tool used by the C++ code to fetch topology)
-sudo apt install -y curl
+sudo apt install -y build-essential cmake g++ make git \
+    ninja-build xterm curl wireshark iperf3
 
 ```
+
+### Step 3.2: Install Required Libraries
+
+Run the following command to install all necessary development libraries and the network emulator:
+
+```bash
+sudo apt install -y \
+    libboost-all-dev \
+    libfmt-dev \
+    libspdlog-dev \
+    libssh-dev \
+    nlohmann-json3-dev 
+
+```
+
+
 
 ---
 
-## 3. Install Runtime Dependencies (SDN Tools)
+## 4. Download & Compile NDTwin Kernel
 
-The C++ code interacts directly with system-level network tools via shell commands (e.g., `popen("sudo ovs-vsctl ...")`).
+We use CMake and Ninja to compile the C++ core.
+
+### Step 4.1: Download Source Code
+
+If you haven't downloaded the project yet, clone it to your Desktop (or preferred location).
 
 ```bash
-# 1. Open vSwitch (OVS)
-# Required for "ovs-vsctl" commands to map interfaces to ports.
-sudo apt install -y openvswitch-switch
-
-# Ensure the OVS service is running
-sudo service openvswitch-switch start
-
-# 2. Mininet (Optional/Mode Dependent)
-# Required if running in utils::MININET mode.
-sudo apt install -y mininet
+cd ~/Desktop
+git clone https://github.com/ndtwin-lab/NDTwin-Kernel.git
 
 ```
 
----
+### Step 4.2: Configure controller / simulation server addresses (AppConfig.hpp)
+Before building or running NDTwin-Kernel, update the runtime endpoints in:
 
-## 4. Python Environment Setup (Ryu Controller)
+`NDTwin-Kernel/setting/AppConfig.hpp`
 
-As stated above, **Python 3.8 is mandatory**. We recommend using `Conda` or `venv` to isolate the environment.
+This file defines the topology JSON path and the host IP/port for:
+- **Ryu controller** (where your customized Ryu app is running)
+- **Simulation server** (where simulation jobs are submitted)
 
-### Option A: Using Conda (Recommended)
+Example:
 
+```cpp
+namespace AppConfig {
+    static const std::string TOPOLOGY_FILE = "../setting/StaticNetworkTopology_ipAlias4_10_HPE_Switches_smapled_by_p4.json";
+    static const std::string TOPOLOGY_FILE_MININET = "../setting/StaticNetworkTopologyMininet_10Switches.json";
+    static const std::string SIM_SERVER_URL = "http://localhost:9000/submit";
+    static const std::string GW_IP = "10.10.10.249";
+    static const std::string RYU_IP_AND_PORT = "127.0.0.1:8080";
+}
+```
+
+### Step 4.3: Provide a static topology file 
+To bootstrap routing quickly and ensure consistent behavior, we recommend using a **static topology JSON**.
+1. **Copy your topology file into:**
+   `NDTwin-Kernel/setting/`
+
+   Example:
+   - Testbed: `StaticNetworkTopology_ipAlias4_10_HPE_Switches_smapled_by_p4.json`
+   - Mininet: `StaticNetworkTopologyMininet_10Switches.json`
+
+2. **Update the topology file path in `AppConfig.hpp`:**
+
+   Open:
+   `NDTwin-Kernel/setting/AppConfig.hpp`
+
+   Then set the correct filename(s):
+
+   ```cpp
+   namespace AppConfig {
+       static const std::string TOPOLOGY_FILE =
+           "../setting/StaticNetworkTopology_ipAlias4_10_HPE_Switches_smapled_by_p4.json";
+       static const std::string TOPOLOGY_FILE_MININET =
+           "../setting/StaticNetworkTopologyMininet_10Switches.json";
+   }
+   ```
+### Step 4.4: Compile with Ninja
+
+1. **Navigate to the project directory:**
 ```bash
-# 1. Create a Python 3.8 environment
-conda create -n sdn_env python=3.8 -y
-
-# 2. Activate the environment
-conda activate sdn_env
-
-# 3. Install Python dependencies (Ryu, etc.)
-pip install -r requirements.txt
+cd ~/Desktop/NDTwin-Kernel
 
 ```
 
-### Option B: Using venv (Standard)
 
+2. **Prepare the build directory:**
 ```bash
-# 1. Install Python 3.8 (if not already on your system)
-sudo apt install -y python3.8 python3.8-venv
-
-# 2. Create the virtual environment
-python3.8 -m venv venv
-
-# 3. Activate the environment
-source venv/bin/activate
-
-# 4. Install Python dependencies
-pip install -r requirements.txt
-
-```
-
----
-
-## 5. Build & Run Instructions
-
-### Building the C++ Project
-
-Assuming a standard CMake project structure:
-
-```bash
+rm -rf build  # Remove existing build directory if present
 mkdir build && cd build
-cmake ..
-make -j$(nproc)
 
 ```
 
 
+3. **Compile:**
+**Note:** We do not set the build type to "Release" yet as optimization flags are pending refactoring.
+```bash
+cmake -GNinja ..
+ninja clean
+ninja -j $(( $(nproc) / 2 ))
+```
 
-### Troubleshooting
 
-**Issue:** `AttributeError: module 'collections' has no attribute 'Iterable'` when starting Ryu.
 
-* **Cause:** You are running Python 3.10+.
-* **Fix:** Switch to the Python 3.8 environment created in Step 4.
+---
 
-**Issue:** `popen() failed` or `Permission denied` in logs.
+## 5. Configure sFlow and OpenFlow on network devices (HPE 5520 example)
+Below is an example for HPE 5520 (Comware CLI) where:
 
-* **Cause:** The application was run without `sudo`, or the user does not have permission to run `ovs-vsctl`.
-* **Fix:** Run the application with `sudo`.
+* Collector / Controller (your machine): `10.10.10.250`
+* sFlow sampling rate: `1000`
+* sFlow polling interval: `10s`
+
+### Step 5.1: Configure sFlow (sampling=1000, polling=10s)
+On the switch CLI:
+```bash
+system-view
+
+# 1) Set sFlow agent address (use the switch mgmt IP / reachable IP)
+# (Command name can vary slightly by release; use the switch's "?" help if needed.)
+sflow agent ip <SWITCH_MGMT_IP>
+
+# 2) Configure the collector (your controller+collector machine)
+sflow collector 1 ip 10.10.10.250 udp-port 6343
+
+# 3) Set sampling rate + polling interval
+interface range GigabitEthernet 1/0/1 to GigabitEthernet 1/0/24
+ sflow flow collector 1
+ sflow sampling-rate 1000
+ sflow counter collector 1
+ sflow counter interval 10
+
+save 
+quit
+```
+
+### Step 5.2: Verify sFlow is received on the collector (using sflowtool)
+On your collector/controller machine (`10.10.10.250`):
+```bash
+sudo apt update
+sudo apt install -y sflowtool tcpdump
+
+# Option A: decode sFlow directly
+sudo sflowtool -p 6343
+
+# Option B: just confirm datagrams are arriving
+sudo tcpdump -ni any udp port 6343
+```
+If sFlow is working, `sflowtool` should continuously print decoded samples, and `tcpdump` should show UDP packets to port 6343.
+![Alt text](/images/sflowtool.png)
+
+
+### Step 5.3: Configure OpenFlow (point switch to your Ryu controller)
+HPE 5520 OpenFlow is configured via an OpenFlow instance, then you add a controller and activate the instance.
+```bash
+system-view
+
+# 1) Create OpenFlow instance
+openflow instance 1
+ controller connect interval 5
+ # 2) Put traffic under OpenFlow control (global is simplest for a testbed)
+ classification global
+ # 3) Configure the controller (your Ryu machine)
+ controller 1 address ip 10.10.10.250 
+ # 4) Activate the instance
+ active instance
+
+save 
+quit
+```
+
+### Step 5.4: Check controller connection state
+```bash
+display openflow instance 1 controller 1
+```
+![Alt text](/images/verify_openflow.png)
+
+**Note:** STP may need to be disabled (only if your lab is loop-free)
+
+### Step 5.5: (Optional) Configure SNMP (for switch monitoring)
+If you want NDTwin to query switch status (e.g., CPU usage, memory usage, temperature), enable **SNMP** on your switches.
+```bash
+system-view
+
+# Enable SNMP agent
+snmp-agent
+
+# Set an SNMP community (read-only example)
+snmp-agent community read public
+
+# (Recommended) Limit who can query SNMP (only your controller machine)
+acl number 2000
+ rule 5 permit source 10.10.10.250 0
+quit
+snmp-agent community read public acl 2000
+
+save 
+quit
+```
+
+---
+## Installation Complete 
+
+You have successfully finished installing the environment!  
+
+To continue, please follow the [User Manual](../../NDTwin%20User%20Manual/NDTwin%20Kernel/) to try launching the **NDTwin Kernel** and get started with your experiments.
+
+---
+

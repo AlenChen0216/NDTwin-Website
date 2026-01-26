@@ -12,8 +12,8 @@ weight: 2
 **Pre-flight Checks:**
 
 1. **Source Code:** Ensure `NDTwin-Kernel` is in your `~/Desktop` (or adjust paths below).
-2. **Compilation:** Ensure `ndtwin_kernel` exists in `build/bin/` (from Section 4).
-3. **Topology Script:** Ensure `testbed_topo.py` exists (from Section 5).
+2. **Compilation:** Ensure `ndtwin_kernel` exists in `build/bin/` (from [Installation Manual](../../../NDTwin%20Installation%20Manual/NDTwin%20Kernel/Operate%20an%20Emulated%20(Software)%20Network/)).
+3. **Topology Script:** Ensure `testbed_topo.py` exists (from [Installation Manual](../../../NDTwin%20Installation%20Manual/NDTwin%20Kernel/Operate%20an%20Emulated%20(Software)%20Network/)).
 
 **Startup Order is Critical:** Please execute Terminals 1 through 3 in the **exact order** listed below.
 
