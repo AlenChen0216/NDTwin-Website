@@ -30,7 +30,7 @@ menu: {main: {weight: 10}}
                                 <i class="fas fa-microchip" style="color: #ED7D31;"></i>
                             </div>
                             <span class="flex-grow-1">
-                                Its Kernel continuously collects real-time network, device, and flow states.
+                                Its Kernel continuously collects real-time and extra-high-precision flow states using a novel zero-control-plane overhead scheme.
                             </span>
                         </li>
                         <li class="mb-3 d-flex align-items-start">
@@ -38,7 +38,7 @@ menu: {main: {weight: 10}}
                                 <i class="fas fa-brain" style="color: #ED7D31;"></i>
                             </div>
                             <span class="flex-grow-1">
-                                Its Apps use simulation and AI/ML technologies to: 1) evaluate/predict the outcome of many "what-if" conditions, 2) find the optimal solution to the current or a predicted situation, and 3) issue commands to network devices in real time to perform the best solution.
+                                Its Apps use simulation and AI/ML technologies to: 1) evaluate/predict the outcome of many "what-if" conditions in parallel, 2) find the optimal solution to the current or a predicted situation quickly, and 3) issue commands to network devices in real time to perform the best solution.
                             </span>
                         </li>
                         <li class="mb-3 d-flex align-items-start">

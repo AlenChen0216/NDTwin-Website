@@ -63,15 +63,17 @@ The core modules that are currently included in the kernel are explained as foll
 
 The network represents the target network that is operated and managed by NDTwin:
 
-* **Control Plane**: NDTwin uses an SDN Controller (e.g., Ryu) to control the switches in real time. To be controlled by NDTwin, the switches need to support the OpenFlow protocol. 
-* **Data Plane**: NDTwin can correctly operate the following two types of networks:
-    * **Emulated Network**: which is constructed by Mininet with Open vSwitch (OVS). 
-    * **Physical Network**: which is composed of hardware switches that support OpenFlow (e.g., Brocade, HPE).
+* **Control Plane**: 
+  * NDTwin uses an SDN Controller (e.g., Ryu) to control the switches in real time. To be controlled by NDTwin, the switches need to support the OpenFlow protocol. To achieve high reliability, following the network industry's management scheme, the machine on which the NDTwin kernel runs and all switches that the NDTwin kernel controls are interconnected by a management network that is different from the data network used to transfer users' data packets. In the market, all managed network switches of all brands provide a management interface (port) for the management purpose. This interface can be used to connect a switch to the management network. 
+* **Data Plane**: 
+  * NDTwin can correctly operate the following two types of data networks:
+    * **Emulated Network**: This type of data network is constructed by Mininet with Open vSwitch (OVS). Note that OVS supports OpenFlow. For this type of data network, its management network is implicitly the memory of the server on which Mininet is run. 
+    * **Physical Network**: This type of data network is composed of hardware switches that support OpenFlow (e.g., Brocade and HPE, which are used in our hardware testbed network). For this type of data network, its management network is a separate hardware management network as described above.
 
 ## Resources Consideration
 
-Due to the design of NDTwin, all NDTwin application processes, tool processes, the kernel process, and the SDN controller process can run together on a server. This configuration enables the NDTwin user to use just one server to run up NDTwin.
+Due to the design of NDTwin, all NDTwin application processes, tool processes, the kernel process, and the SDN controller process (and even the Mininet process if Mininet is used as the emulated data network) can run together on a server. This configuration enables the NDTwin user to use just one server to run up NDTwin.
 
-When using NDTwin to operate a very large network with a huge number of flows, if the computational and storage resources of a server are insufficient for NDTwin to perform optimally, the NDTwin applications, tools, kernel, and SDN controller can run simultaneously on different servers if needed.
+When using NDTwin to operate a very large network with a huge number of flows, if the computational and storage resources of a server are insufficient for NDTwin to perform optimally, the NDTwin applications, tools, kernel, and SDN controller can run simultaneously on different servers if needed. In this usage case, these different servers should be interconnected by the managament network over which the NDTwin kernel controls all switches. This way, the RESTful API requests and replies exchanged among them will not be affected by the traffic transmitted on the data network. 
 
 Although NDTwin can correctly and successfully operate a network emulated by Mininet, since running an emulation consumes considerable CPU and memory resources, experiment results show that when the sending rates of flows in an emulated network are set to high values, the emulated network will run very slowly. This problem is caused by emulation, not NDTwin.     
