@@ -78,7 +78,7 @@ pip list | grep -E "eventlet|greenlet|dnspython|ryu"
 ```bash
 ryu-manager ryu.app.simple_switch_13
 ```
-![Alt text](/images/ryu_installation_success.png)
+![Alt text](/images/ryu_installation_success_on_testbed.png)
 
 ### Step 2.6: Prepare the Customized Ryu Controller App
 This project uses a customized Ryu (OpenFlow 1.3) controller to:
