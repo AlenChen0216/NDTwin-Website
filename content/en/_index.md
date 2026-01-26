@@ -30,7 +30,7 @@ menu: {main: {weight: 10}}
                                 <i class="fas fa-microchip" style="color: #ED7D31;"></i>
                             </div>
                             <span class="flex-grow-1">
-                                Its Kernel continuously collects real-time and super-high-precision flow states using a novel zero-control-plane overhead sFlow scheme (IEEE ICC 2026, to appear).
+                                Its Kernel continuously collects real-time and ultra-precision flow states using a novel zero-control-plane overhead sFlow scheme (IEEE ICC 2026, to appear).
                             </span>
                         </li>
                         <li class="mb-3 d-flex align-items-start">
