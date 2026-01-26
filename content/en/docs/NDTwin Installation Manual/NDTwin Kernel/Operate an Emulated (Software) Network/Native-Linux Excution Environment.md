@@ -88,7 +88,7 @@ This project uses a customized Ryu (OpenFlow 1.3) controller to:
 * Support dynamic discovery mode if the static file is missing (topology events + host learning via packet-in/ICMP)
 * Compute paths and push flow entries to each switch once the topology is ready
 
-*Note: Update `static_topology_file_path` to the path of your static topology file in the NDTwin-Kernel project on your host machine.*
+**Note:** Update `static_topology_file_path` to the path of your static topology file in the NDTwin-Kernel project on your host machine.
 
 1. **Create the Ryu App file**
 ```bash
@@ -104,7 +104,14 @@ The full controller implementation is shown below:
 
 </details>
 
+### Step 2.7 Install required Python libraries for the customized Ryu app
+```bash
+# Graph algorithms used by the controller
+pip install -U networkx
 
+# Pin requests/urllib3 to compatible versions (avoid runtime conflicts)
+pip install -U "requests<2.29" "urllib3<2"
+```
 
 ---
 
@@ -189,7 +196,7 @@ mkdir build && cd build
 
 
 3. **Compile:**
-*Note: We do not set the build type to "Release" yet as optimization flags are pending refactoring.*
+**Note:** We do not set the build type to "Release" yet as optimization flags are pending refactoring.
 ```bash
 cmake -GNinja ..
 ninja clean

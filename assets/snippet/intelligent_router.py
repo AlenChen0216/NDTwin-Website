@@ -21,7 +21,7 @@ import random
 from ryu.lib import hub
 
 # TODO: Change it
-static_topology_file_path = Path("/home/patty/NDTwin_Kernel/setting/StaticNetworkTopologyMininet_10Switches.json")
+static_topology_file_path = Path("/home/patty/Desktop/NDTwin-Kernel/setting/StaticNetworkTopologyMininet_10Switches.json")
 
 RYU_SERVER_INSTANCE_NAME = "ndt_ryu_app"
 switch_num = 10
@@ -150,7 +150,7 @@ class IntelligentRyu(app_manager.RyuApp):
         for link in links_list:
             src, dst = link.src.dpid, link.dst.dpid
             src_port, dst_port = link.src.port_no, link.dst.port_no
-            self.logger.info(f"Add edge ({src},{src_port}) -> ({dst},{dst_port})")
+            # self.logger.info(f"Add edge ({src},{src_port}) -> ({dst},{dst_port})")
             # Add forward and reverse edges
             self.dynamic_net.add_edge(src, dst, port=src_port)
             self.dynamic_net.add_edge(dst, src, port=dst_port)
@@ -243,7 +243,7 @@ class IntelligentRyu(app_manager.RyuApp):
             # Add nodes and edges to net
             for node in topo.get("nodes", []):
                 if not node: continue
-                self.logger.info(f"n {node.get('nickname', '')}")
+                # self.logger.info(f"n {node.get('nickname', '')}")
                 if node.get("vertex_type", "") == 0:    # switch
                     ecmp_groups = node.get("ecmp_groups", [])
                     self.static_net.add_node(int(node.get("dpid")), ecmp_groups=ecmp_groups)
@@ -256,29 +256,30 @@ class IntelligentRyu(app_manager.RyuApp):
                     
             for edge in topo.get("edges", []):
                 if not edge: continue
-                self.logger.info(f"e src_dpid {edge.get('src_dpid', '')} -> dst_dpid {edge.get('dst_dpid', '')}")
+                # self.logger.info(f"e src_dpid {edge.get('src_dpid', '')} -> dst_dpid {edge.get('dst_dpid', '')}")
                 if edge.get("src_dpid") == 0:   # host to sw
-                    self.logger.info("host to sw")
+                    # self.logger.info("host to sw")
                     # Look up mac from vertex
                     first_src_ip = edge.get("src_ip")[0]
                     mac = self.int_to_mac(self.ip_to_mac[first_src_ip])
-                    self.logger.info(f"src mac {mac} target dst_dpid {edge.get('dst_dpid')} port 0")
+                    # self.logger.info(f"src mac {mac} target dst_dpid {edge.get('dst_dpid')} port 0")
                     self.static_net.add_edge(mac, edge.get("dst_dpid"), port=0)
                 elif edge.get("dst_dpid") == 0: # sw to host
-                    self.logger.info("sw to host")
+                    # self.logger.info("sw to host")
                     # Look up mac from vertex
                     first_dst_ip = edge.get("dst_ip")[0]
                     mac = self.int_to_mac(self.ip_to_mac[first_dst_ip])
-                    self.logger.info(f"src src_dpid {edge.get('src_dpid')} target mac {mac} port {edge.get('src_interface')}")
+                    # self.logger.info(f"src src_dpid {edge.get('src_dpid')} target mac {mac} port {edge.get('src_interface')}")
                     self.static_net.add_edge(edge.get("src_dpid"), mac, port=edge.get("src_interface"))
                 else:
-                    self.logger.info("sw to sw")
+                    # self.logger.info("sw to sw")
                     self.static_net.add_edge(edge.get("src_dpid"), edge.get("dst_dpid"), port=edge.get("src_interface"))
             # Install all-destination routing entries
             if is_mininet:
                 hub.sleep(60)
             self.install_initial_openflow_entries_completed = True
             self.install_all_pair_paths(self.static_net)
+            self.logger.info("Static topology initialized, all-destination paths installed.")
             
         except Exception as e:
             self.logger.error(f"Failed to load static topology file {path}: {e}")
@@ -370,7 +371,7 @@ class IntelligentRyu(app_manager.RyuApp):
         for dst_ip in all_hosts_ip_list:
             dst_host = self.find_host_by_ip(net, dst_ip)
             dst_switch = self.find_connected_switch(net, dst_host)
-            self.logger.info("Installing paths toward host %s via BFS", dst_ip)
+            # self.logger.info("Installing paths toward host %s via BFS", dst_ip)
             parent_hash = {}
             parent_hash[dst_ip] = None
 
@@ -402,12 +403,12 @@ class IntelligentRyu(app_manager.RyuApp):
                 actions = [parser.OFPActionOutput(out_port)]
                 self.add_flow(datapath, priority=10, match=match, actions=actions)
 
-                self.logger.info(
-                    "Installing flow on switch %s: match(ipv4_dst=%s) -> output(port=%d)",
-                    current_switch,
-                    dst_ip,
-                    out_port,
-                )
+                # self.logger.info(
+                #     "Installing flow on switch %s: match(ipv4_dst=%s) -> output(port=%d)",
+                #     current_switch,
+                #     dst_ip,
+                #     out_port,
+                # )
 
 
                 
@@ -488,7 +489,7 @@ class IntelligentRyu(app_manager.RyuApp):
                     node = parent_hash.get(node)
 
 
-                print(f"Flow path to {dst_ip} through switch {switch}: {' -> '.join(str(n) for n in path)}")
+                # print(f"Flow path to {dst_ip} through switch {switch}: {' -> '.join(str(n) for n in path)}")
                 full_path = []
                 for src_ip in all_hosts_ip_list:
                     if src_ip == dst_ip:
@@ -499,7 +500,7 @@ class IntelligentRyu(app_manager.RyuApp):
                     # print(f"src out_port {out_port}")
                     if src_switch == switch:
                         full_path = [(src_ip, out_port)] + path
-                        self.logger.info("Flow path from %s to %s path %s\n\n\n\n\n", src_ip, dst_ip, full_path)
+                        # self.logger.info("Flow path from %s to %s path %s\n\n\n\n\n", src_ip, dst_ip, full_path)
                         all_destination_paths.append(full_path)
         
         self.all_destination_paths = all_destination_paths

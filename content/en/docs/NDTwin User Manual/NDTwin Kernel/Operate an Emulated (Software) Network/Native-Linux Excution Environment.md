@@ -1,8 +1,8 @@
 ---
 title: Install All Required Components on a Linux Server
 description: > 
-  A comprehensive guide for manually installing the NDT system on a native Linux environment.
-  This section covers system dependencies, building the NDT Kernel with Ninja, configuring Python environments, and running the full system.
+  A comprehensive guide for manually installing the NDTwin system on a native Linux environment.
+  This section covers system dependencies, building the NDTwin Kernel with Ninja, configuring Python environments, and running the full system.
 date: 2025-12-24
 weight: 2
 ---
@@ -11,8 +11,8 @@ weight: 2
 
 **Pre-flight Checks:**
 
-1. **Source Code:** Ensure `NetworkDigitalTwin-main` is in your `~/Desktop` (or adjust paths below).
-2. **Compilation:** Ensure `ndt_main` exists in `build/bin/` (from Section 4).
+1. **Source Code:** Ensure `NDTwin-Kernel` is in your `~/Desktop` (or adjust paths below).
+2. **Compilation:** Ensure `ndtwin_kernel` exists in `build/bin/` (from Section 4).
 3. **Topology Script:** Ensure `testbed_topo.py` exists (from Section 5).
 
 **Startup Order is Critical:** Please execute Terminals 1 through 3 in the **exact order** listed below.
@@ -23,7 +23,6 @@ weight: 2
 * **Environment:** `ryu-env` (Python 3.8).
 
 ```bash
-cd ~/Desktop/NetworkDigitalTwin-main
 conda activate ryu-env
 # 'intelligent_router.py' is our custom controller app
 ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp-tcp-listen-port 6633 --observe-link
@@ -36,21 +35,28 @@ ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp
 * **Environment:** System Native (Root).
 
 ```bash
-cd ~/Desktop/NetworkDigitalTwin-main
-# Clean up old network artifacts (Crucial step)
-sudo mn -c
+cd ~/Desktop/NDTwin-Kernel/
 # Start the custom topology script
 sudo python3 testbed_topo.py
-
 ```
 
-### Terminal 3: NDT Kernel
+**Note:** After the topology starts, wait ~60 seconds to let the customized Ryu app finish host discovery and path installation (you will see "all-destination paths installed" message).
+Only then start launching NDTwin (backend/GUI), otherwise NDTwin may query Ryu before the topology is fully detected.
+![Alt text](/images/all-destination-flow-entries_installed.png)
 
-* **Purpose:** Starts the Digital Twin Engine.
+**Note:** If you want to restart Mininet and run the topology again, clean up the previous Mininet state first:
+```bash
+sudo mn -c
+```
+
+
+### Terminal 3: NDTwin Kernel
+
+* **Purpose:** Starts the NDTwin Kernel.
 * **Environment:** System Native (Root).
 
 ```bash
-cd ~/Desktop/NetworkDigitalTwin-main/build
+cd ~/Desktop/NDTwin-Kernel/build
 
 # Set API Key
 # If you do not have a valid OpenAI API key, you can input any random string 
@@ -58,13 +64,12 @@ cd ~/Desktop/NetworkDigitalTwin-main/build
 export OPENAI_API_KEY="any-random-string-here"
 
 # Execute with sudo, preserving the environment variable (-E)
-sudo -E bin/ndt_main --loglevel info
-
+sudo -E bin/ndtwin_kernel --loglevel info
 ```
+![Alt text](/images/ndtwin_launching.png)
 
----
 
-## 7. Generating Traffic (Validation)
+### Generating Traffic (Validation)
 
 To test if the system is working, you can generate traffic inside the **Mininet CLI** (Terminal 2).
 
@@ -77,20 +82,27 @@ mininet> h1 iperf3 -s &
 
 2. **Run a client on Host 2:**
 ```bash
-mininet> h2 iperf3 -c h1
+mininet> h2 iperf3 -c h1 -t 300
 
 ```
 
 
-3. **Observe:**
-* **Terminal 1 (Ryu):** Should show link discovery logs.
-* **Terminal 3 (NDT):** Logs should reflect flow detection and bandwidth usage.
+3. **Verify detected flow data (NDTwin API):**
+Use the following command to query NDTwin and confirm whether flow data has been successfully captured/recorded by the system:
+```bash
+curl -X GET http://localhost:8000/ndt/get_detected_flow_data
+```
 
+**Expected:** The API returns a JSON response containing the currently detected flow records (or an empty list if no flows have been captured yet).
+
+![Alt text](/images/ndtwin_api_demo.png)
+
+See more NDTwin API docs in [this link](../../../NDTwin%20Developer%20Manual/NDTwin%20Application/NDTwin%20Kernel%20API.md).
 
 
 ---
 
-## 8. Safe Shutdown Procedure
+### Safe Shutdown Procedure
 
 When finishing your experiment, please close the system in **reverse order** and perform cleanup to avoid errors in future runs:
 
