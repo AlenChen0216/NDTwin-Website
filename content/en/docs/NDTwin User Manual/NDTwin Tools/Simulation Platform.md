@@ -14,9 +14,9 @@ weight: 30
 The Simulation Server relies on the network topology being ready. Follow this strict order:
 
 1. Ryu Controller
-2. Mininet
+2. Mininet (if you are using emulated network)
 3. NDTwin Kernel
-4. **Simulation Platform Manager** (Start this now)
+4. **Simulation Platform Manager** 
 
 ### 1.2 Running the Server
 
