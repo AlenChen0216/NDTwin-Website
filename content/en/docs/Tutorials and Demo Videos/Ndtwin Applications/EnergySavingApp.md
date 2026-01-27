@@ -8,7 +8,7 @@ weight: 1
 
 ## Step1: Simulation Server
 
-* **Path:** `Energy Saving App/NDT-Simulation-Server-master`
+* **Path:** `Energy-Saving App/NDT-Simulation-Server-master`
 * **Note:** Backend server for the simulation environment.
 
 1. Navigate to the directory:

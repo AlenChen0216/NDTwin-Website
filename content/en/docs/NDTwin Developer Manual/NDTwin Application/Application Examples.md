@@ -6,7 +6,8 @@ weight: 6
 ---
 
 ## Energy-Saving App
-![Status](https://img.shields.io/badge/status-active-success) ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-active-success) ![Version](https://img.shields.io/badge/version-1.0.0-blue) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?logo=apache&logoColor=white)](https://opensource.org/licenses/Apache-2.0)
+
 
 The **Energy-Saving App** dynamically monitors link utilization and flow states to power down underutilized switches during off-peak hours, significantly reducing operational expenditure (OPEX) while maintaining the quality of experience (QoE) of user flows.
 
@@ -20,7 +21,8 @@ The **Energy-Saving App** dynamically monitors link utilization and flow states 
 ---
 
 ## Traffic-Engineering App
-![Status](https://img.shields.io/badge/status-active-success) ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-active-success) ![Version](https://img.shields.io/badge/version-1.0.0-blue) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?logo=apache&logoColor=white)](https://opensource.org/licenses/Apache-2.0)
+
 
 The **Traffic-Engineering App** reduces network congestion and optimizes bandwidth utilization of links in a network by performing dynamic ECMP load-balancing for every ECMP port group.
 
