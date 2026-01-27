@@ -149,21 +149,21 @@ FUNCTION build_features(time_series_table):
 External inference interface (C++ call entry point)
 ```
 FUNCTION predict_from_matrix(input_matrix):
-    df ??matrix_to_df(input_matrix)
+    df <-matrix_to_df(input_matrix)
 
-    features ??build_features(df)
+    features <-build_features(df)
 
-    model_input ??reshape features to (1, WINDOW, FEATURES)
+    model_input <-reshape features to (1, WINDOW, FEATURES)
 
     LOAD TorchScript model
 
     DISABLE gradient computation
 
-    prediction_std ??model(model_input)
+    prediction_std <-model(model_input)
 
     LOAD training scaler
 
-    prediction_mb ??inverse-transform prediction_std using scaler
+    prediction_mb <-inverse-transform prediction_std using scaler
 
     RETURN prediction_mb 
 ```
