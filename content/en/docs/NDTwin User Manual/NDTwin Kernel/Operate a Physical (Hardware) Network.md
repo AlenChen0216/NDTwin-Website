@@ -82,7 +82,7 @@ curl -X GET http://localhost:8000/ndt/get_detected_flow_data
 
 ![Alt text](/images/ndtwin_api_call_succeeded_on_testbed.png)
 
-See more NDTwin API docs in [this link](../../NDTwin%20Developer%20Manual/NDTwin%20Application/NDTwin%20Kernel%20API.md).
+See more NDTwin API docs in [NDTwin API](../../NDTwin%20Developer%20Manual/NDTwin%20Application/NDTwin%20Kernel%20API.md).
 
 
 ---

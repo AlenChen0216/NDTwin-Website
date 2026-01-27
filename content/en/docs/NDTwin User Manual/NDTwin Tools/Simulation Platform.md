@@ -11,14 +11,14 @@ weight: 30
 
 ### 1.1 Startup Sequence
 
-The Simulation Server relies on the network topology being ready. Follow this strict order:
+The **Simulation Platform Manager** wakes up the registered simulator and runs the simulation using the required network data collected by the NDTwin Kernel, following this strict order.
 
 1. Ryu Controller
 2. Mininet (if you are using emulated network)
 3. NDTwin Kernel
 4. **Simulation Platform Manager** 
 
-### 1.2 Running the Server
+### 1.2 Running the Simulation Platform Manager
 
 Open a terminal in the Simulation Platform Manager directory:
 

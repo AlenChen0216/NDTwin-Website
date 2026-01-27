@@ -168,4 +168,4 @@ The NDTwin API uses standard HTTP status codes. Below are common error responses
 
 ---
 
-See more NDTwin API docs in [this link](../NDTwin%20Kernel%20API.md).
+See more NDTwin API docs in [NDTwin API](../NDTwin%20Kernel%20API.md).

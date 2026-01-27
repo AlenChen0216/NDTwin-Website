@@ -164,4 +164,4 @@ The application uses an app-level lock to prevent overlapping control rounds and
 > **Note:** In a typical workflow, the app calls `acquire_lock` before pulling a network snapshot and submitting simulation cases, periodically calls `renew_lock` if the simulator takes time, and calls `release_lock` only after all results are processed and the chosen action is applied.
 
 
-See more NDTwin API docs in [this link](../NDTwin%20Kernel%20API.md).
+See more NDTwin API docs in [NDTwin API](../NDTwin%20Kernel%20API.md).
