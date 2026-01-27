@@ -114,9 +114,8 @@ sudo -E bin/ndtwin_kernel --loglevel info
 
 ```
 
----
 
-### Interactive Configuration
+#### Interactive Configuration
 
 Upon execution, the system will prompt you to select the operation mode:
 
