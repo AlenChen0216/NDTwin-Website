@@ -13,26 +13,26 @@ weight: 3
 
 The system comprises three main components:
 
-i. Client Application (e.g., NDT App) This component analyzes system states to generate candidate simulation cases. It handles data preparation by storing input files on the shared Network File System (NFS) and subsequently dispatches simulation requests to the NDT Kernel.
+i. **NDTwin Application** This component analyzes system states to generate candidate simulation cases. It handles data preparation by storing input files on the shared Network File System (NFS) and subsequently dispatches simulation requests to the NDTwin Kernel.
 
-ii. Simulation Request & Reply Manager Acts as the central communication bridge, relaying requests and replies between the Client Application and the simulation platform.
+ii. **Simulation request and reply manager** Acts as the central communication bridge, relaying requests and replies between the NDTwin Application and the simulation platform.
 
-iii. simulation platform Responsible for the heavy lifting, this server receives cases and forks processes to simulate them in parallel on a multi-core CPU. It evaluates the outcomes, writes the results back to NFS, and sends a completion reply to the NDT Kernel to notify the Client Application.
+iii. **Simulation platform manager** Responsible for the heavy lifting, this server receives cases and forks processes to simulate them in parallel on a multi-core CPU. It evaluates the outcomes, writes the results back to NFS, and sends a completion reply to the NDTwin Kernel to notify the NDTwin Application.
 
 
 ---
 
 ### 2. Workflow Execution Cycle
 
-1. **Initiation:** The Client Application generates simulation scenarios, writes the input data to NFS, and signals the NDT Kernel.
+1. **Initiation:** The NDTwin Application generates simulation scenarios, writes the input data to NFS, and signals the NDTwin Kernel.
 2. **Processing:** The simulation platform reads the inputs, executes simulations in parallel, and writes the results back to NFS.
 3. **Completion & Decision:**
-* The Client Application waits for replies confirming all cases are finished.
+* The NDTwin Application waits for replies confirming all cases are finished.
 * It reads the output files from NFS to retrieve the detailed results.
 * It compares the outcomes to select the **optimal plan**.
 
 
-4. **Execution:** The Client Application instructs the NDT Kernel to execute network changes based on the selected best plan.
+4. **Execution:** The NDTwin Application instructs the NDTwin Kernel to execute network changes based on the selected best plan.
 
 ---
 
@@ -43,8 +43,8 @@ iii. simulation platform Responsible for the heavy lifting, this server receives
 
 #### Roles and Responsibilities
 
-* **NDT Kernel (NFS Server):** Exports file directories, acting as the central storage hub.
-* **Client App & simulation platform (NFS Clients):** Mount these directories to perform direct read/write operations.
+* **NDTwin Kernel (NFS Server):** Exports file directories, acting as the central storage hub.
+* **NDTwin Application & Simulation platform manager (NFS Clients):** Mount these directories to perform direct read/write operations.
 
 ---
 
@@ -145,7 +145,8 @@ When the external simulator finishes, it calls NDTwin, which then forwards the r
 
 ---
 
-#### 3. Error Handling Reference
+### Reference
+#### Error Handling Reference
 
 The NDTwin API uses standard HTTP status codes. Below are common error responses:
 
@@ -157,7 +158,7 @@ The NDTwin API uses standard HTTP status codes. Below are common error responses
 
 ---
 
-#### 4. Summary Table of Operations
+#### Summary Table of Operations
 
 | Operation | Method | Endpoint |
 | --- | --- | --- |
@@ -166,3 +167,5 @@ The NDTwin API uses standard HTTP status codes. Below are common error responses
 | **Notify Completion** | `POST` | `/ndt/simulation_completed` |
 
 ---
+
+See more NDTwin API docs in [this link](../NDTwin%20Kernel%20API.md).

@@ -87,7 +87,6 @@ This project uses a customized Ryu (OpenFlow 1.3) controller to:
 * Support dynamic discovery mode if the static file is missing (topology events + host learning via packet-in/ICMP)
 * Compute paths and push flow entries to each switch once the topology is ready
 
-**Note:** Update `static_topology_file_path` to the path of your static topology file in the NDTwin-Kernel project on your host machine.
 
 1. **Create the Ryu App file**
 ```bash
@@ -103,14 +102,29 @@ The full controller implementation is shown below:
 
 </details>
 
-3. **Set the expected number of switches (`switch_num`)**
+<br>
 
-The controller waits until **all switches are connected** before loading the topology and proactively installing the **all-destination IPv4 flow entries**.  
-Update `switch_num` in `intelligent_router.py` to match the number of switches in your deployment.
+> **Note:** Before running the controller, update the parameters in `intelligent_router.py` to match your environment.
+
+3. **Configure deployment parameters (`static_topology_file_path`, `is_mininet`, `switch_num`)**
+
+The controller uses these parameters to decide **how to load/discover the topology** and **when to proactively install all-destination IPv4 flow entries**.
+
+- `static_topology_file_path`: points to your topology JSON (used in *static topology mode*).
+- `is_mininet`: set `true` for Mininet, `false` for physical testbed.
+- `switch_num`: the controller waits until this many switches are connected before installing initial routing entries.
 
 ```python
-# Number of switches expected to connect before installing initial routing entries
-switch_num = 10   # TODO: change to your switch count
+from pathlib import Path
+
+# (1) Static topology JSON path (update to your local file path)
+static_topology_file_path = Path("/home/<user>/Desktop/NDTwin-Kernel/setting/StaticNetworkTopology_XXX.json")
+
+# (2) Deployment mode
+is_mininet = False   # True: Mininet, False: physical testbed
+
+# (3) Number of switches expected to connect before installing initial routing entries
+switch_num = 10      # TODO: change to your switch count
 ```
 
 ### Step 2.7: Install required Python libraries for the customized Ryu app

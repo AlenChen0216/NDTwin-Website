@@ -132,3 +132,36 @@ Once completed:
 * Non-blocking main loop
 * Strong separation between decision logic and execution
 * Safe concurrency via explicit locking
+
+---
+
+## 5. Related NDTwin APIs
+
+This application structure relies on the following NDTwin APIs to register the app, coordinate control rounds with locks, and dispatch simulation cases.
+
+### 5.1 Registration
+
+| Purpose | Method | Endpoint | Used in |
+| --- | --- | --- | --- |
+| Register the application and provide the callback URL for simulation completion | `POST` | `/ndt/app_register` | Application Initialization |
+
+### 5.2 Simulation Dispatch
+
+| Purpose | Method | Endpoint | Used in |
+| --- | --- | --- | --- |
+| Submit a simulation case to NDTwin for dispatching to the external simulator | `POST` | `/ndt/received_a_simulation_case` | Main Control Thread (Periodic Loop) |
+
+### 5.3 Lock Coordination (Control Round Exclusivity)
+
+The application uses an app-level lock to prevent overlapping control rounds and ensure consistent decision-making.
+
+| Purpose | Method | Endpoint | Used in |
+| --- | --- | --- | --- |
+| Acquire the application lock before reading state / dispatching simulations | `POST` | `/ndt/acquire_lock` | Main Control Thread (start of each round) |
+| Extend the lock while the round is still in progress (optional heartbeat) | `POST` | `/ndt/renew_lock` | Main Thread or I/O Thread (while waiting for results) |
+| Release the lock after completing actuation and marking the round done | `POST` | `/ndt/release_lock` | Decision & Actuation Phase (end of round) |
+
+> **Note:** In a typical workflow, the app calls `acquire_lock` before pulling a network snapshot and submitting simulation cases, periodically calls `renew_lock` if the simulator takes time, and calls `release_lock` only after all results are processed and the chosen action is applied.
+
+
+See more NDTwin API docs in [this link](../NDTwin%20Kernel%20API.md).
