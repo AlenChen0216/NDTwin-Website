@@ -15,19 +15,21 @@ The Simulation Server relies on the network topology being ready. Follow this st
 
 1. Ryu Controller
 2. Mininet
-3. NDT (Network Digital Twin)
-4. **Simulation Server** (Start this now)
+3. NDTwin Kernel
+4. **Simulation Platform Manager** (Start this now)
 
 ### 1.2 Running the Server
 
-Open a terminal in the Simulation Server directory:
+Open a terminal in the Simulation Platform Manager directory:
 
 ```bash
-cd ~/NDT-Simulation-Server
-sudo ./server
+cd ~/Simulation-Platform-Manager
+sudo ./simulation_platform_manager
 
 ```
 
 * **Why sudo?** The server requires root privileges to mount the NFS directory `/mnt/nfs/sim` during operation.
 * **Confirmation:** Wait for the "Server started" message.
 
+
+See more design explanation at [Simulation Platform Manager](../../NDTwin%20Developer%20Manual/NDTwin%20Application/Simulation%20Platform/index.md)
