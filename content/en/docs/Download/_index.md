@@ -51,4 +51,4 @@ Sample and production applications designed to run on top of NDTwin.
 
 ## Installation Guide
 
-For instructions on how to install the individual packages, please refer to the [Installation Documentation](#).
+For instructions on how to install the individual packages, please refer to the [Installation Documentation](../NDTwin%20Installation%20Manual/).
