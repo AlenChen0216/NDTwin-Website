@@ -19,7 +19,10 @@ After an AI/ML model has been trained on a machine that is not part of NDTwin, t
 To make an inference, depending on the model used, a set of feature data should be fed into the trained model. An NDTwin application can call appropriate NDTwin kernel API functions to get a set of real-time network data (e.g., the current bandwidth usage of all links). Then, it can feed the retrieved real-time data into the model as the feature input to make an inference. For time-series models, an NDTwin application can keep the past retrieved data inside itself to form a sequence of time-series data for making an inference.
 
 If the NDTWin application program is not written in Python but in a different language such as C++, the NDTwin application needs to perform some operations to import a trained model and call its prediction function for inference.
-Below, we use an example to explain how an NDTwin application uses LSTNet to train a time-series model and uses the trained model for prediction and optimal control of the network. In this example, the LSTNet model is trained in PyTorch and exported as a .pt file. The NDTwin application is a C++ program. 
+
+# Example
+
+Below, we use an example to explain the training phase, deployment preparation phase, and inference phase of an NDTwin application that uses LSTNet to train a time-series model and uses the trained model to predict the network traffic volume transmitted in ten minutes for the next interval. In this example, the LSTNet model is trained in PyTorch and exported as a .pt file and the NDTwin application is a C++ program. 
 
 # Training Phase
 ## 1) Prerequisites
@@ -50,7 +53,7 @@ The dataset must be collected at a fixed time interval, such as:                
 Shuffling the data is not allowed, as it breaks temporal dependencies.
 
 ## 3) Feature Engineering Recommendations
-To improve the model's ability to learn temporal and periodic patterns, you are encouraged to include time-related and cyclical features during the feature engineering stage, such as:
+To improve the model's ability to learn temporal and periodic patterns, users are encouraged to include time-related and cyclical features during the feature engineering stage, such as:
 
 ### 1. Calendar-Based Features:
 
@@ -65,7 +68,7 @@ For traffic data exhibiting strong periodic behavior, it is recommended to inclu
 
 ### 3. Target Value Normalization:
 Network traffic values may span multiple orders of magnitude (e.g., hundreds of MB to tens of GB).
-* Normalizing or standardizing the target variable is therefore recommended, for example using ```StandardScaler```.
+* Normalizing or standardizing the target variable is therefore recommended. For example, the ```StandardScaler``` can be used.
 
 ## 4) Normalization (Optional)
 ### 1. Applies ```StandardScaler``` only to flow (bytes)
@@ -151,19 +154,19 @@ External inference interface (C++ call entry point)
 FUNCTION predict_from_matrix(input_matrix):
     df <-matrix_to_df(input_matrix)
 
-    features <-build_features(df)
+    features <- build_features(df)
 
-    model_input <-reshape features to (1, WINDOW, FEATURES)
+    model_input <- reshape features to (1, WINDOW, FEATURES)
 
     LOAD TorchScript model
 
     DISABLE gradient computation
 
-    prediction_std <-model(model_input)
+    prediction_std <- model(model_input)
 
     LOAD training scaler
 
-    prediction_mb <-inverse-transform prediction_std using scaler
+    prediction_mb <- inverse-transform prediction_std using scaler
 
     RETURN prediction_mb 
 ```
