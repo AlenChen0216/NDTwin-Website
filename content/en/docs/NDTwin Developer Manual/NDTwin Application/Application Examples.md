@@ -16,7 +16,7 @@ The **Energy-Saving App** dynamically monitors link utilization and flow states 
 | :--- | :--- |
 | **Language** | Python |
 
-[View Source Code →](../../Download/_index.md)
+[View Source Code →](https://github.com/ndtwin-lab/Energy-Saving-App)
 
 ---
 
@@ -30,7 +30,7 @@ The **Traffic-Engineering App** reduces network congestion and optimizes bandwid
 | Component | Specification |
 | :--- | :--- |
 | **Language** | C++ |
-[View Source Code →](../../Download/_index.md)
+[View Source Code →](https://github.com/ndtwin-lab/Traffic-Engineering-App)
 
 ---
 
