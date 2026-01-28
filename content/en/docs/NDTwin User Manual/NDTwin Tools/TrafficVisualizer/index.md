@@ -4,12 +4,7 @@ description: >
 date: 
 weight: 5
 ---
-Here is the translation of your report, separated into a **User Manual** and an **Installation & Technical Manual** as requested.
 
----
-title: Network Traffic Visualizer GUI Features Documentation
-
----
 
 # Network Traffic Visualizer GUI Features Documentation
 
@@ -403,4 +398,3 @@ In Real-time mode, the application automatically updates the topology and flow i
 
 ---
 
-© 2025 Network Traffic Visualizer
