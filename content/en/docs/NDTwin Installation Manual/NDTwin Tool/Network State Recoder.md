@@ -11,15 +11,29 @@ Network State Recorder (NSR) is a tool that periodically fetches network state d
 
 ## 1. Prerequisites & Setup
 
-Before running NSR, ensure the environment is configured correctly and scripts have the necessary execution permissions.
+Before running NSR, ensure the required libraries is installed, environment is configured correctly, and scripts have the necessary execution permissions.
+
+### Requirements
+
+- **Python**: 3.8 or higher
+- **NDTwin Server**: Running and accessible
+- **Ryu**: For setting flow rule to switches
+- **Python Dependencies**:
+  - `nornir` - Network automation framework
+  - `loguru` - Logging library
+  - `orjson` - Fast JSON library
+  - `requests` - HTTP library
+
+```bash
+pip install nornir loguru orjson requests
+```
 
 ### Script Permissions
 
 NSR relies on shell scripts for startup and shutdown. You must grant them execution privileges:
 
 ```bash
-chmod +x start_NSR.sh close_NSR.sh
-
+chmod +x start_network_state_recorder.sh stop_network_state_recorder.sh
 ```
 
 ### API Dependency
@@ -64,7 +78,7 @@ This is the primary configuration file for NSR behavior (intervals, target serve
 ---
 Recorder:
   data:
-    ndtwin_server: "http://127.0.0.1:8000"
+    ndtwin_kernel: "http://127.0.0.1:8000"
     request_interval: 5    # Data fetch interval in seconds (integer, >= 1)
     storage_interval: 2    # File rotation interval in minutes (integer, >= 1)
     log_level: "DEBUG"     # Logging level
@@ -75,7 +89,7 @@ Recorder:
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `ndtwin_server` | string | `http://127.0.0.1:8000` | URL of the NDTwin server |
+| `ndtwin_kernel` | string | `http://127.0.0.1:8000` | URL of the NDTwin kernel |
 | `request_interval` | integer | `5` | Frequency to fetch data from NDTwin (seconds) |
 | `storage_interval` | integer | `2` | Frequency to rotate and compress JSON files (minutes) |
 | `log_level` | string | `DEBUG` | Minimum logging level (TRACE, DEBUG, INFO, WARNING, ERROR) |
