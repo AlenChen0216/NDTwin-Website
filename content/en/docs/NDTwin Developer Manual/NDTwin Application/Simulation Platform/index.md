@@ -17,7 +17,7 @@ i. **NDTwin Application** This component analyzes system states to generate cand
 
 ii. **Simulation request and reply manager** Acts as the central communication bridge, relaying requests and replies between the NDTwin Application and the simulation platform.
 
-iii. **Simulation platform manager** Responsible for the heavy lifting, this server receives cases and forks processes to simulate them in parallel on a multi-core CPU. It evaluates the outcomes, writes the results back to NFS, and sends a completion reply to the NDTwin Kernel to notify the NDTwin Application.
+iii. **Simulation platform manager** Handles the heavy lifting. This server receives simulation cases and dispatches each case to the specified simulator, then forks worker processes to run simulations in parallel across multiple CPU cores. It evaluates the outcomes, writes results back to NFS, and sends a completion reply to the NDTwin Kernel so the NDTwin Application can be notified.
 
 
 ---
@@ -169,3 +169,6 @@ The NDTwin API uses standard HTTP status codes. Below are common error responses
 ---
 
 See more NDTwin API docs in [NDTwin API](../NDTwin%20Kernel%20API.md).
+
+See an end-to-end example in the [Energy-Saving App](https://github.com/ndtwin-lab/Energy-Saving-App) and the [Simulation Platform Manager](https://github.com/ndtwin-lab/Simulation-Platform-Manager), or watch the demo video [here](../../../Tutorials%20and%20Demo%20Videos/Ndtwin%20Applications/index.md).
+
