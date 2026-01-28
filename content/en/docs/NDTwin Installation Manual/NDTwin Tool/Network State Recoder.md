@@ -81,6 +81,7 @@ Recorder:
     ndtwin_kernel: "http://127.0.0.1:8000"
     request_interval: 5    # Data fetch interval in seconds (integer, >= 1)
     storage_interval: 2    # File rotation interval in minutes (integer, >= 1)
+    display_on_console: true  # Enable real-time logging output to console (true/false)
     log_level: "DEBUG"     # Logging level
 
 ```
@@ -92,6 +93,7 @@ Recorder:
 | `ndtwin_kernel` | string | `http://127.0.0.1:8000` | URL of the NDTwin kernel |
 | `request_interval` | integer | `5` | Frequency to fetch data from NDTwin (seconds) |
 | `storage_interval` | integer | `2` | Frequency to rotate and compress JSON files (minutes) |
+| `display_on_console` | boolean | `true` | Enable real-time logging output to console. Set to `false` to log only to files in `logs/` directory |
 | `log_level` | string | `DEBUG` | Minimum logging level (TRACE, DEBUG, INFO, WARNING, ERROR) |
 
 #### Log Levels

@@ -29,9 +29,11 @@ Use this for long-term data collection. It runs NSR in the background using `noh
 
 ```
 
+*Note: this script will change the value of `display_on_console` in config file to `false`
+
 #### Option 2: Foreground Mode (Debugging)
 
-Use this to monitor real-time logs in the terminal.
+In order to monitor real-time logs in the terminal, you need to **set the `display_on_console` to `true`**
 
 ```bash
 python3 network_state_recorder.py
@@ -58,6 +60,7 @@ pgrep -f network_state_recorder.py
 ```
 
 *Note: If permissions deny execution, try: `sudo ./stop_network_state_recorder.sh*`
+*Note: this script will change the value of `display_on_console` in config file to `true`
 
 #### Option 2: Manual Termination
 
@@ -117,7 +120,7 @@ NSR logs are immediately written to the `./logs/` folder (not displayed in the t
 
 **Log File Format:** `logs/NSR_YYYY-MM-DD.log`
 
-**Real-time Monitoring:**
+**Real-time Monitoring Background NSR:**
 
 ```bash
 tail -f logs/NSR_$(date +%Y-%m-%d).log
