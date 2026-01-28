@@ -6,57 +6,42 @@ weight: 5
 ---
 
 
-### 1. System Requirements
+# Network Traffic Visualizer Installation Guide
 
-#### 1.1 Development Environment
+## 1. System Requirements
 
-* **Operating System:** Cross-platform (Windows, macOS, Linux)
-* **Java Runtime:** JDK 21 (OpenJDK or Oracle JDK)
-* **Build Tool:** Apache Maven 3.13.0 or higher
-* **Network:** Active internet/network connection to access the NDT API.
+- OS: Windows, macOS, or Linux
+- Java: JDK 21
+- Build tool: Apache Maven 3.6+ (3.13+ recommended)
+- Network: Reachable NDT API endpoint
 
-#### 1.2 Technology Stack
-
-* **Language:** Java 21
-* **UI Framework:** JavaFX 21.0.2
-* **Dependencies:**
-* `org.openjfx` (Controls, FXML)
-* `com.google.code.gson` / `jackson-databind` (JSON Processing)
-* `org.apache.httpcomponents` (HTTP Client)
-* `org.controlsfx` (UI Enhancements)
-
-
-
-### 2. Project Structure
-
-The project follows a standard Maven directory structure:
+## 2. Project Structure
 
 ```
-NDTwin real-time animation gui/
+Network Traffic Visualizer/
 ├── src/
 │   ├── main/
-│   │   ├── java/org/example/demo2/     # Java Source Code
-│   │   └── resources/org/example/demo2/ # FXML & Assets
-├── images/                             # Image Resources
-├── pom.xml                             # Maven Configuration
-├── start.sh                            # Startup Script
-└── README_ENV.md                       # Environment Documentation
-
+│   │   ├── java/org/example/demo2/
+│   │   └── resources/org/example/demo2/
+├── images/
+├── pom.xml
+├── mvnw
+├── network_traffic_visualizer.sh
+└── settings.json
 ```
 
-### 3. Compilation & Installation
+## 3. Compilation & Installation
 
-#### 3.1 Verify Environment
+### 3.1 Verify Environment
 
 Ensure Java and Maven are correctly installed:
 
 ```bash
 java -version  # Must be Java 21
 mvn -version   # Must be Maven 3.6+
-
 ```
 
-#### 3.2 Build the Project
+### 3.2 Build the Project
 
 Navigate to the project root and run:
 
@@ -66,167 +51,72 @@ mvn clean compile
 
 # Or build a full package
 mvn clean package
-
 ```
 
-### 4. Configuration & Execution
+## 4. Configuration
 
-#### 4.1 Environment Variables
+The app reads the API endpoint from `NDT_API_URL`.
 
-The application relies on the `NDT_API_URL` to fetch data.
+Default:
 
-* **Default:** `http://localhost:8000` (if not set).
-* **Setting the variable:**
+```
+http://localhost:8000
+```
+
+Set a custom API URL:
+
 ```bash
 export NDT_API_URL="http://your-server:8000"
-
 ```
 
+## 5. Run
 
-
-#### 4.2 Running the Application
-
-You can run the application using the provided shell script or via Maven.
-
-**Method 1: Using the Startup Script**
+If the script is not executable:
 
 ```bash
-# Run with default settings
-./run_debug.sh
-
-# Run with a custom API URL
-NDT_API_URL="http://192.168.1.100:8000" ./start.sh
-
+chmod +x ./network_traffic_visualizer.sh
 ```
 
-### 5. Developer Reference: Core Architecture
-
-#### 5.1 Key Class Map
-
-| Feature | Primary Class | Location |
-| --- | --- | --- |
-| **Main Entry** | `NetworkTopologyApp.java` | `src/main/java/org/example/demo2/` |
-| **Drawing Core** | `TopologyCanvas.java` | Handles drawing nodes, links, and flows. |
-| **Data Fetching** | `NDTApiClient.java` | Fetches `GraphData` and `DetectedFlowData`. |
-| **Flow Control** | `FlowFilter.java` | Manages flow visibility checkboxes. |
-| **Dialogs** | `InfoDialog.java` | Handles Node Info and Port Connection windows. |
-
-#### 5.2 Data Flow
-
-1. **API Client:** `NDTApiClient` fetches JSON data.
-2. **App Logic:** `NetworkTopologyApp` converts API data into internal models (`Node`, `Link`, `Flow`).
-3. **Rendering:** `TopologyCanvas` updates the visual elements at 60 FPS (or triggered events).
-
-#### 5.3 Maintenance Guide
-
-* **Adding Dependencies:** Update `pom.xml`.
-* **API Changes:** If the JSON response format changes, update the data models in `NDTApiClient.java` and `GraphData.java`.
-* **Styling:** UI styles are defined in `dialog.css`.
-
-### NDTwin Desktop GUI Deployment & Startup Guide
-
-**Version:** NDTwin Visualization (JavaFX)
-**Prerequisites:** Java 21 (JDK), Maven 3.6+
-
----
-
-#### 1. Environment Setup
-
-Before running the desktop application, ensure your system meets the requirements.
-
-**Step 1: Verify Java Version**
-Open your terminal and check if Java 21 is installed.
+Start the app:
 
 ```bash
-java -version
-
+./network_traffic_visualizer.sh
 ```
 
-*Output should indicate version 21.*
+## 6. Troubleshooting
 
-**Step 2: Verify Maven Version**
-Check if Maven is installed for building the project.
+- **API connection errors:** Check `NDT_API_URL` and network access.
+- **JavaFX errors:** Ensure JDK 21 is installed and Maven dependencies are downloaded.
+
+## 7. Ubuntu Desktop App Shortcut
+
+You can create a desktop launcher so the app opens with a single click.
+
+### 7.1 Create a Launcher
+
+Create a `.desktop` file:
 
 ```bash
-mvn -version
-
+mkdir -p ~/.local/share/applications
+cat > ~/.local/share/applications/network-traffic-visualizer.desktop <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=Network Traffic Visualizer
+Exec=/bin/bash -lc "cd /path/to/Network Traffic Visualizer && ./network_traffic_visualizer.sh"
+Icon=/path/to/NDTwin_traffic_animation_v3.0.2/images/NDTwin.jpg
+Terminal=false
+Categories=Network;Development;
+EOF
 ```
 
----
+Replace `/path/to/Network Traffic Visualizer` with your actual project path.
 
-#### 2. Compilation (Building the App)
-
-You need to compile the source code into an executable format.
-
-**Step 1: Navigate to Project Directory**
+Make it executable:
 
 ```bash
-cd "NDTwin real-time animation gui"
-
+chmod +x ~/.local/share/applications/network-traffic-visualizer.desktop
 ```
 
-**Step 2: Clean and Compile**
-Run the following Maven command to clean old builds and compile the new one:
+### 7.2 Launch
 
-```bash
-mvn clean compile
-
-```
-
-**Step 3: Package (Optional but Recommended)**
-To create a full executable JAR file:
-
-```bash
-mvn clean package
-
-```
-
----
-
-#### 3. Execution (Running the App)
-
-There are two ways to start the application.
-
-**Method 1: Using the Startup Script (Recommended)**
-The provided script handles environment variables automatically.
-
-1. **Grant permission (if needed):**
-```bash
-chmod +x start.sh
-
-```
-
-
-2. **Run with Default Settings:**
-```bash
-./run_debug.sh
-
-```
-
-
-3. **Run with Custom API URL:**
-If your NDT API server is not on localhost, specify the URL:
-```bash
-NDT_API_URL="http://your-server-ip:8000" ./start.sh
-
-```
-
-
-
-**Method 2: Manual Configuration**
-If you are running it manually or via an IDE, you may need to set the environment variable first.
-
-```bash
-export NDT_API_URL="http://your-server-ip:8000"
-# Then run via Maven or Java command
-
-```
-
-*Note: The default URL is `http://localhost:8000` if not specified.*
-
----
-
-#### 4. Troubleshooting
-
-* **Network Error:** Ensure your computer can reach the NDT API server.
-* **JavaFX Error:** If you see "missing JavaFX runtime components," ensure you are using a JDK that includes JavaFX, or that `pom.xml` dependencies are correctly downloaded by Maven.
+Open the app grid and search for **Network Traffic Visualizer**, then pin it if needed.
