@@ -19,7 +19,10 @@ After an AI/ML model has been trained on a machine that is not part of NDTwin, t
 To make an inference, depending on the model used, a set of feature data should be fed into the trained model. An NDTwin application can call appropriate NDTwin kernel API functions to get a set of real-time network data (e.g., the current bandwidth usage of all links). Then, it can feed the retrieved real-time data into the model as the feature input to make an inference. For time-series models, an NDTwin application can keep the past retrieved data inside itself to form a sequence of time-series data for making an inference.
 
 If the NDTwin application program is not written in Python but in a different language such as C++, the NDTwin application needs to perform some operations to import a trained model and call its prediction function for inference.
-Below, we use an example to explain how an NDTwin application uses LSTNet to train a time-series model and uses the trained model for prediction and optimal control of the network. In this example, the LSTNet model is trained in PyTorch and exported as a .pt file. The NDTwin application is a C++ program. 
+
+# Example
+
+Below, we use an example to explain the training phase, deployment preparation phase, and inference phase of an NDTwin application that uses LSTNet to train a time-series model and uses the trained model to predict the network traffic volume transmitted in ten minutes for the next interval. In this example, the LSTNet model is trained in PyTorch and exported as a .pt file and the NDTwin application is a C++ program. 
 
 # Training Phase
 ## 1) Prerequisites
