@@ -24,8 +24,16 @@ Before running NSR, ensure the required libraries is installed, environment is c
   - `orjson` - Fast JSON library
   - `requests` - HTTP library
 
+Install libraries:
+
 ```bash
 pip install nornir loguru orjson requests
+```
+
+Clone NSR:
+
+```bash
+git clone https://github.com/ndtwin-lab/Network-State-Recorder.git
 ```
 
 ### Script Permissions
