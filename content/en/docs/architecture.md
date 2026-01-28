@@ -18,17 +18,17 @@ The NDTwin architecture comprises four components: applications, tools, kernel, 
 
 The application component consists of various applications developed on the NDTwin platform. An NDTwin application is developed for achieving a specific optimization goal such as load-balancing or anomaly detection. Currently, NDTwin provides the **Traffic-engineering App** and **Energy-saving App**. More applications will be added by the NDTwin development team in the future. Additionally, anyone can develop his/her own applications by using the NDTwin open source project.
 
-Each NDTwin application is a separate program running independently, and it communicates with the NDTwin kernel via **RESTful APIs** to get services from the kernel or request the kernel to control specified network switches. An NDTwin application can provide its RESTful APIs to the kernel. Doing so enables the kernel to asynchronously send notifications, data, or requests to it. 
+Each NDTwin application is a separate program running independently, and it communicates with the NDTwin Kernel via **RESTful APIs** to get services from the kernel or request the kernel to control specified network switches. An NDTwin application can provide its RESTful APIs to the kernel. Doing so enables the kernel to asynchronously send notifications, data, or requests to it. 
 
 This RESTful APIs-based design provides many advantages as follows:
 
 * **Easy Integration**: NDTwin applications can be independently developed and written in different programming languages. They can be implemented as single-threaded or multi-threaded programs to best fit their needs.  
 * **High Performance**: Since each NDTwin application runs as an independent process, multiple NDTwin applications can run simultaneously over the multiple CPU cores of a server to increase their aggregate processing throughput. For those NDTwin applications that are CPU-bound, they can simultaneously run on different servers to further boost their aggregate processing throughput.  
-* **Fault Isolation**: Since each NDTwin application runs as a different process, a faulty or buggy NDTwin application will not crash, block, or slow down the operations of the NDTwin kernel or other NDTwin applications.
+* **Fault Isolation**: Since each NDTwin application runs as a different process, a faulty or buggy NDTwin application will not crash, block, or slow down the operations of the NDTwin Kernel or other NDTwin applications.
 
  ## Tools 
 
-Like an NDTwin application, an NDTwin tool is a process that uses RESTful APIs to communicate with the kernel bidirectionally. While the goal of an NDTwin application is to optimally control the network, the goal of an NDTwin tool is to support the NDTwin kernel or the NDTwin user. Similar to NDTwin applications, NDTwin tools can all run on a single server or separately run on different servers to achieve more computational and storage resources.    
+Like an NDTwin application, an NDTwin tool is a process that uses RESTful APIs to communicate with the kernel bidirectionally. While the goal of an NDTwin application is to optimally control the network, the goal of an NDTwin tool is to support the NDTwin Kernel or the NDTwin user. Similar to NDTwin applications, NDTwin tools can all run on a single server or separately run on different servers to achieve more computational and storage resources.    
 
 The tools that are currently included in NDTwin are listed as follows:
 
@@ -64,7 +64,7 @@ The core modules that are currently included in the kernel are explained as foll
 The network represents the target network that is operated and managed by NDTwin:
 
 * **Control Plane**: 
-  * NDTwin uses an SDN Controller (e.g., Ryu) to control the switches in real time. To be controlled by NDTwin, the switches need to support the OpenFlow protocol. To achieve high reliability, following the network industry's management scheme, the machine on which the NDTwin kernel runs and all switches that the NDTwin kernel controls are interconnected by a management network that is different from the data network used to transfer users' data packets. In the market, all managed network switches of all brands provide a management interface (port) for the management purpose. This interface can be used to connect a switch to the management network. 
+  * NDTwin uses an SDN Controller (e.g., Ryu) to control the switches in real time. To be controlled by NDTwin, the switches need to support the OpenFlow protocol. To achieve high reliability, following the network industry's management scheme, the machine on which the NDTwin Kernel runs and all switches that the NDTwin Kernel controls are interconnected by a management network that is different from the data network used to transfer users' data packets. In the market, all managed network switches of all brands provide a management interface (port) for the management purpose. This interface can be used to connect a switch to the management network. 
 * **Data Plane**: 
   * NDTwin can correctly operate the following two types of data networks:
     * **Emulated Network**: This type of data network is constructed by Mininet with Open vSwitch (OVS). Note that OVS supports OpenFlow. For this type of data network, its management network is implicitly the memory of the server on which Mininet is run. 
@@ -74,6 +74,6 @@ The network represents the target network that is operated and managed by NDTwin
 
 Due to the design of NDTwin, all NDTwin application processes, tool processes, the kernel process, and the SDN controller process (and even the Mininet process if Mininet is used as the emulated data network) can run together on a server. This configuration enables the NDTwin user to use just one server to run up NDTwin.
 
-When using NDTwin to operate a very large network with a huge number of flows, if the computational and storage resources of a server are insufficient for NDTwin to perform optimally, the NDTwin applications, tools, kernel, and SDN controller can run simultaneously on different servers if needed. In this usage case, these different servers should be interconnected by the managament network over which the NDTwin kernel controls all switches. This way, the RESTful API requests and replies exchanged among them will not be affected by the traffic transmitted on the data network. 
+When using NDTwin to operate a very large network with a huge number of flows, if the computational and storage resources of a server are insufficient for NDTwin to perform optimally, the NDTwin applications, tools, kernel, and SDN controller can run simultaneously on different servers if needed. In this usage case, these different servers should be interconnected by the managament network over which the NDTwin Kernel controls all switches. This way, the RESTful API requests and replies exchanged among them will not be affected by the traffic transmitted on the data network. 
 
 Although NDTwin can correctly and successfully operate a network emulated by Mininet, since running an emulation consumes considerable CPU and memory resources, experiment results show that when the sending rates of flows in an emulated network are set to high values, the emulated network will run very slowly. This problem is caused by emulation, not NDTwin.     
