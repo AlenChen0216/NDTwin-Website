@@ -8,6 +8,6 @@ weight: 1
 
 [![Watch the demo](https://img.youtube.com/vi/CfE6TmnYJDI/hqdefault.jpg)](https://www.youtube.com/watch?v=CfE6TmnYJDI)
 
-The **NDTwin Kernel** is the central nervous system of the Network Digital Twin framework. It is responsible for synchronizing the state between the physical network and the digital twin, managing data flow, and orchestrating interactions between NDT Applications (Apps) and the Simulation Server.
+The **NDTwin Kernel** is the central nervous system of the Network Digital Twin framework. It is responsible for synchronizing the state between the physical network and the digital twin, managing data flow, and orchestrating interactions between NDTwin Applications (Apps) and the Simulation Platform Manager.
 
 This guide details the kernel's execution lifecycle, internal modules, and key operational flows.

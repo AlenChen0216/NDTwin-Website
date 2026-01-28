@@ -1,9 +1,3 @@
----
-title: NDTwin Kernel API
-description: Explain the usages of NDTWin kernel API, which is used by NDTWin applications and NDTWin tools for requesting data/services from the NDTwin kernel or asking the NDTwin kernel to control the network.  
-date: 2017-01-05
-weight: 5
----
 # NDT RESTful API Documentation
 ## 1. POST /ndt/link_failure_detected
 ### Description
@@ -1074,7 +1068,7 @@ Returned when an unknown exception type is thrown.
 
 ### Description
 
-Called by NDTwin Application to notify the NDTwin server that a new simulation case has been dispatched by an external simulator and reply the response from simulation server.
+Called by NDTwin Application to notify the NDTwin server that a new simulation case has been dispatched by an external simulator and reply the response from simulation platform manager.
 
 ### Request
 * Method: **POST**

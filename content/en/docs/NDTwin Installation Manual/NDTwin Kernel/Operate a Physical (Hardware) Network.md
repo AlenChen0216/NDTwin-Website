@@ -187,14 +187,14 @@ git clone https://github.com/ndtwin-lab/NDTwin-Kernel.git
 
 ```
 
-### Step 4.2: Configure controller / simulation server addresses (AppConfig.hpp)
+### Step 4.2: Configure controller / Simulation Platform Manager addresses (AppConfig.hpp)
 Before building or running NDTwin-Kernel, update the runtime endpoints in:
 
 `NDTwin-Kernel/setting/AppConfig.hpp`
 
 This file defines the topology JSON path and the host IP/port for:
 - **Ryu controller** (where your customized Ryu app is running)
-- **Simulation server** (where simulation jobs are submitted)
+- **Simulation Platform Manager server** (where simulation jobs are submitted)
 
 Example:
 
