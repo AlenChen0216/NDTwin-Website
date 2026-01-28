@@ -6,107 +6,161 @@ date: 2017-01-05
 weight: 4
 ---
 
-AI/ML model training and inference involve data, training, and inferecne. Here, we explain how an NDTwin application gets data from the NDTwin Kernel for trainning a model and how it uses the trained model for inference. Performing inferences can be used to classify a packet/flow/situation, etc. or to predict the future outcome of a flow/switch/link/network, etc. The purposes of using AI/ML models in an NDTwin application can be various. 
 
-Nowadays, most people use the Python language and Python-based platforms (e.g., scikit-learn, PyTorch,TensorFlow, etc.) to write programs for training and inferencing an AI/ML model. If the NDTwin application program is written in Python, it can use these Python-based platforms for training and inferencing a model as any non-NDTwin application program. After inferencing a model to get the classification result or the predicted future outcome, the NDTwin application can issue appropriate NDTwin Kernel APIs to optimally control the network.
 
-Regarding obtaining appropriate data to train an AI/ML model, what data need to be collected to train the model depends on how an NDTwin application will use the trained model. For network data, the NDTwin application can (maybe periodically) call appropriate NDTwin Kernel APIs to get the data. The network state recorder (NSR) tool of NDTwin can also be used to automatically and periodically record the network data during a specified period into files, which can later be opend by the NDTwin application for model trainning. Besides, public datasets can be used to train the model if the dataset is meaningful for a specific NDTwin application.
+# AI/ML Integration in NDTwin Applications
 
-AI/ML model trainning can be performed offline. Thus, there is no need to perform model trainning on the NDTwin framework. NDTwin application developers can train their models on any machine they want. If the model trainning requires a considerable amount of GPU or CPU time, the developers can facilitate their model trainning on a powerful machine that is not part of NDTwin. 
+AI/ML model training and inference involve data, training, and inference. Here, we explain how an NDTwin application gets data from the NDTwin Kernel for training a model and how it uses the trained model for inference. Performing inferences can be used to classify a packet/flow/situation, etc. or to predict the future outcome of a flow/switch/link/network, etc. The purposes of using AI/ML models in an NDTwin application can be various.
 
-After an AI/ML model has been trained on a machine that is not part of NDTwin, the NDTwin application can use the trained model for inference and optimal control of the network. Normally, the trained model needs to be exported into a file (e.g., exported to a .pt file if the PyTorch platform is used for trainning). If the NDTwin application program is written in Python, it can import the trained model from the exported model file and then calls appropriate prediction functions to make inferences. This usage is the same as that for non-NDTwin application in the real world. Instead of trainning a model by themselves, NDTwin application developers can also use a model that has been trained elsewhere by other people, if applicable.    
+### Overview of the Workflow
 
-To make an inference, depending on the model used, a set of feature data should be fed into the trained model. An NDTwin application can call appropriate NDTwin Kernel API functions to get a set of real-time network data (e.g., the current bandwidth usage of all links). Then, it can feed the retrieved real-time data into the model as the feature input to make an inference. For time-series models, an NDTwin application can keep the past retrieved data inside itself to form a sequence of time-series data for making an inference. When an NDTwin application makes an inference, the trained model need not reside in the NDTwin application. Instead, it can be an online model that can be accessed by API. ChatGPT and Gemini are two possible examples. 
+Nowadays, most people use the Python language and Python-based platforms (e.g., **scikit-learn, PyTorch, TensorFlow**, etc.) to write programs for training and inferencing an AI/ML model.
 
-If the NDTwin application program is not written in Python but in a different language such as C++, the NDTwin application needs to perform some operations to import a trained model and call its prediction function for inference. The following explains how to do this.
+* If the NDTwin application program is **written in Python**, it can use these Python-based platforms for training and inferencing a model as any non-NDTwin application program. After inferencing a model to get the classification result or the predicted future outcome, the NDTwin application can issue appropriate NDTwin Kernel APIs to optimally control the network.
+* If the NDTwin application program is **not written in Python but in a different language such as C++**, the NDTwin application needs to perform some operations to import a trained model and call its prediction function for inference.
+
+### Data Collection Strategy
+
+Regarding obtaining appropriate data to train an AI/ML model, what data need to be collected to train the model depends on how an NDTwin application will use the trained model.
+
+1. **Direct API Calls:** For network data, the NDTwin application can (maybe periodically) call appropriate NDTwin Kernel APIs to get the data.
+2. **Network State Recorder (NSR):** The NSR tool of NDTwin can also be used to automatically and periodically record the network data during a specified period into files, which can later be opened by the NDTwin application for model training.
+3. **Public Datasets:** Public datasets can be used to train the model if the dataset is meaningful for a specific NDTwin application.
+
+### Offline Training Concept
+
+AI/ML model training can be performed **offline**. Thus, there is no need to perform model training on the NDTwin framework. NDTwin application developers can train their models on any machine they want. If the model training requires a considerable amount of GPU or CPU time, the developers can facilitate their model training on a powerful machine that is not part of NDTwin.
+
+### Inference & Deployment
+
+After an AI/ML model has been trained on a machine that is not part of NDTwin, the NDTwin application can use the trained model for inference and optimal control of the network.
+
+* Normally, the trained model needs to be exported into a file (e.g., exported to a `.pt` file if the PyTorch platform is used for training).
+* If the NDTwin application program is written in Python, it can import the trained model from the exported model file and then calls appropriate prediction functions to make inferences. This usage is the same as that for non-NDTwin application in the real world.
+* Instead of training a model by themselves, NDTwin application developers can also use a model that has been trained elsewhere by other people, if applicable.
+
+**Real-time Inference Logic:**
+To make an inference, depending on the model used, a set of feature data should be fed into the trained model. An NDTwin application can call appropriate NDTwin Kernel API functions to get a set of real-time network data (e.g., the current bandwidth usage of all links). Then, it can feed the retrieved real-time data into the model as the feature input to make an inference.
+
+> **Note on Time-Series:** For time-series models, an NDTwin application can keep the past retrieved data inside itself to form a sequence of time-series data for making an inference.
+
+
+---
 
 # A Complete Example
 
-Below, we use an example to explain the training phase, deployment preparation phase, and inference phase of an NDTwin application that uses LSTNet to train a time-series model and uses the trained model to predict the network traffic volume in the next hour. The dataset contains one year's worth of time-series data. The format of each data record is [timestamp_separated_by_1_hour, the traffic volume in bytes in this 1-hour period]. For example, ["2024-01-01 00:00", 50000000000] is a data record. In this example, the LSTNet model is trained in PyTorch and exported as a .pt file and the NDTwin application is a C++ program. The feature input to the LSTNet model is the past 168 hours (i.e., the past 7 days) of traffic volume (with each hour's traffic volume as a data record). The output of the LSTNet model is the predicted traffic volume in the next hour.
+Below, we use an example to explain the training phase, deployment preparation phase, and inference phase of an NDTwin application that uses **LSTNet** to train a time-series model and uses the trained model to predict the network traffic volume in the next hour.
 
-# Training Phase
-## 1) Prerequisites
-### Python
+* **Format:** `[timestamp_separated_by_1_hour, the traffic volume in bytes in this 1-hour period]`.
+* *Example:* `["2024-01-01 00:00", 50000000000]`
+
+
+* **Tech Stack:** LSTNet model trained in **PyTorch** and exported as a `.pt` file; NDTwin application is a **C++ program**.
+* **Input/Output:**
+* *Input:* Past 168 hours (i.e., the past 7 days) of traffic volume.
+* *Output:* Predicted traffic volume in the next hour.
+
+
+
+---
+
+## Phase 1: Training Phase
+
+### 1) Prerequisites
+
+**Python Environment**
+
 * Python 3.9+ (recommended: 3.10)
-### Required dependencies (actually used in the code)
-* PyTorch (torch)
+
+**Required dependencies** (actually used in the code)
+
+* PyTorch (`torch`)
 * scikit-learn (for Standard scaler)
 * joblib (for saving the scaler)
 
-```python
+```bash
 pip install torch scikit-learn joblib
+
 ```
-## 2) Data Preparation and File Structure (Required)
+
+### 2) Data Preparation and File Structure (Required)
+
 Before training a network traffic forecasting model, users must ensure that their time series dataset satisfies the following requirements:
 
-1. Fixed Time Granularity:
-
-The dataset must be collected at a fixed time interval, such as:                    One record every 10 minutes.
-
-2. Explicit Target Variable:
-
+1. **Fixed Time Granularity:**
+The dataset must be collected at a fixed time interval, such as: One record every 10 minutes.
+2. **Explicit Target Variable:**
 * The dataset must include a clearly defined traffic-related target variable to be predicted by the model.
 * This variable serves as the label in the supervised learning process.
 
-3. Chronologically Ordered Data:
 
+3. **Chronologically Ordered Data:**
 Shuffling the data is not allowed, as it breaks temporal dependencies.
 
-## 3) Feature Engineering Recommendations
+### 3) Feature Engineering Recommendations
+
 To improve the model's ability to learn temporal and periodic patterns, you are encouraged to include time-related and cyclical features during the feature engineering stage, such as:
 
-### 1. Calendar-Based Features:
-
+**1. Calendar-Based Features:**
 The following features can be extracted directly from timestamps and used as model inputs:
 * Month
 * Day of month
 
-### 2. Cyclical Features:
+
+**2. Cyclical Features:**
 For traffic data exhibiting strong periodic behavior, it is recommended to include cyclical encodings, such as:
 * Hourly cycles
 * Weekly cycles
 
-### 3. Target Value Normalization:
+
+**3. Target Value Normalization:**
 Network traffic values may span multiple orders of magnitude (e.g., hundreds of MB to tens of GB).
-* Normalizing or standardizing the target variable is therefore recommended, for example using ```StandardScaler```.
+* Normalizing or standardizing the target variable is therefore recommended, for example using `StandardScaler`.
 
-## 4) Normalization (Optional)
-### 1. Applies ```StandardScaler``` only to the traffic volume (in bytes)
-* ```fit``` on the training set
-* ```transform``` on the test set
 
-### 2. Saves the scaler as ```.joblib```
-### Note
-* The same scaler must be used during both training and deployment (for inverse normalization)
-* The scaler must be fitted only on the training set, not the full dataset, to avoid data leakage
 
-## 5) Training Outputs and Deployment Artifacts (Required)
+### 4) Normalization (Optional)
+
+**1. Applies `StandardScaler` only to the traffic volume (in bytes)**
+
+* `fit` on the training set
+* `transform` on the test set
+
+**2. Saves the scaler as `.joblib`**
+
+> **Note:**
+> * The same scaler must be used during both training and deployment (for inverse normalization).
+> * The scaler must be fitted only on the training set, not the full dataset, to avoid data leakage.
+> 
+> 
+
+### 5) Training Outputs and Deployment Artifacts (Required)
+
 When LSTNet is used as the time series forecasting model, the training process produces the following deployment artifacts:
 
-* ```your_model_name.pt```:
+* **`your_model_name.pt`**: A TorchScript traced model used for deployment and inference.
+* **`your_scaler_name.joblib`**: The data scaler fitted during training, which must be reused during inference and inverse normalization.
 
-   A TorchScript traced model used for deployment and inference
-* ```your_scaler_name.joblib```:
-    
-    The data scaler fitted during training, which must be reused during inference and inverse normalization
-
-#### During inference, the input tensor shape must exactly match the example input used during model tracing.
-For example:     
-```(batch_size, 168, 7)```
-
+**Important:** During inference, the input tensor shape must exactly match the example input used during model tracing.
+For example: `(batch_size, 168, 7)`
 Where:
-* ```168```: length of the input time sequence (e.g., 168 time steps)
-* ```7```: number of features per time step
 
-# Deployment Preparation Phase
-* This phase packages the trained TorchScript model (```.pt```)and scaler artifact (```.joblib```) into a Python interface callable from a C++ application.
+* `168`: length of the input time sequence (e.g., 168 time steps)
+* `7`: number of features per time step
+
+---
+
+## Phase 2: Deployment Preparation Phase
+
+* This phase packages the trained TorchScript model (`.pt`) and scaler artifact (`.joblib`) into a Python interface callable from a C++ application.
 * Python handles feature engineering, normalization, and inference, then returns predictions back to C++.
 
 ### Python Interface (Three Pseudo Functions)
-1. ```matrix_to_df```
 
+**1. `matrix_to_df`**
 Input Matrix and convert it into a time series data table.
-``` 
+
+```python
 FUNCTION matrix_to_df(input_matrix):
     REQUIRE input_matrix length == WINDOW (168 timesteps)
 
@@ -122,11 +176,13 @@ FUNCTION matrix_to_df(input_matrix):
     SORT rows by time in ascending order
 
     RETURN time-indexed table
-```
-2. ```build_features```
 
-Feature engineering (consistent with the training phase)
 ```
+
+**2. `build_features`**
+Feature engineering (consistent with the training phase).
+
+```python
 FUNCTION build_features(time_series_table):
     CONVERT n_bytes from Bytes to MB
 
@@ -146,66 +202,66 @@ FUNCTION build_features(time_series_table):
         [month, day, n_bytes, sin_hour, cos_hour, sin_week, cos_week]
 
     RETURN feature_matrix with shape (168, 7)
-```
-3.```predict_from_matrix```
 
-External inference interface (C++ call entry point)
 ```
+
+**3. `predict_from_matrix`**
+External inference interface (C++ call entry point).
+
+```python
 FUNCTION predict_from_matrix(input_matrix):
-    df <-matrix_to_df(input_matrix)
+    df <- matrix_to_df(input_matrix)
 
-    features <-build_features(df)
+    features <- build_features(df)
 
-    model_input <-reshape features to (1, WINDOW, FEATURES)
+    model_input <- reshape features to (1, WINDOW, FEATURES)
 
     LOAD TorchScript model
 
     DISABLE gradient computation
 
-    prediction_std <-model(model_input)
+    prediction_std <- model(model_input)
 
     LOAD training scaler
 
-    prediction_mb <-inverse-transform prediction_std using scaler
+    prediction_mb <- inverse-transform prediction_std using scaler
 
     RETURN prediction_mb 
+
 ```
+
 * This function serves as the primary inference interface between Python and C++.
-* The Python side is responsible for:
-   * Input validation
-   * Feature engineering
-   * Model inference
-   * Inverse normalization
-* The C++ side only needs to provide the raw time series input data and receive the prediction results.
+* **The Python side is responsible for:** Input validation, Feature engineering, Model inference, Inverse normalization.
+* **The C++ side only needs to:** Provide the raw time series input data and receive the prediction results.
 
-# Inference Phase (C++ Integration with Python Prediction Model)
-## 1. System Architecture Overview
+---
+
+## Phase 3: Inference Phase (C++ Integration with Python Prediction Model)
+
+### 1. System Architecture Overview
+
 The inference framework adopts a hybrid deployment architecture using C++ and Python, in which responsibilities are clearly separated:
-### Python Side (Deployment Preparation)
 
+**Python Side (Deployment Preparation)**
 Responsible for:
 
-* Loading the trained TorchScript model (```.pt```)
-
-* Loading the trained scaler (```.joblib```)
-
+* Loading the trained TorchScript model (`.pt`)
+* Loading the trained scaler (`.joblib`)
 * Performing feature engineering
-
 * Executing model inference
-
 * Performing inverse normalization
+* Providing an external callable inference interface: `predict_from_matrix()`
 
-* Providing an external callable inference interface:```predict_from_matrix()```
-### C++ Side
+**C++ Side**
 Responsible for:
 
 * Preparing time series input data
-
 * Calling Python inference functions via pybind11
-
 * Receiving and integrating prediction outputs into the C++ system workflow
-### Data Flow Diagram
-```
+
+**Data Flow Diagram**
+
+```text
 C++ input sequence
          |
 pybind11 calls Python module
@@ -215,53 +271,71 @@ Python feature engineering + inference
 Prediction result returned
          |
 C++ receives and processes result
+
 ```
-## 2. Python Inference Module Loading
-Users must place the Python inference module generated(```your_python_interface_name.py```) during the Deployment Preparation Phase together with the following files in the same directory:```your_model_name.pt```, ```your_scaler_name.joblib```, ```your_c/c++.exe```
-# 3. C++ Loading Mechanism Design
-* Use ```pybind11::embed```to initialize an embedded Python interpreter
 
-* Modify ```sys.path``` to allow Python to locate the module
+### 2. Python Inference Module Loading
 
-* Import the Python inference module using ```py::module::import("your_python_interface_name")```
+Users must place the Python inference module generated (`your_python_interface_name.py`) during the Deployment Preparation Phase together with the following files in the same directory:
 
-* Call the Python inference function using ```module.attr("predict_from_matrix")(data);```
+* `your_model_name.pt`
+* `your_scaler_name.joblib`
+* `your_c/c++.exe`
 
-For example:
-```c++
+### 3. C++ Loading Mechanism Design
+
+1. Use `pybind11::embed` to initialize an embedded Python interpreter.
+2. Modify `sys.path` to allow Python to locate the module.
+3. Import the Python inference module using `py::module::import("your_python_interface_name")`.
+4. Call the Python inference function using `module.attr("predict_from_matrix")(data);`.
+
+**Example:**
+
+```cpp
 #include <pybind11/embed.h>
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
+
 namespace py = pybind11;
+
+// Initialization
 py::initialize_interpreter();
 module = py::module::import("your_python_interface_name");
+
+// Call prediction
 py::object predicted_result = module.attr("predict_from_matrix")(data);
+
 ```
-# 4. C++ - Python Interface Design
-## Python External Inference Function Specification
-### Input Format
-```
-list of [time_string, n_bytes]
-Total length: 168
-```
-### Example
-```
+
+### 4. C++ - Python Interface Design
+
+**Python External Inference Function Specification**
+
+* **Input Format:** `list of [time_string, n_bytes]`
+* **Total length:** 168
+
+**Example Input:**
+
+```json
 [
   ["2024-01-01 00:00", 50000000000],
   ["2024-01-01 01:00", 52000000000],
   ...
   (168 samples in total)
 ]
+
 ```
-### C++ Invocation Logic
-```
-1. Generate 168-hour time series input
-2. Pack data as vector<pair<string, double>>
-3. Call module.attr("predict_from_matrix") to predict
-```
-# 5. Runtime Inference Execution Flow
-```
-Create Predictor object
+
+**C++ Invocation Logic**
+
+1. Generate 168-hour time series input.
+2. Pack data as `vector<pair<string, double>>`.
+3. Call `module.attr("predict_from_matrix")` to predict.
+
+### 5. Runtime Inference Execution Flow
+
+```text
+Create C++ Predictor object
         |
 Initialize embedded Python interpreter
         |
@@ -274,4 +348,5 @@ Call predict_from_matrix()
 Receive prediction output
         |
 Display or integrate into system
+
 ```
