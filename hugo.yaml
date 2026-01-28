@@ -101,10 +101,6 @@ params:
         icon: fa fa-envelope
         desc: Discussion and help from your fellow users
     # Developer relevant links
-      - name: Facebook
-        url: https://www.facebook.com/  # 記得換成你的 FB 網址
-        icon: fab fa-facebook           # FB 圖示
-        desc: Follow us on Facebook
       - name: X               # 名稱改成 X
         url: https://x.com/nd_twin  # 網址改成 x.com
         icon: fab fa-x-twitter # 圖示改成 X 的 logo

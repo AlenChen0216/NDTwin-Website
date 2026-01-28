@@ -155,13 +155,13 @@ If your server is at a different address, modify accordingly.
 Ensure the deployment script has execute permissions:
 
 ```bash
-sudo chmod +x deploy.sh
+sudo chmod +x web_gui_deploy.sh  
 ```
 
 Execute the deployment script:
 
 ```bash
-./deploy.sh
+./web_gui_deploy.sh  
 ```
 
 The deployment script will automatically perform the following operations:
