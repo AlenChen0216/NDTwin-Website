@@ -175,7 +175,7 @@ The Simulation Platform does not compile the simulator logic directly into itsel
 **Command Example:**
 ```bash
 # Assuming you are in the source root of Energy-Saving-App
-cp ./energy_saving_simulator ../Simulation-platform-manager/registered/energy_saving_simulator/1.0/executable
+cp ./energy_saving_simulator ../Simulation-Platform-Manager/registered/energy_saving_simulator/1.0/executable
 ```
 
 > **Makefile option (recommended):** The Energy-Saving App repository already automates simulator registration in its **Makefile**.  
