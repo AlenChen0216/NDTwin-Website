@@ -221,5 +221,5 @@ std::string SIM_SERVER_URL = "http://<YOUR_SIM_IP>:8003/submit";
 
 For step-by-step instructions on how to launch the **NDTwin-Kernel**, **Simulation-Platform-Manager**, and **Energy-Saving-App**, see:
 
+- **Demo:** [Demo](../../Tutorials%20and%20Demo%20Videos/_index.md)
 - **User Manual:** [User Manual](../../NDTwin%20User%20Manual/)
-- **Demo Video:** [Demo Video](../../Tutorials%20and%20Demo%20Videos/_index.md)
