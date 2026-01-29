@@ -115,7 +115,7 @@ sudo apt install nfs-common
 
 2. **Create Mount Point:**
 ```bash
-sudo mkdir -p /mnt/nfs/sim
+sudo mkdir -p /mnt/nfs/app
 
 ```
 
