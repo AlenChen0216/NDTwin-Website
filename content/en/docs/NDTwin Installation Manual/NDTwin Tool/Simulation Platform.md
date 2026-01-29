@@ -17,6 +17,10 @@ This installation manual uses the **Energy-Saving App** as a concrete example of
 
 **Scope:** Simulation Platform, Energy-Saving App Simulator, and NFS Configuration.
 
+> **Deployment Note:** In production, **NDTwin-Kernel**, **Energy-Saving-App**, and **Simulation-Platform-Manager** can run on **different machines** (e.g., Kernel on the NDTwin server, Simulation Platform Manager on a multi-core simulation server, and the App on any client host).  
+> **In this demo, we run all three components on the same machine** for simplicity.
+
+
 ## 1. System Requirements
 
 * **Operating System:** Linux Ubuntu 22.04.X ~ 24.04.X
@@ -32,9 +36,6 @@ The Simulation subsystem requires specific libraries for networking, logging, an
 Clone the example simulator and the Simulation Platform Manager:
 
 ```bash
-# Choose a workspace
-mkdir -p ~/ndtwin-sim && cd ~/ndtwin-sim
-
 # Clone the Simulation Platform Manager
 git clone https://github.com/ndtwin-lab/Simulation-Platform-Manager.git
 
@@ -50,7 +51,6 @@ Execute the following commands:
 # Core Utilities and JSON
 sudo apt install nlohmann-json3-dev
 sudo apt install libboost-all-dev
-sudo apt install libboost-process-dev
 
 # Logging
 sudo apt install libspdlog-dev
@@ -68,7 +68,15 @@ The Simulation Platform must share a file system with the NDTwin.
 
 ### 3.1 Server-Side Setup (On NDTwin Machine)
 
-1. **Create Directory:**
+
+1. **Install NFS Server:**
+```bash
+sudo apt update
+sudo apt install -y nfs-kernel-server
+sudo systemctl enable --now nfs-kernel-server
+```
+
+2. **Create Directory:**
 ```bash
 sudo mkdir -p /srv/nfs/sim
 sudo chown nobody:nogroup /srv/nfs/sim
@@ -77,15 +85,18 @@ sudo chmod 777 /srv/nfs/sim
 ```
 
 
-2. **Configure Exports:**
+3. **Configure Exports:**
 Edit `/etc/exports` to include the Simulation Platform's IP:
 ```txt
 /srv/nfs/sim <Sim_Server_IP>(rw,sync,no_subtree_check,all_squash)
 
 ```
 
+> **Note:** If the **Simulation Platform Manager** and **NDTwin Kernel** run on the **same machine**, you can set `<Sim_Server_IP>` to `localhost` (or `127.0.0.1`).
 
-3. **Restart NFS:**
+
+
+4. **Restart NFS:**
 ```bash
 sudo systemctl restart nfs-kernel-server
 
@@ -111,13 +122,49 @@ sudo mkdir -p /mnt/nfs/sim
 
 *Note: If you change this path, you must update the source code configuration to match.*
 
-## 4. Compilation & Deployment
 
-### 4.1 Build Flags
+## 4. Configure Energy-Saving-App and Simulation-Platform-Manager settings (before build)
+
+### 4.1 Configure Energy-Saving-App settings 
+
+Before compiling, edit the example settings file and set your IP/port values:
+
+1. Open: `Energy-Saving-App/include/app/settings.hpp.example`
+2. Update fields such as:
+   - `app_ip`, `app_port`
+   - `ndt_ip`, `ndt_port`
+   - `request_manager_ip`, `request_manager_port`
+   - `nfs_server_ip`, `nfs_mnt_dir`, etc.
+3. Save it as `Energy-Saving-App/include/app/settings.hpp`
+
+> If your Makefile supports auto-generation, you can also run `make all` once to create `include/app/settings.hpp` from the example, then edit the generated file.
+
+### 4.2 Configure Simulation-Platform-Manager settings 
+
+Before compiling, edit the example settings file:
+
+1. Open: `Simulation-Platform-Manager/include/settings/sim_server.hpp.example`
+2. Update fields such as:
+   - `request_manager_ip`, `request_manager_port`, `request_manager_target`
+   - `sim_server_port`, `sim_server_target`
+   - `nfs_server_ip`, `nfs_server_dir`, `nfs_mnt_dir`
+3. Save it as `Simulation-Platform-Manager/include/settings/sim_server.hpp`
+
+> If your Makefile supports auto-generation, you can run `make all` once to create `include/settings/sim_server.hpp` from the example, then edit it.
+
+
+> **Same-machine demo tip:** If **NDTwin-Kernel**, **Energy-Saving-App**, and **Simulation-Platform-Manager** run on the **same machine**, you can set all `*_ip` fields (e.g., `app_ip`, `ndt_ip`, `request_manager_ip`, `nfs_server_ip`) to `localhost` (or `127.0.0.1`) and keep the ports as configured.
+
+
+
+
+## 5. Compilation & Deployment
+
+### 5.1 Build Flags
 
 * **Logging:** Compile with `-DSPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE` to ensure debug logs function correctly when the `-l debug` flag is used.
 
-### 4.2 Simulator Registration (Crucial Step)
+### 5.2 Simulator Registration and Build Energy-Saving App (Crucial Step)
 
 The Simulation Platform does not compile the simulator logic directly into itself; it runs it as an external binary. You must "register" the Energy-Saving Simulator by placing the compiled binary in a specific directory.
 
@@ -129,7 +176,6 @@ The Simulation Platform does not compile the simulator logic directly into itsel
 ```bash
 # Assuming you are in the source root of Energy-Saving-App
 cp ./energy_saving_simulator ../Simulation-platform-manager/registered/energy_saving_simulator/1.0/executable
-
 ```
 
 > **Makefile option (recommended):** The Energy-Saving App repository already automates simulator registration in its **Makefile**.  
@@ -137,16 +183,21 @@ cp ./energy_saving_simulator ../Simulation-platform-manager/registered/energy_sa
 >
 > ```bash
 > # From the source root of Energy-Saving-App
-> make sim
+> cd Energy-Saving-App
+> make all
 > ```
 >
 > This will generate `./energy_saving_simulator` and copy it to:
 > `../Simulation-Platform-Manager/registered/energy_saving_simulator/1.0/executable`.
 
+### 5.3 Build Simulation Platform Manager
+```bash
+cd Simulation-Platform-Manager
+make all
+```
 
 
-
-### 4.3 NDTwin Integration Check
+### 5.4 NDTwin Integration Check
 
 For the Simulation Platform to receive tasks, the NDTwin must know its address.
 
@@ -155,3 +206,20 @@ For the Simulation Platform to receive tasks, the NDTwin must know its address.
 std::string SIM_SERVER_URL = "http://<YOUR_SIM_IP>:8003/submit";
 
 ```
+
+> **Note:** If the **Simulation Platform Manager** and **NDTwin Kernel** run on the **same machine**, you can set `<YOUR_SIM_IP>` to `localhost` (or `127.0.0.1`).
+
+* **Recompile NDTwin-Kernel:** After updating `setting/AppConfig`, rebuild and restart the NDTwin-Kernel.
+
+> See the NDTwin-Kernel build steps in the [Installation Manual](../../NDTwin%20Installation%20Manual/NDTwin%20Kernel/_index.md).
+
+
+
+---
+
+## 6. Launch Guide
+
+For step-by-step instructions on how to launch the **NDTwin-Kernel**, **Simulation-Platform-Manager**, and **Energy-Saving-App**, see:
+
+- **User Manual:** [User Manual](../../NDTwin%20User%20Manual/)
+- **Demo Video:** [Demo Video](../../Tutorials%20and%20Demo%20Videos/_index.md)
