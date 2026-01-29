@@ -71,7 +71,7 @@ Network traffic values may span multiple orders of magnitude (e.g., hundreds of 
 * Normalizing or standardizing the target variable is therefore recommended, for example using ```StandardScaler```.
 
 ## 4) Normalization (Optional)
-### 1. Applies ```StandardScaler``` only to flow (bytes)
+### 1. Applies ```StandardScaler``` only to the traffic volume (in bytes)
 * ```fit``` on the training set
 * ```transform``` on the test set
 
@@ -98,11 +98,11 @@ Where:
 * ```168```: length of the input time sequence (e.g., 168 time steps)
 * ```7```: number of features per time step
 
-# Deployment Preparation Phase (Python Inference Bridge Module Specification)
+# Deployment Preparation Phase
 * This phase packages the trained TorchScript model (```.pt```)and scaler artifact (```.joblib```) into a Python interface callable from a C++ application.
 * Python handles feature engineering, normalization, and inference, then returns predictions back to C++.
 
-### Python Interface (3 Pseudo Function)
+### Python Interface (Three Pseudo Functions)
 1. ```matrix_to_df```
 
 Input Matrix and convert it into a time series data table.
@@ -217,7 +217,7 @@ Prediction result returned
 C++ receives and processes result
 ```
 ## 2. Python Inference Module Loading
-Users must place the Python inference module generated(```your_python_interface.py```) during the Deployment Preparation Phase together with the following files in the same directory:```your_model_name.pt```, ```your_scaler_name.joblib```, ```your_c/c++.exe```
+Users must place the Python inference module generated(```your_python_interface_name.py```) during the Deployment Preparation Phase together with the following files in the same directory:```your_model_name.pt```, ```your_scaler_name.joblib```, ```your_c/c++.exe```
 # 3. C++ Loading Mechanism Design
 * Use ```pybind11::embed```to initialize an embedded Python interpreter
 
