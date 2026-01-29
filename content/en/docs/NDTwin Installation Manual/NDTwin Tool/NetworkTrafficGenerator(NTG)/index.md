@@ -32,7 +32,7 @@ python3 --version
 pip3 --version
 ```
 
-Libraries used by NTG controller-side scripts (`interactive_commands.py` + `Utilis/*.py`):
+Libraries used by NTG controller-side scripts (`network_traffic_generator.py` + `Utilis/*.py`):
 
 - `loguru`
 - `prompt_toolkit`
@@ -49,17 +49,23 @@ pip install --upgrade pip
 pip install loguru prompt_toolkit nornir nornir-utils pyyaml numpy pandas paramiko requests
 ```
 
+Clone our NTG:
+
+```bash
+git clone https://github.com/ndtwin-lab/Network-Traffic-Generator.git
+```
+
 If your environment uses Conda/virtualenv, activate it before installing packages.
 
 ## Files Overview
 
 ![](files.png)
 
-- `interactive_commands.py`: Interactive CLI that accepts commands.
+- `network_traffic_generator.py`: Interactive CLI that accepts commands.
 - `Utilis/`: Contains some related util functions.
 - `setting/Hardware.yaml`: Nornir host inventory (testbed controller + worker nodes + on-site host IPs).
 - `setting/API_server_startup.yaml`: Nornir group file (startup/shutdown commands for worker-node API servers).
-- `setting/Mininet.yaml`: Mininet runtime mode and local ndtwin server (basic metadata).
+- `setting/Mininet.yaml`: Mininet runtime mode and local ndtwin kernel (basic metadata).
 - `NTG.yaml`: Nornir configuration pointing to the inventory files above.
 - `flow_template.json` & `dist_template.json`: Example configuration for intervals and flow generation parameters.
 
@@ -88,56 +94,82 @@ Notes:
 `setting/API_server_startup.yaml`
 ```yaml
 worker_node_servers:
-  data:
-    startup_commands:
-      - "source ~/ntg/bin/activate && cd Desktop/NTG && pwd && nohup uvicorn worker_node:app --host 0.0.0.0 --port 8000 > uvi.log 2>&1 &"
-    shutdown_commands:
-      - "killall -9 uvicorn"
+  data:
+    startup_commands:
+      - "source ~/ntg/bin/activate && cd Desktop/NTG && pwd && nohup uvicorn network_traffic_generator_worker_node:app --host 0.0.0.0 --port 8000 > uvi.log 2>&1 &"
+    shutdown_commands:
+      - "killall -9 uvicorn"
 ```
 Notes:
-- `startup_commands` should start your FastAPI server (e.g., `uvicorn worker_node:app ...`) on each worker node.
+- `startup_commands` should start your FastAPI server (e.g., `uvicorn network_traffic_generator_worker_node:app ...`) on each worker node.
 - Adjust virtualenv path and ports as needed.
 
 `setting/Hardware.yaml` (abbreviated; tailor to your hosts)
 ```yaml
 Hardware_Testbed:
-  hostname: "hardware_testbed"
-  data:
-    ndtwin_server: "http://10.10.xx.xx:8000"
-    recycle_interval: 10
+  hostname: "hardware_testbed"
+  data:
+    ndtwin_kernel: "http://10.10.xx.xx:8000"
+    recycle_interval: 10
+    sleep_time:
+      min: 0.4
+      max: 1.3
+    ports_limitation:
+      min_port: 5204
+      max_port: 10204
+      exclude_ports:
+        - 8000
+    log_level: "DEBUG"
 
 worker_node1:
-  hostname: 10.10.xx.xx
-  username: "server1"
-  password: "xxooxx"
-  port: 22
-  groups:
-    - worker_node_servers
-  data:
-    worker_node_server: "http://10.10.xx.xx:8000"
-    on_site_hosts:
-      h1: "192.168.yy.yy"
-      # ... continue for h2–hzz
+  hostname: 10.10.xx.xx
+  username: "server1"
+  password: "xxooxx"
+  port: 22
+  groups:
+    - worker_node_servers
+  data:
+    worker_node_server: "http://10.10.xx.xx:8000"
+    retries: 5
+    backoff_min_ms: 250.0
+    backoff_max_ms: 500.0
+    thread_count: 500
+    on_site_hosts:
+      h1: "192.168.yy.yy"
+      # ... continue for h2–hzz
 
 # Repeat similarly for worker_node2–worker_node4 with their ranges
 ```
 
 Notes:
-- `ndtwin_server` is the location of our NDTwin controller.
+- `ndtwin_kernel` is the location of our NDTwin Kernel.
 - `recycle_interval` is the interval for asking whether `worker_node_server` have finished some iperf3 and recycle the used ports.
+- `sleep_time` defines the random waiting interval (in seconds) between starting iperf server and client to avoid "Connection Refused". `min` and `max` set the lower and upper bounds.
+- `ports_limitation` controls the port range used for flow generation:
+  - `min_port`: The minimum port number available for iperf flows.
+  - `max_port`: The maximum port number available for iperf flows.
+  - `exclude_ports`: A list of ports to exclude from the available range (e.g., ports used by other services like the API server).
+- `log_level` sets the logging verbosity. Supported values: `TRACE`, `DEBUG`, `INFO`, `WARNING`, `ERROR`.
 - `groups` must be a YAML list (e.g., `- worker_node_servers`).
-- `data.worker_node_server` must be reachable from the machine running `interactive_commands.py`.
+- `data.worker_node_server` must be reachable from the machine running `network_traffic_generator.py`.
+- `retries` specifies the number of retry attempts for worker nodes to restart iperf client.
+- `backoff_min_ms` and `backoff_max_ms` define the minimum and maximum backoff time (in milliseconds) between retry attempts.
+- `thread_count` sets the maximum number of concurrent threads for starting iperf client/server on each worker node.
 - `data.on_site_hosts` maps logical host names (e.g., h1) to IP addresses. If you define lots of hosts in one worker node, please list all of them.
-- Our NTG will distribute the role of client/server in iperf using the logical host names from the **NDTwin Controller**. Thus, please make sure the logical host name is the same in **NDTwin Controller** and **NTG**.
+- Our NTG will distribute the role of client/server in iperf using the logical host names from the **NDTwin Kernel**. Thus, please make sure the logical host name is the same in **NDTwin Kernel** and **NTG**.
 
 `setting/Mininet.yaml`
 
 ```yaml
 Mininet_Testbed:
-  hostname: "mininet_testbed"
-  data:
-    ndtwin_server: "http://127.0.0.1:8000"
-    mode: "cli"
+  hostname: "mininet_testbed"
+  data:
+    ndtwin_kernel: "http://127.0.0.1:8000"
+    mode: "cli"
+    log_level: "DEBUG"
+    sleep_time:
+      min: 0.4
+      max: 1.3
 ```
 
 Notes:

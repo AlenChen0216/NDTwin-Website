@@ -67,32 +67,32 @@ if __name__ == "__main__":
 
 ### Start Up Process
 
-1. Modify the topology `python` code to import `interactive_commands.py` and replace Mininet's CLI to our NTG's CLI.
+1. Modify the topology `python` code to import `network_traffic_generator.py` and replace Mininet's CLI to our NTG's CLI.
 
 ```python
 from mininet.topo import Topo
 from mininet.net import Mininet
 #from mininet.cli import CLI
 from mininet.node import RemoteController
-from interactive_commands import interactive_command_mode
+from network_traffic_generator import command_line
 
 class MyTopo(Topo):
-  def build(self):
-    s1 = self.addSwitch("s1")
-    h1 = self.addHost("h1")
-    h2 = self.addHost("h2")
+  def build(self):
+    s1 = self.addSwitch("s1")
+    h1 = self.addHost("h1")
+    h2 = self.addHost("h2")
 
-    self.addLink(h1,s1)
-    self.addLink(h2,s1)
+    self.addLink(h1,s1)
+    self.addLink(h2,s1)
 
 if __name__ == "__main__":
-  topo = MyTopo()
-  net = Mininet(
-        topo=topo,
-        controller=RemoteController)
-  net.start()
-  #CLI(net)
-  interactive_command_mode(net)
+  topo = MyTopo()
+  net = Mininet(
+        topo=topo,
+        controller=RemoteController)
+  net.start()
+  #CLI(net)
+  **command_line(net)**
 ```
 
 2. Start the Ryu Controller.
@@ -118,7 +118,7 @@ sudo python ./topo.py
 5. Start the NDTwin.
 
 ```bash
-sudo bin/ndt_main
+sudo bin/NDTwin_Kernel
 ```
 ![ndtwin](./ndtwin.png)
 
@@ -133,7 +133,7 @@ sudo bin/ndt_main
 - You must have installed `Ryu`, and `NDTwin`.
 - You must have downloaded `NTG`.
 - You must modify the `NTG.yaml`'s `host_file` into `./setting/Hardware.yaml ` and parameters in `./setting/Hardware.yaml`.
-- For hardware testbed, we use **master and worker** architecture to generate flows. Thus, you need to prepare some machines running in **Linux** and install python libraries as below and move `worker_node.py` into those machines:
+- For hardware testbed, we use **master and worker** architecture to generate flows. Thus, you need to prepare some machines running in **Linux** and install python libraries as below and move `network_traffic_generator_worker_node.py` into those machines:
 
   - `fastapi`
   - `uvicorn` (used to start the API server)
@@ -159,19 +159,19 @@ ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp
 2. Start the NDTwin
 
 ```bash
-sudo bin/ndt_main
+sudo bin/NDTwin_Kernel
 ```
 
 3. Start the NTG
 
 ```bash
-python interactive_commands.py
+python network_traffic_generator.py
 ```
 
 4. Manually Start worker node API servers on machines if the worker nodes do not start up correctly.
 
 ```bash
-uvicorn worker_node:app --host 0.0.0.0 --port 8000
+uvicorn network_traffic_generator_worker_node:app --host 0.0.0.0 --port 8000
 ```
 
 5. Now, you can use `NTG` to generate flows.

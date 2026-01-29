@@ -25,16 +25,18 @@ weight: 30
 Use this for long-term data collection. It runs NSR in the background using `nohup`.
 
 ```bash
-./start_NSR.sh
+./start_network_state_recorder.sh
 
 ```
 
+*Note: this script will change the value of `display_on_console` in config file to `false`
+
 #### Option 2: Foreground Mode (Debugging)
 
-Use this to monitor real-time logs in the terminal.
+In order to monitor real-time logs in the terminal, you need to **set the `display_on_console` to `true`**
 
 ```bash
-python3 NSR.py
+python3 network_state_recorder.py
 
 ```
 
@@ -43,7 +45,7 @@ python3 NSR.py
 To verify if NSR is currently running:
 
 ```bash
-pgrep -f NSR.py
+pgrep -f network_state_recorder.py
 
 ```
 
@@ -51,23 +53,21 @@ pgrep -f NSR.py
 
 ### Stopping NSR
 
-#### Option 1: Using the Close Script
-
-Gracefully terminates the process.
+#### Option 1: Using the Stop Script
 
 ```bash
-./close_NSR.sh
-
+./stop_network_state_recorder.sh
 ```
 
-*Note: If permissions deny execution, try: `sudo ./close_NSR.sh*`
+*Note: If permissions deny execution, try: `sudo ./stop_network_state_recorder.sh*`
+*Note: this script will change the value of `display_on_console` in config file to `true`
 
 #### Option 2: Manual Termination
 
 * **Foreground:** Press `Ctrl+C`.
 * **Background:**
 ```bash
-kill -15 $(pgrep -f NSR.py)
+sudo kill -15 $(pgrep -f network_state_recorder.py)
 
 ```
 
@@ -120,7 +120,7 @@ NSR logs are immediately written to the `./logs/` folder (not displayed in the t
 
 **Log File Format:** `logs/NSR_YYYY-MM-DD.log`
 
-**Real-time Monitoring:**
+**Real-time Monitoring Background NSR:**
 
 ```bash
 tail -f logs/NSR_$(date +%Y-%m-%d).log
@@ -131,10 +131,10 @@ tail -f logs/NSR_$(date +%Y-%m-%d).log
 
 | Issue | Possible Cause | Solution |
 | --- | --- | --- |
-| **"NDTwin server is not reachable"** | Server down or wrong URL | Check `ndtwin_server` in `recorder_setting.yaml` and verify connectivity via `curl`. |
+| **"NDTwin kernel is not reachable"** | Server down or wrong URL | Check `ndtwin_kernel` in `recorder_setting.yaml` and verify connectivity via `curl`. |
 | **"No Recorder setting found"** | Config missing | Ensure `setting/recorder_setting.yaml` exists and YAML syntax is correct. |
 | **Permission Denied** | Script not executable | Run `chmod +x *.sh` or use `sudo`. |
-| **Cannot Stop NSR** | Permission restrictions | Use `sudo ./close_NSR.sh`. |
+| **Cannot Stop NSR** | Permission restrictions | Use `sudo ./stop_network_state_recorder.sh`. |
 | **High Disk Usage** | Logs/Data growing too fast | Increase `request_interval` or decrease `storage_interval` in config. |
 
 ---
