@@ -6,56 +6,59 @@ date: 2017-01-05
 weight: 1
 ---
 
-## Step1: Simulation Server
+## Step1: Simulation Platform Manager
 
-* **Path:** `Energy-Saving App/NDT-Simulation-Server-master`
+* **Path:** `Simulation-Platform-Manager`
 * **Note:** Backend server for the simulation environment.
 
 1. Navigate to the directory:
 ```bash
-cd ~/Desktop/Energy Saving App/NDT-Simulation-Server-master
+cd ~Simulation-Platform-Manager
 
 ```
 
 
 2. Compile (Skip if already compiled):
 ```bash
-make
-
+make all
 ```
 
 
 3. Execute the server:
 ```bash
-sudo ./server
+sudo ./simulation_platform_manager
 
 ```
+
+![Alt text](/images/simulation-platform-manager_launching_succeed.png)
 
 
 
 ---
 
-## Step2: Power Saving App
+## Step2: Energy Saving App
 
-* **Path:** `Energy Saving App/NDT-Power-master`
+* **Path:** `Energy-Saving-App`
 * **Note:** Energy calculation module.
 
 1. Navigate to the directory:
 ```bash
-cd ~/Desktop/Energy Saving App/NDT-Power-master
+cd ~/Energy-Saving-App
 
 ```
 
 
 2. Compile (Skip if already compiled):
 ```bash
-make
+make all
 
 ```
 
 
 3. Execute the application:
 ```bash
-sudo ./power
+sudo ./energy_saving_app
 
 ```
+
+![Alt text](/images/energy-saving-app_lanuching_succeed.png)
