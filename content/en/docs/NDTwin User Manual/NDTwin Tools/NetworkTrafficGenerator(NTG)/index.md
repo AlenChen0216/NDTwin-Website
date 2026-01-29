@@ -91,8 +91,8 @@ if __name__ == "__main__":
         topo=topo,
         controller=RemoteController)
   net.start()
-  #CLI(net)
-  **command_line(net)**
+  # change `CLI(net)` to the function below.
+  command_line(net)
 ```
 
 2. Start the Ryu Controller.
