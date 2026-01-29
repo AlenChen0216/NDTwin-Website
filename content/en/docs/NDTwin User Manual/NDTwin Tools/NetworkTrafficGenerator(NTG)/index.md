@@ -135,16 +135,16 @@ sudo bin/NDTwin_Kernel
 - You must modify the `NTG.yaml`'s `host_file` into `./setting/Hardware.yaml ` and parameters in `./setting/Hardware.yaml`.
 - For hardware testbed, we use **master and worker** architecture to generate flows. Thus, you need to prepare some machines running in **Linux** and install python libraries as below and move `network_traffic_generator_worker_node.py` into those machines:
 
-  - `fastapi`
-  - `uvicorn` (used to start the API server)
-  - `pydantic`
-  - `loguru`
-  - `orjson` (required by `ORJSONResponse`)
+  - `fastapi`
+  - `uvicorn` (used to start the API server)
+  - `pydantic`
+  - `loguru`
+  - `orjson` (required by `ORJSONResponse`)
 
-  ```bash
-  pip install --upgrade pip
-  pip install fastapi "uvicorn[standard]" pydantic loguru orjson
-  ```
+```bash
+pip install --upgrade pip
+pip install fastapi "uvicorn[standard]" pydantic loguru orjson
+```
 
   Also, you need to make sure NTG can connect to those worker nodes.
 
@@ -187,8 +187,9 @@ uvicorn network_traffic_generator_worker_node:app --host 0.0.0.0 --port 8000
 ## Troubleshooting
 
 - If flows do not start: 
-  - Confirm API servers are up, ports opened, and the `interactive_commands.py` process can reach them.
-  - It may due to the CPU resources are not enough for you're flow configurations. Please lower the `flow numbers` or parameters to fix the question.
+  - Confirm API servers are up, ports opened, and the `interactive_commands.py` process can reach them.
+  - It may due to the CPU resources are not enough for you're flow configurations. Please lower the `flow numbers` or parameters to fix the question.
+  - Since every iperf process will open **one file** and the **number of opening file may be limited**, the machine would be unable to run new iperf process when you have generated a huge amount of flows. Thus, you can change the `ulimits -n` or `ulimits -u` to a higher values to solve the problem.
 - If Nornir inventory errors occur: double-check that `groups` is a YAML list and host keys/fields are correctly indented.
 - If `uvicorn` fails to start: verify your virtualenv and ensure `uvicorn` is installed (`pip install uvicorn fastapi`).
 
