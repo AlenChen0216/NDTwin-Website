@@ -97,7 +97,7 @@ params:
     # End user relevant links
     user:
       - name: User mailing list
-        url: https://example.org/mail
+        url: mailto:support@ndtwin.org
         icon: fa fa-envelope
         desc: Discussion and help from your fellow users
     # Developer relevant links

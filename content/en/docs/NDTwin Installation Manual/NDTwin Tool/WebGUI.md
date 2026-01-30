@@ -110,15 +110,15 @@ If both commands display version numbers, the installation is successful.
 If you received a ZIP archive, extract it first:
 
 ```bash
-unzip NDTwin_Web_GUI_release.zip
-cd NDTwin_Web_GUI
+unzip Web-GUI.zip
+cd Web-GUI
 ```
 
 If you cloned from a Git repository, execute:
 
 ```bash
-git clone <repository-url>
-cd NDTwin_Web_GUI
+git clone https://github.com/ndtwin-lab/Web-GUI.git
+cd Web-GUI
 ```
 
 ### Step 2: Configure Environment Variables
@@ -219,7 +219,7 @@ To start the application after the initial deployment:
 
 2. **Navigate to the project root directory:**
    ```bash
-   cd /path/to/NDTwin_Web_GUI
+   cd /path/to/Web-GUI
    ```
 
 3. **Start all services:**

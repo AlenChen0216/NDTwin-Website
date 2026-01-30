@@ -18,7 +18,7 @@ weight: 5
 ## 2. Project Structure
 
 ```
-Network Traffic Visualizer/
+Network-Traffic-Visualizer/
 ├── src/
 │   ├── main/
 │   │   ├── java/org/example/demo2/
@@ -32,6 +32,14 @@ Network Traffic Visualizer/
 
 ## 3. Compilation & Installation
 
+### 3.0 Get the Source Code
+
+Clone the project from GitHub:
+
+```bash
+git clone https://github.com/ndtwin-lab/Network-Traffic-Visualizer.git
+cd Network-Traffic-Visualizer
+```
 ### 3.1 Verify Environment
 
 Ensure Java and Maven are correctly installed:

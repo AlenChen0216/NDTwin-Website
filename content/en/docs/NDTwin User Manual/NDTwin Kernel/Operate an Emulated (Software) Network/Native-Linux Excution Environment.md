@@ -35,7 +35,6 @@ ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp
 * **Environment:** System Native (Root).
 
 ```bash
-cd ~/Desktop/NDTwin-Kernel/
 # Start the custom topology script
 sudo python3 testbed_topo.py
 ```

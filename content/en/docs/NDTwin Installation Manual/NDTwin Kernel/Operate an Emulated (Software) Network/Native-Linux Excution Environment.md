@@ -237,7 +237,6 @@ We rely on a custom Python script (`testbed_topo.py`) to solve **sFlow routing c
 
 1. **Create the Mininet Script file**
 ```bash
-cd ~/Desktop/NDTwin-Kernel/
 nano testbed_topo.py
 ```
 2. **Paste the code**
