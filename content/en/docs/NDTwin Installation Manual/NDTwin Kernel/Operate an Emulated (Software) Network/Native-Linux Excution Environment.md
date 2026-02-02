@@ -37,6 +37,15 @@ conda activate ryu-env
 python --version   # should be Python 3.8.x
 ```
 
+> **Conda TOS Notice (required once)**
+> If this is your first time using the Anaconda default channels (`pkgs/main`, `pkgs/r`), you must accept the Terms of Service before creating the environment:
+>
+> ```bash
+> conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+> conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+> ```
+
+
 ### Step 2.2: Install System Build Dependencies
 ```bash
 sudo apt update
@@ -89,7 +98,7 @@ This project uses a customized Ryu (OpenFlow 1.3) controller to:
 * Compute paths and push flow entries to each switch once the topology is ready
 
 
-1. **Create the Ryu App file**
+1. **Create the Ryu App file in your Home (or any folder)**
 ```bash
 nano intelligent_router.py
 ```

@@ -29,6 +29,10 @@ ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp
 
 ```
 
+> App Path Note: You can launch your custom app using an absolute path (recommended) or a relative path.
+> * Absolute path example: ~/ryu_apps/intelligent_router.py
+> * Relative path example: ./intelligent_router.py (if you cd into the folder first)
+
 ### Terminal 2: Mininet Topology
 
 * **Purpose:** Creates the virtual network and configures sFlow.
@@ -39,14 +43,15 @@ ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp
 sudo python3 testbed_topo.py
 ```
 
-**Note:** After the topology starts, wait ~60 seconds to let the customized Ryu app finish host discovery and path installation (you will see "all-destination paths installed" message).
-Only then start launching NDTwin (backend/GUI), otherwise NDTwin may query Ryu before the topology is fully detected.
+> **Note:** After the topology starts, wait ~60 seconds to let the customized Ryu app finish host discovery and path installation (you will see "all-destination paths installed" message).
+> Only then start launching NDTwin (backend/GUI), otherwise NDTwin may query Ryu before the topology is fully detected.
+
 ![Alt text](/images/all-destination-flow-entries_installed.png)
 
-**Note:** If you want to restart Mininet and run the topology again, clean up the previous Mininet state first:
-```bash
-sudo mn -c
-```
+> **Note:** If you want to restart Mininet and run the topology again, clean up the previous Mininet state first:
+> ```bash
+> sudo mn -c
+> ```
 
 
 ### Terminal 3: NDTwin Kernel
