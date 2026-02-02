@@ -29,8 +29,13 @@ ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp
 
 ```
 
-**Note:** After lanuching, wait seconds to let the customized Ryu app connect to all network devices, finish host discovery and path installation (you will see "all-destination paths installed" message).
-Only then start launching NDTwin (backend/GUI), otherwise NDTwin may query Ryu before the topology is fully detected.
+> App Path Note: You can launch your custom app using an absolute path (recommended) or a relative path.
+> * Absolute path example: ~/ryu_apps/intelligent_router.py
+> * Relative path example: ./intelligent_router.py (if you cd into the folder first)
+
+> **Note:** After lanuching, wait seconds to let the customized Ryu app connect to all network devices, finish host discovery and path installation (you will see "all-destination paths installed" message).
+> Only then start launching NDTwin (backend/GUI), otherwise NDTwin may query Ryu before the topology is fully detected.
+
 ![Alt text](/images/all_destination_flow_entries_installed_on_testbed.png)
 
 
