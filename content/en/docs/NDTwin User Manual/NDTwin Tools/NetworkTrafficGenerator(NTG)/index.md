@@ -118,7 +118,7 @@ sudo python ./topo.py
 5. Start the NDTwin.
 
 ```bash
-sudo bin/NDTwin_Kernel
+sudo -E bin/ndtwin_kernel --loglevel info
 ```
 ![ndtwin](./ndtwin.png)
 
@@ -159,7 +159,7 @@ ryu-manager intelligent_router.py ryu.app.rest_topology ryu.app.ofctl_rest --ofp
 2. Start the NDTwin
 
 ```bash
-sudo bin/NDTwin_Kernel
+sudo -E bin/ndtwin_kernel --loglevel info
 ```
 
 3. Start the NTG
