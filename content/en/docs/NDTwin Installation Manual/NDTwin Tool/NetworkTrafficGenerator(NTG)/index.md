@@ -38,6 +38,7 @@ Libraries used by NTG controller-side scripts (`network_traffic_generator.py` + 
 - `prompt_toolkit`
 - `nornir`, `nornir-utils`
 - `pyyaml`
+- `pydantic`
 - `numpy`, `pandas`
 - `paramiko`
 - `requests`
@@ -46,7 +47,7 @@ Install them:
 
 ```bash
 pip install --upgrade pip
-pip install loguru prompt_toolkit nornir nornir-utils pyyaml numpy pandas paramiko requests
+pip install loguru prompt_toolkit nornir nornir-utils pyyaml numpy pandas paramiko requests pydantic
 ```
 
 Clone our NTG:
@@ -56,6 +57,19 @@ git clone https://github.com/ndtwin-lab/Network-Traffic-Generator.git
 ```
 
 If your environment uses Conda/virtualenv, activate it before installing packages.
+
+If you use NTG with hardware testbed, you need to install below libraries for all machines that used to generate flows.
+
+- `fastapi`
+- `uvicorn` (used to start the API server)
+- `pydantic`
+- `loguru`
+- `orjson` (required by `ORJSONResponse`)
+
+```bash
+pip install --upgrade pip
+pip install fastapi "uvicorn[standard]" pydantic loguru orjson
+```
 
 ## Files Overview
 

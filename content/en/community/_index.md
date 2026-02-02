@@ -11,7 +11,7 @@ menu:
   {{< clickable-card 
       title="Contact Us" 
       icon="fas fa-envelope" 
-      url="mailto:your-email@example.com" 
+      url="mailto:support@ndtwin.org" 
       btnText="Email Us" 
       btnIcon="fas fa-paper-plane" 
       color="#ED7D31" >}} 
